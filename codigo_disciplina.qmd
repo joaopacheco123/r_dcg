@@ -14,23 +14,21 @@ editor_options:
     wrap: 72
 ---
 
-Cronograma
+# Cronograma
 
-11/08/2023 Aula 1 (João Amaral) - Cronograma da primeira parte
+11/08/2023 Aula 1 (João Amaral)
+
+Cronograma da primeira parte
 
 Introdução à Linguagem R: - Instalação - Ambiente do RStudio - Script
 com comandos - Operações matemáticas - Objetos, funções, operadores -
 Números, vetores, tabelas de dados e matrizes - Instalando e carregando
 pacotes.
 
-```         
-- Apresentar os livros principais - Utiliznaod a linguagem R
-                  - Discovering statistics using R (Andy Field)
-                  - R in Action
-                  - R Cookbook
-```
+Apresentar os livros principais - Utilizando a linguagem R - Discovering
+statistics using R (Andy Field) - R in Action - R Cookbook
 
--   Lista de exercícios
+Lista de exercícios
 
 (propor coleta de dados: - idade - altura - filmes favoritos (ação,
 drama, aventura, ficção científica, suspense/terror) - gênero musical
@@ -49,20 +47,21 @@ Títulos e subtítulos - Chunks - Tabelas - Lista de exercícios
 25/08/2023 Aula 3 - Importando dados e usando funções importantes "Base
 R" (João Amaral)
 
-```         
-- Importando dados.
-- Funções importantes:
-    - Comentário, 
-    - Atribuir, 
-    - Concatenar,  
-    - str(D)
-    - head(D)
-    - round(x, k)
-    - sum(x)
-    - cbind e rbind
-    - Ajuda
-- Pedindo ajuda para o chatgpt!
-```
+-   Importando dados.
+
+-   Funções importantes:
+
+    -   Comentário,
+    -   Atribuir,
+    -   Concatenar,\
+    -   str(D)
+    -   head(D)
+    -   round(x, k)
+    -   sum(x)
+    -   cbind e rbind
+    -   Ajuda
+
+-   Pedindo ajuda para o chatgpt!
 
 -   Lista de exercícios
 
