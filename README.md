@@ -1,5 +1,7 @@
 # Análise de dados em saúde mental: Estudos observacionais e psicometria em linguagem R.  
 
+![Logo Mental Health Epidemiology Group](imagens/full_logo_color.png)
+
 **Professores**:
 - Prof. Dr. Maurício Scopel Hoffmann
 - Prof. MSc. João Pedro Pacheco
