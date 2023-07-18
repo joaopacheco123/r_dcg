@@ -33,7 +33,7 @@ Essa é uma disciplina teórico-prática destinada aos alunos de graduação do 
 
 ### Unidade 1  
 1. Introdução à Linguagem R  
-2. Elaborando relatórios com o Rmarkdown  
+2. Elaborando relatórios com o Quarto  
 3. Importando dados e funções importantes  
 4. Estrutura de dados  
 5. Manipulando dados  
