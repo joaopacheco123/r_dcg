@@ -39,17 +39,17 @@ Essa é uma disciplina teórico-prática destinada aos alunos de graduação do 
 8. Gráficos avançados usando ggplot2  
 
 ### Unidade 2: 
-I.	Análises de regressão linear, logística e de Poisson em dados transversais e longitudinais.
-II.	Modelos mistos para dados transversais e longitudinais.
-III.	Pesos para correções de representatividade amostral.
-IV.	Princípios e aplicação da Equação Estrutural e inferência causal.
-V.	Análise fatorial exploratória – Análise de questionário utilizando o pacote psych e análise gráfica utilizando o pacote EGAnet.
-VI.	Análise fatorial confirmatória – Análise de instrumento/escala sintomática utilizando os pacotes lavaan, semPlot e semTools.
-VII.	Invariância de medida – Análise de invariância utilizando os pacotes lavaan, semPlot e semTools.
-VIII.	Teorias da Resposta ao Item – Análise de instrumento/escala utilizando os pacotes psych, ltm e mirt, e avaliação das curvas de característica e informação específica dos itens e geral do instrumento.
-IX.	Mediação e Moderação.
-X.	Modelos cross-lagged – Planejamento e testagem de modelo cross-lagged utilizando os pacotes lavaan, semPlot e semTools.
-XI.	Modelos de crescimento latente (Latent growth models).
+1. Análises de regressão linear, logística e de Poisson em dados transversais e longitudinais.
+2. Modelos mistos para dados transversais e longitudinais.
+3. Pesos para correções de representatividade amostral.
+4. Princípios e aplicação da Equação Estrutural e inferência causal.
+5. Análise fatorial exploratória – Análise de questionário utilizando o pacote psych e análise gráfica utilizando o pacote EGAnet.
+6. Análise fatorial confirmatória – Análise de instrumento/escala sintomática utilizando os pacotes lavaan, semPlot e semTools.
+7. Invariância de medida – Análise de invariância utilizando os pacotes lavaan, semPlot e semTools.
+8. Teorias da Resposta ao Item – Análise de instrumento/escala utilizando os pacotes psych, ltm e mirt, e avaliação das curvas de característica e informação específica dos itens e geral do instrumento.
+9. Mediação e Moderação.
+10. Modelos cross-lagged – Planejamento e testagem de modelo cross-lagged utilizando os pacotes lavaan, semPlot e semTools.
+11. Modelos de crescimento latente (Latent growth models).
 
 ### Unidade 3: Boas práticas em codificação e analise de dados: Como utilizar o Git, Github e Open Science Framework.
 
