@@ -1,11 +1,9 @@
-# DISCIPLINA COMPLEMENTAR DE GRADUAÇÃO
+# Análise de dados em saúde mental: Estudos observacionais e psicometria em linguagem R.  
 
 **Professores**:
 - Prof. Dr. Maurício Scopel Hoffmann
 - Prof. MSc. João Pedro Pacheco
-- MD. João Villanova do Amaral
-
-**Nome da disciplina**: Análise de dados em saúde mental: Estudos observacionais e psicometria em linguagem R.  
+- MD. João Villanova do Amaral  
 **Departamento de ensino**: Neuropsiquiatria  
 **Carga horária total**: 30 horas  
 **Carga horária dividida entre**: Teórica (15h) e Prática (15h).  
@@ -51,19 +49,24 @@ Essa é uma disciplina teórico-prática destinada aos alunos de graduação do 
 10. Modelos cross-lagged – Planejamento e testagem de modelo cross-lagged utilizando os pacotes lavaan, semPlot e semTools.
 11. Modelos de crescimento latente (Latent growth models).
 
-### Unidade 3: Boas práticas em codificação e analise de dados: Como utilizar o Git, Github e Open Science Framework.
+### Unidade 3: Boas práticas em codificação e analise de dados: 
+
+1. Como utilizar o Git  
+2. Como utilizar o Github  
+3. Open Science Framework  
 
 ## Instruções
 Para as aulas práticas, serão disponibilizados banco de dado livre e código inicial para que o aluno comece a criar seu próprio código de análise, que será utilizado para a avaliação. A nota final do aluno será calculada com a participação nas aulas (40%) e a entrega de códigos de análise em R, que estejam corretos e preparados para a análise do banco de dados que será disponibilizado. 
 
-## BIBLIOGRAFIA BÁSICA 
+## Bibliografia básica
 
 - ALCOFORADO, L. F. Utilizando A Linguagem R: Conceitos, manipulação, visualização, modelagem e elaboração de relatórios. Alta Books; 1ª edição, 2021.
+- R IN ACTION.
 - GROLEMUND, G., WICKHAM, H. R for Data Science: Import, Tidy, Transform, Visualize, and Model Data. O'Reilly Media, 2ª edição, 2023 (https://r4ds.hadley.nz/)
 - KLINE, R.B. Principles and practice of structural equation modeling. The Guilford Press. 4ª edição, 2016.
 - VAN BORK, R. Interpreting Psychometric Models. 2019.
 
-## BIBLIOGRAFIA COMPLEMENTAR
+## Bibliografia complementar
 
 - FIELD, A., MILES, J., FIELD, Z. Discovering Statistics Using R. Sage Publishing, 2012.
 - KABACOFF, R.I. R in Action: Data analysis and graphics with R. Manning. 2a edição.
