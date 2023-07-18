@@ -1,6 +1,6 @@
 ---
-title: "Tutorial R - básico"
-author: "João Pedro Gonçalves Pacheco"
+title: "Análise de dados em saúde mental"
+author: "Maurício Hoffmann, João Pacheco & João Amaral"
 date: "03/06/2021"
 output:
   html_document:
@@ -8,21 +8,12 @@ output:
     toc_float:
       collapsed: yes
       smooth_scrool: yes
-  word_document:
-    toc: yes
-  pdf_document: 
-    toc: yes
 editor_options:
   chunk_output_type: console
   markdown: 
     wrap: 72
 ---
 
-To-do list:
-
--   Ver os videos do youtube
-
--   Ver o livro R in action
 
 ## Introdução
 
