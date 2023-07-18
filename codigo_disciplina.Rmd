@@ -140,7 +140,6 @@ São tipos especiais de objetos que realizam ações sobre outros objetos.
 Muito da funcionalidade do R se dá através da aplicação de funções aos
 dados.
 
-Exemplo: isTRUE(x) - teste de se 'x' é verdade
 Exemplo: isTRUE(x) - teste de se 'x' é verdade 
 
 ### **Operadores**
