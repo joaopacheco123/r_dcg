@@ -30,7 +30,7 @@ Prova: Gerar um arquivo markdown respondendo perguntas específicas conforme cad
 
 Aula 2 - Quarto (João Pacheco)
 
- - Documento de saída - Títulos e subtítulos - Chunks - Tabelas - Lista de exercícios
+-   Documento de saída - Títulos e subtítulos - Chunks - Tabelas - Lista de exercícios
 
 Aula 3 - Importando dados e usando funções importantes "Base R" (João Amaral)
 
