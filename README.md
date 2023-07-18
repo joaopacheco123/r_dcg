@@ -3,7 +3,8 @@
 **Professores**:
 - Prof. Dr. Maurício Scopel Hoffmann
 - Prof. MSc. João Pedro Pacheco
-- MD. João Villanova do Amaral  
+- MD. João Villanova do Amaral
+
 **Departamento de ensino**: Neuropsiquiatria  
 **Carga horária total**: 30 horas  
 **Carga horária dividida entre**: Teórica (15h) e Prática (15h).  
