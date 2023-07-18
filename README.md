@@ -1,4 +1,4 @@
-![Logo Mental Health Epidemiology Group](imagens/full_logo_color.png)
+![Logo Mental Health Epidemiology Group](imagens/full_logo_color_github.png)
 
 # Análise de dados em saúde mental: 
 ## Estudos observacionais e psicometria em linguagem R    
