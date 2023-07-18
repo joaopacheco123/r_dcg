@@ -1,0 +1,73 @@
+---
+title: "Cronograma"
+author: "Maurício Hoffmann, João Pacheco e João Amaral"
+format: html
+editor: visual
+---
+
+# Cronograma
+
+| Dia        | Assunto                                                | Professor    |
+|------------|--------------------------------------------------------|--------------|
+| 11/08/2023 | Introdução à Linguagem R                               | João Amaral  |
+| 18/08/2023 | Quarto                                                 | João Pacheco |
+| 25/08/2023 | Importando dados e usando funções importantes "Base R" | João Amaral  |
+| 01/09/2023 | Estrutura de dados                                     | João Pacheco |
+| 15/09/2023 | Manipulando dados com dplyr                            | João Amaral  |
+| 22/09/2023 | Estatística descritiva e tabelas                       | João Amaral  |
+| 29/09/2023 | Visualizando dados e modelando                         | João Pacheco |
+| 06/10/2023 | Gráficos avançados usando ggplot2                      | João Pacheco |
+| Assíncrona | Avaliação 1                                            | Todos        |
+
+: Aula 1 - Introdução à Linguagem R (João Amaral)
+
+1.  Cronograma da primeira unidade
+2.  Introdução à Linguagem R: - Instalação - Ambiente do RStudio - Script com comandos - Operações matemáticas - Objetos, funções, operadores - Números, vetores, tabelas de dados e matrizes - Instalando e carregando pacotes.
+3.  Apresentar os livros principais - Utilizando a linguagem R - Discovering statistics using R (Andy Field) - R in Action - R Cookbook
+4.  Lista de exercícios
+
+Prova: Gerar um arquivo markdown respondendo perguntas específicas conforme cada aula no banco de dados gerado. O código deve rodar e gerar resultados corretos conforme o gabarito.
+
+Aula 2 - Quarto (João Pacheco)
+
+ - Documento de saída - Títulos e subtítulos - Chunks - Tabelas - Lista de exercícios
+
+Aula 3 - Importando dados e usando funções importantes "Base R" (João Amaral)
+
+-   Importando dados.
+
+-   Funções importantes:
+
+    -   Comentário,
+    -   Atribuir,
+    -   Concatenar,
+    -   str(D)
+    -   head(D)
+    -   round(x, k)
+    -   sum(x)
+    -   cbind e rbind
+    -   Ajuda
+
+-   Pedindo ajuda para o chatgpt!
+
+-   Lista de exercícios
+
+Aula 4 - Estrutura de dados (João Pacheco)
+
+\- Níveis de medida, tipos de variáveis (usar aula do maurício ou do mestrado) - Tipos de dados: vetores, matrizes, arrays, dados etc (R in Action) - Fatores (R in action) - Listas - Dados organizados (tidy data) (R For data Science) - Lista de exercícios
+
+Aula 5 - Manipulando dados com dplyr (João Amaral)
+
+\- Tibble - Identificando e modificando o tipo da variável - Operador pipe - Funções mais complexas: select(), pull(), filter(), distinct(), arrange(), mutate(), transmute(), summarise(), group_by(), add_column(), add_row(), rename() - pivot_longer() e pivot_wider() - separate() e unite() - complete(), drop_na(), replace_na() - if_else() e case_when() - Lista de exercícios
+
+Aula 6 - Estatística descritiva e tabelas (João Amaral)
+
+\- frequências - mean(x), median(x), min(x), max(x) - Pacote DescTools - Lista de exercícios
+
+Aula 7 - Visualizando dados e modelando (João Pacheco)
+
+\- Visualizando dados (R base) - plot - dar vários exemplos de plots - E estatística inferencial básica (modelando a relação entre duas variáveis) - Lista de exercícios
+
+Aula 8 - Gráficos avançados usando ggplot2 (João Pacheco) (???)
+
+\- Linguagem gráfica ggplot2 - Gráficos avançados usando ggplot2 - Lista de exercícios
