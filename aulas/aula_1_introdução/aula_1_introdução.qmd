@@ -1,0 +1,104 @@
+---
+title: "Aula 1. Introdução"
+author: "João Amaral"
+format:
+  html:
+    toc: true
+    toc_float:
+      collapsed: true
+      smooth_scrool: true
+editor_options:
+  chunk_output_type: console
+  markdown: 
+    wrap: 72
+---
+
+## Introdução
+
+R e R studio são softwares gratuitos.
+
+R é baseado em sintaxe (linguagem), não em point-and-click.
+
+-   Mais flexibilidade
+
+-   Facilita gravar todas as transformações nos dados e análises
+
+### **Objetos**
+
+R grava seus dados em 'objetos' - aba 'environment'
+
+### **Funções**
+
+São tipos especiais de objetos que realizam ações sobre outros objetos.
+
+Muito da funcionalidade do R se dá através da aplicação de funções aos
+dados.
+
+Exemplo: isTRUE(x) - teste de se 'x' é verdade
+
+### **Operadores**
+
+São sinais que também realizam ações sobre objetos.
+
+#### **Aritméticos**
+
+| Operador   | Descrição                   |
+|------------|-----------------------------|
+| \+         | adição                      |
+| \-         | subtração                   |
+| \*         | multiplicação               |
+| /          | divisão                     |
+| \^ ou \*\* | exponenciação / potenciação |
+
+#### **Lógicos e de comparação**
+
+| Operador | Descrição          |
+|----------|--------------------|
+| \<       | menor que          |
+| \<=      | menor ou igual     |
+| \>       | maior que          |
+| \>=      | maior ou igual     |
+| ==       | exatamente igual a |
+| !=       | diferente de       |
+| !x       | não 'x'            |
+| x \| y   | 'x' ou 'y'         |
+| x & y    | 'x' e 'y'          |
+
+### **Pacotes**
+
+O software básico do R já vem com várias funções pré-instaladas.
+
+Para adicionar funções, é necessário a instalação de pacotes (próximo
+tópico).
+
+## Instalação
+
+### Instalando R e RStudio
+
+1)  R: <http://www.r-project.org>
+2)  RStudio: <https://www.rstudio.com/>
+
+### Instalando pacotes
+
+```{r}
+#| eval: false
+#| include: false
+
+install.packages("psych")
+
+# Para instalar com as dependências:
+install.packages("psych", dependencies = TRUE)
+```
+
+Depois, é importante carregar o pacote para utilizá-lo:
+
+```{r}
+library(psych)
+```
+
+### Explorando pacotes
+
+Esta página permite explorar os pacotes, por tópicos:
+<https://cran.r-project.org/web/views/>
+
+![](imagens/Capturar1.PNG)
