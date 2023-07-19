@@ -1,0 +1,67 @@
+---
+title: "Dicionários de dados planilha drive"
+format: html
+editor: visual
+execute:
+  warning: false
+  error: false
+editor_options:
+  chunk_output_type: console
+---
+
+# Seção 1: Dados gerais
+
+| Variável               | Tipo                  |
+|------------------------|-----------------------|
+| Idade                  | quantitativa discreta |
+| Altura                 | quantitativa contínua |
+| Gênero cinematográfico | qualitativa nominal   |
+| Gênero musical         | qualitativa nominal   |
+| Atividade física       | qualitativa ordinal   |
+
+# Seção 2: Escala de bem-estar Warwick-Edinburgh (versão curta adaptada)
+
+| Item                                                  | Tipo                                  | Pontuação |
+|-------------------------------------------------------|---------------------------------------|-----------|
+| Tenho me sentido otimista em relação ao futuro        | Likert 5 pontos (qualitativa ordinal) | 0-1-2-3-4 |
+| Tenho me sentido útil                                 | Likert 5 pontos (qualitativa ordinal) | 0-1-2-3-4 |
+| Tenho me sentido tranquilo                            | Likert 5 pontos (qualitativa ordinal) | 0-1-2-3-4 |
+| Tenho lidado bem com os problemas                     | Likert 5 pontos (qualitativa ordinal) | 0-1-2-3-4 |
+| Tenho pensado com clareza                             | Likert 5 pontos (qualitativa ordinal) | 0-1-2-3-4 |
+| Tenho me sentido próximo (a) às outras pessoas        | Likert 5 pontos (qualitativa ordinal) | 0-1-2-3-4 |
+| Tenho sido capaz de tomar as minhas próprias decisões | Likert 5 pontos (qualitativa ordinal) | 0-1-2-3-4 |
+
+# Seção 3: Traços de personalidade (extroversão e neuroticismo)
+
+Como a essa escala de personalidade realiza perguntas de mesma direção do traço de personalidade (e.g., "é conversador, comunicativo") e perguntas com direção inversa (e.g., "é reservado"), precisamos mostrar para o computador que a pontuação delas será inversa para um mesmo traço. Em outras palavras, uma pessoa muito comunicativa terá maior traço latente de extroversão, enquanto uma pessoa muito reservada terá menor traço para ele, mesmo as duas avaliando o mesmo construto.
+
+| Item                                               | Traço        | Tipo                                  | Pontuação |
+|----------------------------------------------------|--------------|---------------------------------------|-----------|
+| É conversador, comunicativo                        | Extroversão  | Likert 5 pontos (qualitativa ordinal) | 0-1-2-3-4 |
+| É depressivo, triste                               | Neuroticismo | Likert 5 pontos (qualitativa ordinal) | 0-1-2-3-4 |
+| É reservado                                        | Extroversão  | Likert 5 pontos (qualitativa ordinal) | 4-3-2-1-0 |
+| É relaxado, controla bem o stress                  | Neuroticismo | Likert 5 pontos (qualitativa ordinal) | 4-3-2-1-0 |
+| É cheio de energia                                 | Extroversão  | Likert 5 pontos (qualitativa ordinal) | 0-1-2-3-4 |
+| Fica tenso com frequência                          | Neuroticismo | Likert 5 pontos (qualitativa ordinal) | 0-1-2-3-4 |
+| Gera muito entusiasmo                              | Extroversão  | Likert 5 pontos (qualitativa ordinal) | 0-1-2-3-4 |
+| Preocupa-se muito com tudo                         | Neuroticismo | Likert 5 pontos (qualitativa ordinal) | 0-1-2-3-4 |
+| Tende a ser quieto, calado                         | Extroversão  | Likert 5 pontos (qualitativa ordinal) | 4-3-2-1-0 |
+| É emocionalmente estável, não se altera facilmente | Neuroticismo | Likert 5 pontos (qualitativa ordinal) | 4-3-2-1-0 |
+| É assertivo, não teme expressar o que sente        | Extroversão  | Likert 5 pontos (qualitativa ordinal) | 0-1-2-3-4 |
+| É temperamental, muda de humor facilmente          | Neuroticismo | Likert 5 pontos (qualitativa ordinal) | 0-1-2-3-4 |
+| É, às vezes, tímido e inibido                      | Extroversão  | Likert 5 pontos (qualitativa ordinal) | 4-3-2-1-0 |
+| Mantém-se calmo nas situações de tensão            | Neuroticismo | Likert 5 pontos (qualitativa ordinal) | 4-3-2-1-0 |
+| É sociável, extrovertido                           | Extroversão  | Likert 5 pontos (qualitativa ordinal) | 0-1-2-3-4 |
+| Fica nervoso facilmente                            | Neuroticismo | Likert 5 pontos (qualitativa ordinal) | 0-1-2-3-4 |
+
+# Importação de dados dos alunos
+
+```{r}
+#| label: Iniciando pacotes e importando dados
+
+
+library(googlesheets4); library(tidyverse)
+
+# Importa os dados após autenticação e transforma em uma df
+df <- read_sheet("https://docs.google.com/spreadsheets/d/1mPcEamJuGjsY-eFFBDOfgqg8Yz-Vy8SuF6doEU1Q_10/edit?resourcekey#gid=1151830925")
+```
