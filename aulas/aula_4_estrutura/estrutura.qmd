@@ -1,0 +1,556 @@
+---
+title: "Introdução às estruturas de dados e tipos de variáveis em R"
+format:
+  html: default
+  pdf: default
+editor: visual
+---
+
+Relembrando
+
+objeto
+
+:   Um **objeto** é qualquer coisa que pode ser associado (e armazenado) em uma variável.
+
+As variáveis em R não são predefinidas; elas assumem o tipo (classe) do objeto que for atribuído a elas.
+
+Assim, uma instrução do tipo:
+
+`x <- 1`
+
+atribui a *x* o valor (inteiro) 1, e é perfeitamente válido reatribuir:
+
+`x <- 2.5`
+
+A classe define a forma que o objeto será manipulado pelas diferentes funções.
+
+## I. Classes de objetos em R
+
+A classe de um objeto é muito importante dentro do R. É a partir dela que as funções e operadores conseguem saber exatamente o que fazer com um objeto.
+
+Por exemplo, se tentarmos somar "a" e "b", uma mensagem de erro aparecerá. Isso acontece porque o R sabe que "a" e "b" são objetos do tipo texto.
+
+```{r}
+#| error: true
+1+1
+
+"a" + "b"
+```
+
+### A. Numérico
+
+#### 1. Inteiros
+
+Inteiros (*integers*) são números inteiros sem nenhuma vírgula.
+
+Em R, você pode criar um número inteiro usando a função `as.integer()` ou simplesmente atribuindo um número inteiro a uma variável.
+
+```{r}
+# Criando uma variável inteira
+meu_integer <- as.integer(42)
+
+# Criando uma variável inteira
+meu_integer <- as.integer(42)
+```
+
+#### 2. Duplo (*double/float*)
+
+Double (também conhecido como *float*) representa números com pontos decimais.
+
+Por padrão, R trata números com pontos decimais como duplos.
+
+```{r}
+# Criando uma variável double
+meu_double <- 3.14
+```
+
+### B. Caractere (*character*)
+
+O tipo de dados *Character* armazena texto ou *strings*.
+
+Os valores de texto são colocados entre aspas simples ou duplas.
+
+```{r}
+# Criando uma variável de caractere
+meu_caractere <- "Olá, Mundo!"
+```
+
+### C. Lógico (Booleano)
+
+O tipo de dados lógicos representa valores binários, TRUE ou FALSE.
+
+Os valores lógicos geralmente são o resultado de comparações ou operações lógicas.
+
+```{r}
+# Criando uma variável lógica
+está_chovendo <- TRUE
+está_ensolarado <- FALSE
+```
+
+### D. Fator
+
+Fatores são usados para representar dados categóricos com níveis ou categorias distintas.
+
+Os fatores são úteis na análise estatística e na visualização de dados.
+
+```{r}
+# Criando uma variável de fator
+escolaridade <- factor(c("Ensino Médio", "Faculdade", "Graduação", "Ensino Médio", "Graduação"))
+```
+
+### E. Data e Hora
+
+R tem classes específicas para lidar com dados de data e hora.
+
+As classes mais comuns são Date, POSIXct e POSIXlt.
+
+```{r}
+# Criando uma variável de data
+hoje <- as.Date("2023-07-22")
+
+# Criando uma variável POSIXct (data e hora com fuso horário)
+current_datetime <- as.POSIXct("2023-07-22 14:30:00", tz = "UTC")
+```
+
+## II. Estruturas de dados básicas em R
+
+### A. Vetores
+
+#### Criando vetores
+
+Os vetores são a estrutura de dados mais simples em R, representando uma coleção de elementos do mesmo tipo de dados.
+
+Você pode criar um vetor usando a função c(), que significa "combinar" ou "concatenar".
+
+```{r}
+# Criando um vetor numérico
+vetor_numerico <- c(10, 20, 30, 40, 50)
+
+# Criando um vetor de caractere
+vetor_caractere <- c("maçã", "banana", "laranja")
+
+# Criando um vetor lógico
+vetor_logico <- c(TRUE, FALSE, TRUE)
+```
+
+#### Operações básicas (subconjunto, aritmética, lógica)
+
+Subconjunto: Acessando elementos específicos de um vetor usando indexação.
+
+Aritmética: Realizar operações matemáticas em vetores (por exemplo, adição, subtração, multiplicação).
+
+Lógico: Executar operações lógicas em vetores (por exemplo, AND, OR).
+
+```{r}
+# Subconjunto
+meu_vetor <- c(5, 10, 15, 20, 25)
+element_3 <- meu_vetor[3] # Acesse o terceiro elemento (15)
+
+# Aritmética
+vetor1 <- c(1, 2, 3)
+vetor2 <- c(4, 5, 6)
+soma_vetor <- vetor1 + vetor2 # Adição elementar
+
+# Lógico
+vetor_logico <- c(TRUE, FALSE, TRUE)
+all_true <- all(vetor_logico) # Verifica se todos os elementos são TRUE
+```
+
+#### Funções vetoriais (comprimento, soma, média, etc.)
+
+R fornece várias funções para trabalhar com vetores, como calcular o comprimento, soma, média, etc.
+
+```{r}
+meu_vetor <- c(5, 10, 15, 20, 25)
+
+# Comprimento do vetor
+comprimento_vetor <- length(meu_vetor)
+
+# Soma e média do vetor
+soma_vetor <- sum(meu_vetor)
+vector_mean <- mean(meu_vetor)
+```
+
+### B. Matrizes
+
+Matrizes são estruturas de dados bidimensionais com linhas e colunas do mesmo tipo de dados.
+
+Você pode criar uma matriz usando a função matrix().
+
+```{r}
+# Criando uma matriz
+my_matrix <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 2, ncol = 3, byrow = TRUE)
+
+# Saída:
+# [,1] [,2] [,3]
+# [1,] 1 2 3
+# [2,] 4 5 6
+```
+
+Operações básicas (subconjunto, aritmética, multiplicação de matrizes)
+
+-   Subconjunto: Acessando elementos específicos, linhas ou colunas de uma matriz usando indexação.
+
+-   Aritmética: Realização de operações aritméticas elementares em matrizes.
+
+-   Multiplicação de matrizes: Realizando a multiplicação de matrizes usando o operador %\*%.
+
+Código de exemplo:
+
+```{r}
+# Subconfiguração
+my_matrix <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 2, ncol = 3, byrow = TRUE)
+element_2_3 <- my_matrix[2, 3] # Acesse o elemento na segunda linha e terceira coluna (6)
+
+# Aritmética
+matriz1 <- matrix(c(1, 2, 3, 4), nrow = 2)
+matriz2 <- matrix(c(5, 6, 7, 8), nrow = 2)
+soma_matriz <- matriz1 + matriz2 # Adição elementar
+
+# Multiplicação da matriz
+produto_matriz <- matriz1 %*% matriz2
+```
+
+Funções de matriz (dim, rowSums, colSums, etc.)
+
+R fornece várias funções para trabalhar com matrizes, como obter dimensões, somas de linhas, somas de colunas, etc.
+
+```{r}
+minha_matriz <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 2, ncol = 3, byrow = TRUE)
+
+# Dimensões da matriz
+matrix_dimensions <- dim(minha_matriz) # Saída: 2 linhas e 3 colunas
+
+# Somas de linhas e somas de colunas
+row_sums <- rowSums(minha_matriz)
+col_sums <- colSums(minha_matriz)
+```
+
+### C. Sequências (*arrays*)
+
+Arrays são estruturas de dados multidimensionais que podem armazenar elementos do mesmo tipo de dados.
+
+Você pode criar um array usando a função array().
+
+```{r}
+# Criando um array
+my_array <- array(c(1, 2, 3, 4, 5, 6), dim = c(2, 3, 2))
+```
+
+### D. Listas
+
+As listas são estruturas de dados versáteis que podem conter elementos de diferentes tipos de dados.
+
+Você pode criar uma lista usando a função list().
+
+```{r}
+# Criando uma lista
+minha_lista <- list(1, "olá", TRUE, c(2, 4, 6))
+```
+
+Acessando elementos da lista
+
+Você pode acessar elementos em uma lista usando indexação ou nomes (se nomeados).
+
+```{r}
+minha_lista <- list(1, "olá", TRUE, c(2, 4, 6))
+
+# Acessando elementos da lista
+element_1 <- minha_lista[[1]] # Acesse o primeiro elemento (1)
+element_hello <- minha_lista[[2]] # Acesse o segundo elemento
+```
+
+### E. Dataframes
+
+Os *dataframes* são estruturas de dados bidimensionais que armazenam dados em linhas e colunas.
+
+Cada coluna em um quadro de dados pode ter um tipo de dados diferente.
+
+Você pode criar um quadro de dados usando a função `data.frame()`.
+
+```{r}
+# Criando um dataframe
+dados_aluno <- data.frame(
+     nome = c("Alice", "Bob", "Charlie", "David"),
+     idade = c(22, 21, 23, 20),
+     pontuação = c(85, 78, 92, 80),
+     aprovado = c(TRUE, FALSE, TRUE, TRUE)
+)
+```
+
+Manipulando dataframes (adicionando, removendo, renomeando colunas)
+
+Adicionar colunas: você pode adicionar novas colunas a um quadro de dados usando o operador de atribuição (\$ ou \[\]).
+
+Removendo colunas: Use a função subset() para excluir colunas indesejadas.
+
+Renomeando colunas: Use a função names() para alterar os nomes das colunas.
+
+```{r}
+# Adicionando uma nova coluna
+dados_aluno$genero <- c("Feminino", "Masculino", "Masculino", "Masculino")
+
+# Removendo uma coluna
+dados_aluno_subset <- subset(dados_aluno, select = -idade)
+
+# Renomeando colunas
+names(dados_aluno_subset) <- c("Nome", "Pontuação", "Aprovado", "Gênero")
+```
+
+Operações básicas (subconjunto, filtragem, classificação)
+
+-   Subconjunto de linhas e colunas: você pode usar a indexação para acessar linhas ou colunas específicas em um quadro de dados.
+
+-   Filtragem: Use condições lógicas para filtrar linhas com base em determinados critérios.
+
+-   Classificação: Use a função order() para classificar o quadro de dados com base em uma coluna específica.
+
+```{r}
+# Subconjunto de linhas e colunas
+# Acesse as três primeiras linhas e as colunas "nome" e "pontuação"
+subset_data <- dados_aluno[1:3, c("nome", "pontuação")]
+
+# Filtrando linhas
+# Filtre os alunos que passaram no exame
+pass_students <- dados_aluno[dados_aluno$passed == TRUE, ]
+
+# Classificando quadro de dados
+# Classifica o quadro de dados pela coluna "score" em ordem decrescente
+sorted_data <- dados_aluno[order(-dados_aluno$pontuação), ]
+```
+
+Observação: os dataframes são estruturas de dados fundamentais para trabalhar com conjuntos de dados do mundo real em R. Eles permitem que você armazene e manipule dados de forma eficaz para várias tarefas de análise e visualização de dados. Os exemplos fornecidos aqui demonstram algumas operações básicas, mas há muito mais funções e técnicas disponíveis para manipulação de quadros de dados em R.
+
+## III. Coerção e conversão de tipo
+
+### A. Coerção implícita
+
+A coerção implícita, também conhecida como coerção de tipo, ocorre quando R converte automaticamente um tipo de dados em outro para executar operações.
+
+R segue regras específicas para coerção implícita para garantir que as operações possam ser realizadas com sucesso.
+
+```{r}
+# Exemplos de coerção implícita
+numeric_vector <- c(1, 2, 3, 4)
+character_vector <- c("5", "6", "7", "8")
+```
+
+### B. Coerção explícita usando funções (as.numeric, as.character, as.logical, etc.)
+
+A coerção explícita permite que você converta explicitamente um tipo de dados em outro usando funções de conversão específicas.
+
+R fornece várias funções para conversão de tipo explícito, como as.numeric(), as.character(), as.logical(), etc.
+
+```{r}
+# Exemplos de coerção explícita
+numeric_vector <- c(1, 2, 3, 4)
+caractere_vetor <- c("5", "6", "7", "8")
+
+# Converter character_vector para numeric explicitamente
+numeric_character_vector <- as.numeric(caractere_vetor)
+
+# Coerção de numérico para caractere
+valor_numérico <- 42
+character_value <- as.character(valor_numérico)
+
+# Coerção para lógico (TRUE/FALSE)
+vetor_lógico <- c(1, 0, 1, 0)
+resultado_lógico <- as.logical(vetor_lógico)
+```
+
+Nota: Tenha cuidado com a conversão de tipo, pois pode resultar em resultados inesperados se os dados não puderem ser convertidos com precisão. Por exemplo, converter caracteres não numéricos em numéricos pode resultar em NAs. Sempre valide os dados e certifique-se de que a conversão pretendida é apropriada para sua análise.
+
+A coerção explícita fornece mais controle sobre as conversões de tipo de dados, permitindo que você assegure que os dados sejam transformados adequadamente antes de uma análise mais aprofundada. A coerção implícita pode ser útil em alguns casos, mas é essencial estar ciente de como o R lida com as conversões de tipo para evitar possíveis problemas em seu código.
+
+## IV. Fatores em detalhe
+
+### A. Compreendendo dados categóricos
+
+Os dados categóricos representam categorias ou grupos discretos e distintos.
+
+Os dados categóricos podem ser nominais (não ordenados) ou ordinais (ordenados).
+
+```{r}
+# Dados categóricos nominais
+eye_colors <- c("Azul", "Marrom", "Verde", "Verde", "Marrom", "Azul")
+
+# Dados categóricos ordinais
+education_levels <- c("Ensino Médio", "Faculdade", "Graduação", "Ensino Médio", "Graduação")
+```
+
+### B. Criando e trabalhando com fatores
+
+Fatores são usados para representar dados categóricos em R.
+
+Você pode criar um fator usando a função factor().
+
+```{r}
+# Criando um fator a partir de dados categóricos nominais
+eye_colors_factor <- factor(eye_colors)
+
+# Criando um fator a partir de dados categóricos ordinais
+education_levels_factor <- factor(education_levels, levels = c("Ensino Médio", "Faculdade", "Graduação"), ordered = TRUE)
+```
+
+Trabalhando com fatores:
+
+`levels()`: Obtenha os níveis/categorias únicos de um fator.
+
+`nlevels()`: Obtenha o número de níveis/categorias em um fator.
+
+`table()`: Cria uma tabela de frequência de níveis de fator.
+
+```{r}
+# Trabalhando com fatores
+levels(education_levels_factor) # Output: "High School" "College" "Graduate"
+nlevels(education_levels_factor) # Saída: 3
+
+# Criando uma tabela de frequência de níveis de fator
+frequência_tabela <- table(eye_colors_factor)
+
+# Saída:
+# Azul Marrom Verde
+# 2 2 2
+```
+
+### C. Níveis de fator de reordenação
+
+Em dados ordinais, a ordem dos níveis de fator é importante.
+
+Você pode alterar a ordem dos níveis de fator usando a função factor() com o argumento de níveis.
+
+```{r}
+# Reordenando os níveis dos fatores
+# Digamos que queremos os níveis em ordem crescente de escolaridade
+education_levels_factor <- factor(education_levels, levels = c("Ensino Médio", "Faculdade", "Graduação"), ordered = TRUE)
+
+# Se quisermos os níveis em ordem decrescente de escolaridade
+education_levels_factor <- factor(education_levels, levels = c("Graduação", "Faculdade", "Ensino Médio"), ordered = TRUE)
+```
+
+Você também pode usar a função reorder() para reordenar os níveis de fator com base em uma variável ou critério específico.
+
+```{r}
+# Reordenando níveis de fator usando reorder()
+pontuações <- c(70, 85, 60, 90)
+education_levels <- c("Ensino Médio", "Faculdade", "Ensino Médio", "Graduação")
+
+# Reordenar education_levels com base nas pontuações
+reordered_education_levels <- reorder(education_levels, pontuações, FUN = mean)
+# Use o fator reordenado em análise ou plotagem posterior
+```
+
+Fatores são essenciais para representar e analisar dados categóricos em R. Compreender a distinção entre dados categóricos nominais e ordinais é crucial para a modelagem e visualização de dados adequada. Ao trabalhar com dados ordenados, reordenar os níveis de fator ajuda a manter a ordem correta em análises e visualizações subsequentes.
+
+## V. Práticas recomendadas para trabalhar com estruturas de dados
+
+### A. Convenções de nomenclatura
+
+Adotar convenções de nomenclatura consistentes e significativas para estruturas de dados e variáveis é essencial para a legibilidade e manutenção do código.
+
+Use nomes descritivos que transmitam a finalidade e o conteúdo da estrutura de dados.
+
+Evite usar nomes que entrem em conflito com palavras reservadas ou funções internas em R.
+
+```{r}
+# Boa convenção de nomenclatura
+pontuação_aluno <- c(85, 78, 92, 80)
+average_score <- mean(pontuação_aluno)
+```
+
+Evite usar nomes como "média" ou "dados" para suas variáveis
+
+### B. Dados organizados (tidy data) 
+
+#### O que são dados organizados?
+
+Tidy data é uma forma estruturada e padronizada de organizar dados, popularizada por Hadley Wickham. Segue um conjunto de princípios que simplificam a manipulação e análise de dados.
+
+Em dados organizados, cada variável tem sua própria coluna, cada observação tem sua própria linha e cada valor é colocado em uma célula.
+
+Dados organizados:
+
+-   Promovem consistência e clareza
+
+-   Agilizam os fluxos de trabalho de análise de dados
+
+-   Tornam as tarefas de manipulação de dados mais diretas e intuitivas
+
+-   Facilitam a integração perfeita com pacotes populares do R, como o alignr, o dplyr e o ggplot2.
+
+#### Comparação com dados confusos ou desarrumados
+
+Dados confusos carecem de uma estrutura padronizada e podem ter variáveis espalhadas por várias colunas, observações misturadas ou valores de dados colocados em células inadequadas.
+
+**Princípios:**
+
+1.  **Colunas são variáveis:** Em dados organizados, cada variável no conjunto de dados ocupa sua própria coluna. Isso permite uma identificação clara e fácil acesso a atributos de dados específicos.
+
+2.  **Linhas são observações:** Cada observação (ou ponto de dados individual) ocupa sua própria linha em dados organizados. Este arranjo permite a fácil identificação de casos ou amostras individuais.
+
+3.  **Os valores estão nas células:** Cada valor no conjunto de dados é colocado em uma célula específica, correspondente à sua variável e observação. Esse arranjo estruturado permite fácil recuperação e manipulação de dados.
+
+4.  **Um tipo de dados por tabela:** Cada tabela em dados organizados deve conter apenas um tipo de dados, como quantitativo, categórico ou textual. Essa separação clara simplifica a análise de dados e garante a integridade dos dados.
+
+```{r}
+# Dados confusos
+messy_data <- data.frame(
+   Nome = c("Alice", "Bob", "Charlie"),
+   Math_Score = c(85, 78, 92),
+   Science_Score = c(90, 88, 76),
+   English_Score = c(80, 94, 88)
+)
+
+# Dados organizados (as variáveis estão em colunas)
+dados_arrumados <- data.frame(
+   Nome = c("Alice", "Bob", "Charlie"),
+   Assunto = c("Matemática", "Matemática", "Matemática", "Ciência", "Ciência", "Ciência", "Inglês", "Inglês", "Inglês"),
+   Pontuação = c(85, 78, 92, 90, 88, 76, 80, 94, 88)
+)
+```
+
+## VI. Conclusão
+
+Hoje abordamos os conceitos fundamentais de estruturas de dados e tipos de variáveis em R.
+
+Os tipos de dados em R incluem numérico, caractere, lógico, fator e data/hora.
+
+Estruturas de dados básicas em R consistem em vetores, matrizes, arrays, listas e dataframes.
+
+A coerção e a conversão de tipo nos permitem converter dados entre diferentes tipos de forma explícita e implícita.
+
+Os fatores são essenciais para representar e analisar dados categóricos em R, e aprendemos como criá-los e manipulá-los.
+
+Exploramos as melhores práticas para trabalhar com estruturas de dados, incluindo convenções de nomenclatura e tidy data.
+
+## VII. Exercícios e Exemplos
+
+### Exercício 1:
+
+Crie um vetor numérico contendo temperaturas em Celsius: 25, 30, 22, 28, 21.
+
+Converta as temperaturas Celsius para Fahrenheit usando a fórmula: Fahrenheit = (Celsius \* 9/5) + 32.
+
+Armazene o resultado em um novo vetor e imprima-o.
+
+```{r}
+# Exercício 1  
+celsius_temperatures <- c(25, 30, 22, 28, 21)  
+fahrenheit_temperatures <- (celsius_temperatures * 9/5) + 32  
+print(fahrenheit_temperatures)
+```
+
+### Exercício 2:
+
+Crie um vetor de caracteres representando os dias da semana: "Segunda", "Terça", ..., "Domingo".
+
+Converta o vetor de caracteres em um fator com níveis ordenados representando a ordem dos dias em uma semana.
+
+Imprima o fator com os níveis na ordem correta.
+
+```{r}
+# Exercício 2  
+dias_da_semana <- c("segunda", "terça", "quarta", "quinta", "sexta", "sábado", "domingo")  
+ordenado_dias <- factor(dias_da_semana, levels = c("segunda", "terça", "quarta", "quinta", "sexta", "sábado", "domingo"), ordered = TRUE)  
+print(ordenado_dias)
+```

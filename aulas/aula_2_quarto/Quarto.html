@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Quarto</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="Quarto_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Quarto_files/libs/quarto-html/quarto.js"></script>
+<script src="Quarto_files/libs/quarto-html/popper.min.js"></script>
+<script src="Quarto_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Quarto_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Quarto_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Quarto_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Quarto_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Quarto_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Quarto_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Quarto.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Quarto</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="quarto" class="level2">
+<h2 class="anchored" data-anchor-id="quarto">Quarto</h2>
+<p>Quarto é uma versão multilíngue e <a href="https://quarto-org.translate.goog/docs/faq/rmarkdown.html?_x_tr_sl=en&amp;_x_tr_tl=pt&amp;_x_tr_hl=pt-BR&amp;_x_tr_pto=wapp">de última geração</a> do R Markdown da Posit e inclui dezenas de novos recursos e capacidades, ao mesmo tempo em que é capaz de renderizar a maioria dos arquivos Rmd existentes sem modificação.</p>
+<p>Neste tutorial, mostraremos como usar o RStudio com o Quarto. Você editará o código e o markdown no RStudio da mesma forma que faria com qualquer documento computacional (por exemplo, R Markdown) e visualizará o documento renderizado na guia Viewer enquanto trabalha.</p>
+<p>Você pode optar por renderizar o seu <code>.qmd</code> como HTML ou em outros formatos, como PDF, MS Word, etc.</p>
+<p>O Quarto é uma biblioteca R que permite a criação de documentos dinâmicos e interativos com código R e texto em um formato semelhante ao Markdown. É muito útil para criar relatórios, apresentações ou até mesmo artigos com análises de dados incorporadas.</p>
+</section>
+<section id="instalação" class="level2">
+<h2 class="anchored" data-anchor-id="instalação"><strong>Instalação</strong></h2>
+<p>Para começar, certifique-se de ter o R instalado em seu computador, em sua versão mais recente. Você pode baixar a versão mais recente do R em <a href="https://cran.r-project.org/"><strong>https://cran.r-project.org/</strong></a>.</p>
+<p>Certifique-se de ter instalado os pacotes <code>tidyverse</code>e <code>palmerpenguins</code>:</p>
+<pre><code>install.packages("tidyverse") 
+install.packages("palmerpenguins")</code></pre>
+<p>Baixe o documento abaixo no site para criar o seu primeiro documento <code>.qmd</code>.</p>
+<p>Use o botão <strong>Render</strong> no RStudio para renderizar o arquivo e visualizar a saída com um único clique ou atalho de teclado (Ctrl+Shift+K).</p>
+</section>
+<section id="criando-um-documento" class="level2">
+<h2 class="anchored" data-anchor-id="criando-um-documento"><strong>Criando um documento</strong></h2>
+<p>Agora que o pacote está instalado, vamos criar um novo documento Quarto. É importante lembrar que os arquivos Quarto possuem a extensão <strong><code>.qmd</code></strong>. Abra um novo arquivo no RStudio e salve-o com a extensão <strong><code>.qmd</code></strong>.</p>
+</section>
+<section id="sintaxe-básica" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sintaxe-básica"><strong>Sintaxe básica</strong></h2>
+<p>Os documentos Quarto são muito semelhantes aos arquivos Markdown, mas também permitem incorporar código R que será executado e seus resultados serão exibidos no documento final. Vamos ver alguns exemplos básicos da sintaxe.</p>
+<p>Em seguida, vamos voltar nossa atenção para o conteúdo do nosso documento Quarto. O arquivo contém três tipos de conteúdo: um cabeçalho YAML, blocos de código e texto de marcação.</p>
+<section id="cabeçalho-yaml" class="level3">
+<h3 class="anchored" data-anchor-id="cabeçalho-yaml"><strong>Cabeçalho YAML</strong></h3>
+<p>Um cabeçalho YAML (opcional) demarcado por três traços ( <code>---</code>) em cada extremidade.</p>
+<pre><code>--- 
+title: "Hello, Quarto" 
+format: html 
+editor: visual 
+---</code></pre>
+<p>Quando renderizado, o <code>title</code>, <code>"Hello, Quarto"</code>, aparecerá na parte superior do documento renderizado com um tamanho de fonte maior do que o restante do documento. Os outros dois campos YAML denotam que a saída deve estar em <code>html</code> <code>format</code>e o documento deve abrir no <code>visual</code> <code>editor</code>por padrão.</p>
+<p>A sintaxe básica do YAML usa pares chave-valor no formato <code>key: value</code>. Outros campos YAML comumente encontrados em cabeçalhos de documentos incluem metadados como <code>author</code>, <code>subtitle</code>, <code>date</code>bem como opções de personalização como <code>theme</code>, <code>fontcolor</code>, <code>fig-width</code>etc. Você pode descobrir todos os campos YAML disponíveis para documentos HTML <a href="https://quarto-org.translate.goog/docs/reference/formats/html.html?_x_tr_sl=en&amp;_x_tr_tl=pt&amp;_x_tr_hl=pt-BR&amp;_x_tr_pto=wapp">aqui</a> . Os campos YAML disponíveis variam de acordo com o formato do documento, por exemplo, veja <a href="https://quarto-org.translate.goog/docs/reference/formats/pdf.html?_x_tr_sl=en&amp;_x_tr_tl=pt&amp;_x_tr_hl=pt-BR&amp;_x_tr_pto=wapp">aqui</a> os campos YAML para documentos PDF e <a href="https://quarto-org.translate.goog/docs/reference/formats/docx.html?_x_tr_sl=en&amp;_x_tr_tl=pt&amp;_x_tr_hl=pt-BR&amp;_x_tr_pto=wapp">aqui</a> para MS Word.</p>
+</section>
+<section id="pedaços-de-código" class="level3">
+<h3 class="anchored" data-anchor-id="pedaços-de-código"><strong>Pedaços de código</strong></h3>
+<p>Blocos de código R identificados com <code>{r}</code>opções de bloco (opcional), no estilo YAML, identificados por <code>#|</code>no início da linha.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load-packages </span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false  </span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins) </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nesse caso, o <code>label</code>da parte do código é <code>load-packages</code>, e definimos <code>include</code>como <code>false</code>para indicar que não queremos a parte em si ou qualquer uma de suas saídas nos documentos renderizados.</p>
+<p>Além de renderizar o documento completo para visualizar os resultados dos blocos de código, você também pode executar cada bloco de código interativamente no editor do RStudio clicando no <img src="https://d33wubrfki0l68.cloudfront.net/18153fb9953057ee5cff086122bd26f9cee8fe93/3aba9/images/notebook-run-chunk.png" class="img-fluid">ícone ou no atalho de teclado (⇧⌘⏎). O RStudio executa o código e exibe os resultados embutidos em seu arquivo ou no console, dependendo de sua preferência.</p>
+</section>
+<section id="títulos-e-texto" class="level3">
+<h3 class="anchored" data-anchor-id="títulos-e-texto"><strong>Títulos e texto</strong></h3>
+<p><code># Título 1</code></p>
+<p><code>## Título 2</code></p>
+<p><code>### Título 3</code></p>
+<p><code>Texto normal.</code></p>
+<p>Use o modo “Visual” para facilitar o seu trabalho!</p>
+</section>
+<section id="código-r" class="level3">
+<h3 class="anchored" data-anchor-id="código-r"><strong>Código R</strong></h3>
+<p>O código R é inserido entre blocos de código cercados por três acentos graves (```). O resultado da execução do código será mostrado abaixo do bloco de código.</p>
+<p><code>```{r} # Exemplo de código R</code></p>
+<p><code>x &lt;- 1:5 mean(x)</code></p>
+<p>Você pode adicionar opções ao código executável como este:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div>
+</section>
+<section id="tabelas" class="level3">
+<h3 class="anchored" data-anchor-id="tabelas">Tabelas</h3>
+<p>Você também pode criar tabelas:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Coluna 1</th>
+<th>Coluna 2</th>
+<th>Coluna 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>1</td>
+<td>x</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>2</td>
+<td>y</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>3</td>
+<td>z</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="gráficos" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="gráficos">Gráficos</h3>
+<p>Você pode incorporar gráficos gerados pelo R diretamente no documento usando o bloco de código R.</p>
+<p>A opção echo: false desativa a impressão do código (somente a saída é exibida).</p>
+<div class="page-columns page-full">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> hwy, <span class="at">y =</span> cty, <span class="at">color =</span> cyl)) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>() <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> hwy, <span class="at">y =</span> cty, <span class="at">color =</span> displ)) <span class="sc">+</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">option =</span> <span class="st">"E"</span>) <span class="sc">+</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-mpg" class="cell column-page quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-mpg-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Quarto_files/figure-html/fig-mpg-1.png" class="img-fluid figure-img" data-ref-parent="fig-mpg" width="672"></p>
+<figcaption class="figure-caption">(a) Color by number of cylinders</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-mpg-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Quarto_files/figure-html/fig-mpg-2.png" class="img-fluid figure-img" data-ref-parent="fig-mpg" width="672"></p>
+<figcaption class="figure-caption">(b) Color by engine displacement, in liters</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: City and highway mileage for 38 popular models of cars.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</section>
+<section id="inserindo-listas" class="level3">
+<h3 class="anchored" data-anchor-id="inserindo-listas">Inserindo listas</h3>
+<ul>
+<li><p>sdf</p></li>
+<li><p>sdf</p></li>
+<li><p>sdf</p></li>
+</ul>
+<p>Inserindo lista numerada:</p>
+<ol type="1">
+<li><p>Linha 1</p></li>
+<li><p>Linha 2</p></li>
+<li><p>Linha 3</p></li>
+</ol>
+</section>
+</section>
+<section id="inserindo-referências" class="level2">
+<h2 class="anchored" data-anchor-id="inserindo-referências">Inserindo referências</h2>
+<p>Você pode também adicionar referências <span class="citation" data-cites="devleesschauwer2022">(<a href="#ref-devleesschauwer2022" role="doc-biblioref">Devleesschauwer et al. 2022</a>)</span> e rodapés<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> no seu documento com facilidade.</p>
+</section>
+<section id="conclusão" class="level2">
+<h2 class="anchored" data-anchor-id="conclusão"><strong>Conclusão</strong></h2>
+<p>O Quarto é uma ferramenta poderosa para criar relatórios e documentos interativos com análises de dados incorporadas. Você pode combinar texto formatado, código R e gráficos em um único documento, facilitando a comunicação e a apresentação de suas análises.</p>
+<p>Este tutorial abordou apenas o básico do Quarto, mas há muito mais recursos para explorar. Você pode personalizar a aparência do documento, adicionar interatividade e muito mais. Para saber mais detalhes e recursos avançados, você pode consultar a documentação oficial do pacote Quarto.</p>
+<p>Espero que este tutorial tenha sido útil para começar com o Quarto em R. Divirta-se explorando essa ferramenta para criar documentos dinâmicos e interativos!</p>
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-devleesschauwer2022" class="csl-entry" role="listitem">
+Devleesschauwer, Brecht, Paul Torgerson, Johannes Charlier, Bruno Levecke, Nicolas Praet, Sophie Roelandt, Suzanne Smit, Pierre Dorny, Dirk Berkvens, and Niko Speybroeck. 2022. <em>Prevalence: Tools for Prevalence Assessment Studies.</em> <a href="https://cran.r-project.org/package=prevalence">https://cran.r-project.org/package=prevalence</a>.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Rodapé 1<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
