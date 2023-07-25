@@ -7,17 +7,16 @@ editor: visual
 
 ## Cronograma
 
-| Dia        | Assunto                                                | Professor    |
-|----------------|-----------------------------------------|----------------|
-| 11/08/2023 | Introdução à Linguagem R                               | João Amaral  |
-| 11/08/2023 | Quarto                                                 | João Pacheco |
-| 18/08/2023 | Importando dados e usando funções importantes "Base R" | João Amaral  |
-| 25/08/2023 | Estrutura de dados                                     | João Pacheco |
-| 01/09/2023 | Manipulando dados com dplyr                            | João Amaral  |
-| 15/09/2023 | Estatística descritiva e tabelas                       | João Amaral  |
-| 22/09/2023 | Visualizando dados e modelando                         | João Pacheco |
-| 29/09/2023 | Gráficos avançados usando ggplot2                      | João Pacheco |
-| Assíncrona | Avaliação 1                                            | Todos        |
+| Dia        | Assunto                           | Professor    |
+|------------|-----------------------------------|--------------|
+| 11/08/2023 | Introdução à Linguagem R          | João Amaral  |
+| 11/08/2023 | Quarto                            | João Pacheco |
+| 18/08/2023 | Estrutura de dados                | João Pacheco |
+| 25/08/2023 | Manipulando dados com dplyr       | João Amaral  |
+| 01/09/2023 | Estatística descritiva e tabelas  | João Amaral  |
+| 15/09/2023 | Visualizando dados e modelando    | João Pacheco |
+| 22/09/2023 | Gráficos avançados usando ggplot2 | João Pacheco |
+| Assíncrona | Avaliação 1                       | Todos        |
 
 ## Conteúdo detalhado
 
@@ -100,7 +99,7 @@ editor: visual
 
 ### Aula 7. Visualizando dados e modelando
 
--    Visualizando dados (R base)
+-   Visualizando dados (R base)
 -   plot(): dar vários exemplos de plots
 -   Estatística inferencial básica
 -   Modelando a relação entre duas variáveis)
@@ -108,7 +107,7 @@ editor: visual
 
 ### Aula 8. Gráficos avançados usando ggplot2
 
--    Linguagem gráfica ggplot2
+-   Linguagem gráfica ggplot2
 -   Gráficos avançados usando ggplot2
 -   Lista de exercícios
 

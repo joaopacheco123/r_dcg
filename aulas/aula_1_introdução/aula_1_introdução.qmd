@@ -13,6 +13,17 @@ editor_options:
     wrap: 72
 ---
 
+## Ideias
+-   começar pelo R console e dps entrar no rstudio
+-   Falar de modo geral sobre linguagem de programacao
+-   Falar do R console, o que representa o output \[1\]
+-   quando aparece o \+ no console
+-   mensagens de erro
+-   R como calculadora
+-   cancelar comandos
+-   comentarios
+-   estilo de sintaxe
+
 ## Introdução
 
 R e R studio são softwares gratuitos.
@@ -81,9 +92,6 @@ tópico).
 ### Instalando pacotes
 
 ```{r}
-#| eval: false
-#| include: false
-
 install.packages("psych")
 
 # Para instalar com as dependências:
