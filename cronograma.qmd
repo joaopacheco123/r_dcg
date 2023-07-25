@@ -47,27 +47,7 @@ editor: visual
 -   Tabelas
 -   Lista de exercícios
 
-### Aula 3. Importando dados e usando funções importantes "Base R"
-
--   Importando dados.
-
--   Funções importantes:
-
-    -   Comentário,
-    -   Atribuir,
-    -   Concatenar,
-    -   str(D)
-    -   head(D)
-    -   round(x, k)
-    -   sum(x)
-    -   cbind e rbind
-    -   Ajuda
-
--   Pedindo ajuda para o chatgpt!
-
--   Lista de exercícios
-
-### Aula 4. Estrutura de dados
+### Aula 3. Estrutura de dados
 
 -   Níveis de medida, tipos de variáveis (usar aula do maurício ou do mestrado)
 -   Tipos de dados: vetores, matrizes, arrays, dados etc (R in Action)
@@ -76,20 +56,27 @@ editor: visual
 -   Dados organizados (tidy data) (R For data Science)
 -   Lista de exercícios
 
-### Aula 5. Manipulando dados com dplyr
+### Aula 4. Importando e manipulando dados com dplyr
+
+-   Importando dados.
 
 -   Tibble
+
 -   Identificando e modificando o tipo da variável
+
 -   Operador pipe
+
 -   Funções mais complexas:
+
     -   select(), pull(), filter(), distinct(), arrange(), mutate(), transmute(), summarise(), group_by(), add_column(), add_row(), rename()
     -   pivot_longer() e pivot_wider()
     -   separate() e unite()
     -   complete(), drop_na(), replace_na()
     -   if_else() e case_when()
+
 -   Lista de exercícios
 
-### Aula 6. Estatística descritiva e tabelas
+### Aula 5. Estatística descritiva e tabelas
 
 -   Frequências
 -   mean(x), median(x), min(x), max(x)
@@ -97,7 +84,7 @@ editor: visual
 -   Gerando tabelas bonitas
 -   Lista de exercícios
 
-### Aula 7. Visualizando dados e modelando
+### Aula 6. Visualizando dados e modelando
 
 -   Visualizando dados (R base)
 -   plot(): dar vários exemplos de plots
@@ -105,7 +92,7 @@ editor: visual
 -   Modelando a relação entre duas variáveis)
 -   Lista de exercícios
 
-### Aula 8. Gráficos avançados usando ggplot2
+### Aula 7. Gráficos avançados usando ggplot2
 
 -   Linguagem gráfica ggplot2
 -   Gráficos avançados usando ggplot2
