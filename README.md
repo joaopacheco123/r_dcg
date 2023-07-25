@@ -34,12 +34,11 @@ Essa é uma disciplina teórico-prática destinada aos alunos de graduação do 
 ### Unidade 1  
 1. Introdução à Linguagem R  
 2. Elaborando relatórios com o Quarto  
-3. Importando dados e funções importantes  
-4. Estrutura de dados  
-5. Manipulando dados  
-6. Estatística descritiva  
-7. Visualizando dados e modelando  
-8. Gráficos avançados usando ggplot2  
+3. Estrutura de dados  
+4. Importando e manipulando dados  
+5. Estatística descritiva  
+6. Visualizando dados e modelando  
+7. Gráficos avançados usando ggplot2  
 
 ### Unidade 2  
 1. Análises de regressão linear, logística e de Poisson em dados transversais e longitudinais.
