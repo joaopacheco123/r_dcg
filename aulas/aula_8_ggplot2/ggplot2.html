@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Visualizando dados e modelando em R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="ggplot2_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ggplot2_files/libs/quarto-html/quarto.js"></script>
+<script src="ggplot2_files/libs/quarto-html/popper.min.js"></script>
+<script src="ggplot2_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ggplot2_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ggplot2_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ggplot2_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="ggplot2_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ggplot2_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ggplot2_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ggplot2.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Visualizando dados e modelando em R</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="tópico-1-introdução-à-visualização-de-dados-e-ggplot2" class="level1">
+<h1>Tópico 1: Introdução à Visualização de Dados e ggplot2</h1>
+<p>Nesta aula, iremos abordar:</p>
+<ol type="1">
+<li><p>Introdução ao pacote ggplot2 e suas funcionalidades</p></li>
+<li><p>Instalação e carregamento do pacote ggplot2</p></li>
+<li><p>Sintaxe básica do ggplot2 e exemplos de gráficos</p></li>
+<li><p>Principais formatos para construção de gráficos no pacote ggplot2</p></li>
+<li><p>Personalização de gráficos no ggplot2</p></li>
+<li><p>Recursos avançados do ggplot2</p></li>
+</ol>
+<section id="introdução-ao-pacote-ggplot2-e-suas-funcionalidades" class="level2">
+<h2 class="anchored" data-anchor-id="introdução-ao-pacote-ggplot2-e-suas-funcionalidades">1.2 Introdução ao pacote ggplot2 e suas funcionalidades</h2>
+<p>O ggplot2 é uma biblioteca do R desenvolvida por Hadley Wickham, projetada para criar visualizações de dados de alta qualidade e de maneira intuitiva. Baseado na “Grammar of Graphics”, o ggplot2 oferece uma abordagem sistemática para criar gráficos, permitindo que os usuários expressem suas intenções de forma clara e concisa.</p>
+</section>
+<section id="instalação-e-carregamento-do-pacote-ggplot2" class="level2">
+<h2 class="anchored" data-anchor-id="instalação-e-carregamento-do-pacote-ggplot2">1.3 Instalação e carregamento do pacote ggplot2</h2>
+<p>Para começar a utilizar o ggplot2, é necessário instalá-lo e carregá-lo no ambiente de trabalho do R. Para isso, podemos executar os seguintes comandos:</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Instalação do pacote ggplot2 (caso ainda não esteja instalado) install.packages("ggplot2")  # Carregamento do pacote ggplot2 library(ggplot2)</code></p>
+</section>
+<section id="estrutura-básica-do-ggplot2" class="level2">
+<h2 class="anchored" data-anchor-id="estrutura-básica-do-ggplot2">1.4 Estrutura básica do ggplot2</h2>
+<p>O ggplot2 segue uma estrutura lógica para a criação de gráficos, composta por camadas (layers) que permitem a adição de informações aos gráficos. A estrutura básica é construída com a função <code>ggplot()</code>, seguida pela definição dos dados a serem utilizados e a especificação dos elementos gráficos através das camadas.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo de estrutura básica do ggplot2 </span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#ggplot(data = dataset, aes(x = variavel_x, y = variavel_y)) +   </span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Geometria do gráfico (pontos, barras, linhas, etc.)   </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a> <span class="co"># geom_pont() +   </span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Outros elementos gráficos (eixos, cores, temas, etc.)   </span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#labs(title = "Título do Gráfico", x = "Rótulo do Eixo X", y = "Rótulo do Eixo Y")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>No exemplo acima, <code>dataset</code> representa o conjunto de dados a ser utilizado, e <code>variavel_x</code> e <code>variavel_y</code> são as variáveis que serão mapeadas para os eixos X e Y, respectivamente.</p>
+<p>Nas próximas seções, iremos explorar diferentes funcionalidades do ggplot2, como a criação de gráficos de barras, boxplots, pontos e linhas, além de aprender a personalizar a aparência dos gráficos e adicionar informações relevantes para a sua interpretação.</p>
+</section>
+</section>
+<section id="tópico-2-sintaxe-básica-do-ggplot2-e-exemplos-de-gráficos" class="level1">
+<h1>Tópico 2: Sintaxe básica do ggplot2 e exemplos de gráficos</h1>
+<section id="construindo-gráficos-de-barras-barplot-com-ggplot2" class="level2">
+<h2 class="anchored" data-anchor-id="construindo-gráficos-de-barras-barplot-com-ggplot2">2.1 Construindo gráficos de barras (barplot) com ggplot2</h2>
+<p>Os gráficos de barras são usados para representar dados categóricos em diferentes categorias e comparar suas frequências ou valores. No ggplot2, podemos criar gráficos de barras utilizando a função <code>geom_bar()</code>.</p>
+<p>Exemplo de gráfico de barras:</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Exemplo de gráfico de barras ggplot(data = dataset, aes(x = variavel_categorica)) +   geom_bar() +   labs(title = "Gráfico de Barras", x = "Categoria", y = "Frequência")</code></p>
+</section>
+<section id="criando-gráficos-de-caixa-boxplot-com-ggplot2" class="level2">
+<h2 class="anchored" data-anchor-id="criando-gráficos-de-caixa-boxplot-com-ggplot2">2.2 Criando gráficos de caixa (boxplot) com ggplot2</h2>
+<p>Os gráficos de caixa, também conhecidos como boxplots, são úteis para visualizar a distribuição de dados numéricos e identificar outliers. No ggplot2, podemos criar gráficos de caixa utilizando a função <code>geom_boxplot()</code>.</p>
+<p>Exemplo de gráfico de caixa:</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Exemplo de gráfico de caixa ggplot(data = dataset, aes(x = variavel_categorica, y = variavel_numerica)) +   geom_boxplot() +   labs(title = "Gráfico de Caixa", x = "Categoria", y = "Valor")</code></p>
+</section>
+<section id="plotagem-de-pontos-scatter-plot-e-linhas-line-plot-com-ggplot2" class="level2">
+<h2 class="anchored" data-anchor-id="plotagem-de-pontos-scatter-plot-e-linhas-line-plot-com-ggplot2">2.3 Plotagem de pontos (scatter plot) e linhas (line plot) com ggplot2</h2>
+<p>Os gráficos de pontos e linhas são utilizados para visualizar a relação entre duas variáveis numéricas. No ggplot2, podemos criar gráficos de pontos e linhas utilizando as funções <code>geom_point()</code> e <code>geom_line()</code>, respectivamente.</p>
+<p>Exemplo de gráfico de pontos:</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Exemplo de gráfico de pontos ggplot(data = dataset, aes(x = variavel_x, y = variavel_y)) +   geom_point() +   labs(title = "Gráfico de Pontos", x = "Eixo X", y = "Eixo Y")</code></p>
+<p>Exemplo de gráfico de linhas:</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Exemplo de gráfico de linhas ggplot(data = dataset, aes(x = variavel_x, y = variavel_y)) +   geom_line() +   labs(title = "Gráfico de Linhas", x = "Eixo X", y = "Eixo Y")</code></p>
+</section>
+<section id="utilizando-diferentes-geometrias-geoms-para-personalização-de-gráficos" class="level2">
+<h2 class="anchored" data-anchor-id="utilizando-diferentes-geometrias-geoms-para-personalização-de-gráficos">2.4 Utilizando diferentes geometrias (geoms) para personalização de gráficos</h2>
+<p>O ggplot2 oferece diversas geometrias (<code>geoms</code>) que permitem personalizar a aparência dos gráficos. Algumas das principais geoms incluem <code>geom_point()</code>, <code>geom_bar()</code>, <code>geom_line()</code>, <code>geom_boxplot()</code>, <code>geom_area()</code>, entre outras. Cada <code>geom</code> oferece diferentes parâmetros para ajustar cores, tamanhos, formas e outros atributos visuais dos elementos do gráfico.</p>
+<p>Neste tópico, aprendemos a criar gráficos de barras, boxplots, pontos e linhas utilizando a sintaxe básica do ggplot2. Nas próximas seções, vamos explorar como personalizar a aparência dos gráficos, adicionar títulos, rótulos e definir temas para torná-los mais informativos e esteticamente agradáveis.</p>
+</section>
+</section>
+<section id="tópico-3-principais-formatos-para-construção-de-gráficos-no-pacote-ggplot2" class="level1">
+<h1>Tópico 3: Principais formatos para construção de gráficos no pacote ggplot2</h1>
+<section id="uso-de-geoms-para-personalização-de-gráficos" class="level2">
+<h2 class="anchored" data-anchor-id="uso-de-geoms-para-personalização-de-gráficos">3.1 Uso de geoms para personalização de gráficos</h2>
+<p>O pacote ggplot2 oferece uma variedade de geometrias (geoms) que podem ser utilizadas para personalizar a aparência dos gráficos. As geoms são responsáveis por representar os dados graficamente, como pontos, linhas, barras, áreas, entre outros elementos. Cada tipo de gráfico requer uma geom específica.</p>
+</section>
+<section id="utilizando-diferentes-geometrias-geoms-no-ggplot2" class="level2">
+<h2 class="anchored" data-anchor-id="utilizando-diferentes-geometrias-geoms-no-ggplot2">3.2 Utilizando diferentes geometrias (geoms) no ggplot2</h2>
+<p>Aqui estão alguns exemplos de como utilizar diferentes geometrias no ggplot2:</p>
+<ul>
+<li><p><code>geom_point()</code>: Utilizado para criar gráficos de dispersão (scatter plots) com pontos individuais representando cada observação.</p></li>
+<li><p><code>geom_bar()</code>: Usado para construir gráficos de barras verticais ou horizontais que mostram a frequência de categorias em um conjunto de dados.</p></li>
+<li><p><code>geom_line()</code>: Ideal para plotar gráficos de linhas conectando pontos sequencialmente, geralmente aplicado em séries temporais ou dados contínuos.</p></li>
+<li><p><code>geom_boxplot()</code>: Usado para exibir gráficos de caixa (boxplots) que mostram a distribuição de dados numéricos, incluindo quartis, mediana e outliers.</p></li>
+<li><p><code>geom_area()</code>: Utilizado para criar gráficos de áreas preenchidas, destacando a variação entre duas variáveis ao longo de um eixo.</p></li>
+<li><p><code>geom_histogram()</code>: Usado para criar histogramas, que mostram a distribuição de frequências de dados contínuos em intervalos.</p></li>
+</ul>
+</section>
+<section id="aplicação-de-temas-para-padronização-visual" class="level2">
+<h2 class="anchored" data-anchor-id="aplicação-de-temas-para-padronização-visual">3.3 Aplicação de temas para padronização visual</h2>
+<p>O ggplot2 permite aplicar temas para padronizar visualmente os gráficos, tornando-os mais consistentes e esteticamente agradáveis. Temas são conjuntos predefinidos de configurações visuais que alteram a aparência geral do gráfico.</p>
+<p>Exemplo de aplicação de um tema:</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Criando um gráfico de barras com tema "dark" ggplot(data = dataset, aes(x = variavel_categorica)) +   geom_bar() +   theme_dark() +   labs(title = "Gráfico de Barras", x = "Categoria", y = "Frequência")</code></p>
+<p>O ggplot2 possui vários temas embutidos, como <code>theme_gray()</code>, <code>theme_light()</code>, <code>theme_bw()</code>, <code>theme_minimal()</code>, <code>theme_classic()</code>, entre outros. Cada tema tem um estilo visual diferente, permitindo que você escolha o mais adequado para a sua apresentação.</p>
+<p>Neste tópico, aprendemos sobre a importância das geometrias (geoms) no ggplot2 e como utilizá-las para criar diferentes tipos de gráficos. Também exploramos a aplicação de temas para melhorar a estética e a consistência visual dos gráficos. Nas próximas seções, vamos aprender a adicionar títulos, rótulos e outras informações relevantes aos gráficos para torná-los mais informativos.</p>
+</section>
+</section>
+<section id="tópico-4-personalização-de-gráficos-no-ggplot2" class="level1">
+<h1>Tópico 4: Personalização de gráficos no ggplot2</h1>
+<section id="inserindo-títulos-subtítulos-e-rótulos-aos-eixos" class="level2">
+<h2 class="anchored" data-anchor-id="inserindo-títulos-subtítulos-e-rótulos-aos-eixos">4.1 Inserindo títulos, subtítulos e rótulos aos eixos</h2>
+<p>A personalização de gráficos inclui a adição de títulos, subtítulos e rótulos aos eixos X e Y para tornar os gráficos mais informativos e compreensíveis.</p>
+<p>Exemplo de gráfico com títulos e rótulos:</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Criando um gráfico de dispersão (scatter plot) com títulos e rótulos ggplot(data = dataset, aes(x = variavel_x, y = variavel_y)) +   geom_point() +   labs(title = "Gráfico de Dispersão", x = "Variável X", y = "Variável Y") +   subtitle("Exemplo de gráfico com títulos e rótulos") +   caption("Fonte: Seu Nome")</code></p>
+</section>
+<section id="definindo-cores-e-temas-para-melhorar-a-estética-do-gráfico" class="level2">
+<h2 class="anchored" data-anchor-id="definindo-cores-e-temas-para-melhorar-a-estética-do-gráfico">4.2 Definindo cores e temas para melhorar a estética do gráfico</h2>
+<p>No ggplot2, podemos personalizar cores dos elementos do gráfico, incluindo pontos, linhas e barras, para melhorar a apresentação visual. Além disso, também podemos aplicar temas para alterar a aparência geral do gráfico.</p>
+<p>Exemplo de gráfico com cores e tema personalizado:</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Criando um gráfico de barras com cores personalizadas e tema "minimal" ggplot(data = dataset, aes(x = variavel_categorica, fill = variavel_categorica)) +   geom_bar() +   scale_fill_manual(values = c("#FFA500", "#008080", "#FFD700", "#800080")) +   theme_minimal() +   labs(title = "Gráfico de Barras com Cores Personalizadas", x = "Categoria", y = "Frequência")</code></p>
+</section>
+<section id="ajustando-escalas-de-eixos-discretas-e-contínuas" class="level2">
+<h2 class="anchored" data-anchor-id="ajustando-escalas-de-eixos-discretas-e-contínuas">4.3 Ajustando escalas de eixos (discretas e contínuas)</h2>
+<p>É possível ajustar as escalas dos eixos X e Y para exibir apenas valores específicos ou limitar o intervalo de visualização. No ggplot2, as funções <code>scale_x_discrete()</code> e <code>scale_y_continuous()</code> podem ser usadas para esse fim.</p>
+<p>Exemplo de gráfico com escalas de eixos ajustadas:</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Criando um gráfico de linhas com escala de eixo Y ajustada entre 0 e 100 ggplot(data = dataset, aes(x = variavel_x, y = variavel_y)) +   geom_line() +   scale_y_continuous(limits = c(0, 100)) +   labs(title = "Gráfico de Linhas com Escala de Eixo Y Ajustada", x = "Eixo X", y = "Eixo Y")</code></p>
+</section>
+<section id="definindo-limites-limits-nos-eixos" class="level2">
+<h2 class="anchored" data-anchor-id="definindo-limites-limits-nos-eixos">4.4 Definindo limites (limits) nos eixos</h2>
+<p>Além de ajustar as escalas dos eixos, também é possível definir limites específicos para os eixos X e Y usando as funções <code>xlim()</code> e <code>ylim()</code>.</p>
+<p>Exemplo de gráfico com limites definidos nos eixos:</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Criando um gráfico de dispersão com limites definidos nos eixos X e Y ggplot(data = dataset, aes(x = variavel_x, y = variavel_y)) +   geom_point() +   xlim(c(0, 10)) +   ylim(c(20, 100)) +   labs(title = "Gráfico de Dispersão com Limites nos Eixos", x = "Eixo X", y = "Eixo Y")</code></p>
+<p>Neste tópico, aprendemos como personalizar gráficos no ggplot2, adicionando títulos, rótulos, definindo cores e temas, ajustando escalas de eixos e definindo limites. Essas técnicas tornam os gráficos mais informativos, esteticamente agradáveis e adequados para a apresentação dos dados. Nas próximas seções, vamos explorar recursos mais avançados, como adicionar efeitos especiais, dividir o gráfico em painéis (facets) e reduzir sobreposições de pontos usando o recurso “jitter”.</p>
+<p>Tópico 5: Recursos avançados do ggplot2</p>
+<p>5.1 Adicionando efeitos especiais aos gráficos</p>
+<p>O ggplot2 permite adicionar efeitos especiais aos gráficos para destacar informações importantes ou tornar a visualização mais atraente. Alguns dos efeitos especiais incluem sombreamento, destaque de pontos, linhas de tendência, entre outros.</p>
+<p>Exemplo de gráfico com linhas de tendência:</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Criando um gráfico de dispersão com linha de tendência ggplot(data = dataset, aes(x = variavel_x, y = variavel_y)) +   geom_point() +   geom_smooth(method = "lm", se = FALSE, color = "red") +   labs(title = "Gráfico de Dispersão com Linha de Tendência", x = "Eixo X", y = "Eixo Y")</code></p>
+</section>
+<section id="utilizando-o-recurso-grid-para-dividir-o-gráfico-em-painéis" class="level2">
+<h2 class="anchored" data-anchor-id="utilizando-o-recurso-grid-para-dividir-o-gráfico-em-painéis">5.2 Utilizando o recurso “grid” para dividir o gráfico em painéis</h2>
+<p>O ggplot2 oferece o recurso “grid” para dividir o gráfico em painéis, permitindo a visualização de diferentes subconjuntos de dados em uma única figura. Isso é especialmente útil para comparar padrões ou tendências em grupos distintos.</p>
+<p>Exemplo de gráfico com divisão em painéis:</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Criando um gráfico de dispersão com divisão em painéis por uma variável categórica ggplot(data = dataset, aes(x = variavel_x, y = variavel_y)) +   geom_point() +   facet_grid(. ~ variavel_categorica) +   labs(title = "Gráfico de Dispersão com Divisão em Painéis", x = "Eixo X", y = "Eixo Y")</code></p>
+</section>
+<section id="usando-o-jitter-para-reduzir-sobreposições-de-pontos" class="level2">
+<h2 class="anchored" data-anchor-id="usando-o-jitter-para-reduzir-sobreposições-de-pontos">5.3 Usando o “jitter” para reduzir sobreposições de pontos</h2>
+<p>O recurso “jitter” é utilizado para reduzir a sobreposição de pontos em gráficos de dispersão, adicionando um pequeno deslocamento aleatório nas posições dos pontos. Isso melhora a visualização de dados com alta densidade de pontos.</p>
+<p>Exemplo de gráfico de dispersão com jitter:</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Criando um gráfico de dispersão com jitter aplicado aos pontos ggplot(data = dataset, aes(x = variavel_x, y = variavel_y)) +   geom_point(position = position_jitter(width = 0.2, height = 0.2)) +   labs(title = "Gráfico de Dispersão com Jitter", x = "Eixo X", y = "Eixo Y")</code></p>
+</section>
+<section id="criando-gráficos-facetados-para-visualizar-subgrupos" class="level2">
+<h2 class="anchored" data-anchor-id="criando-gráficos-facetados-para-visualizar-subgrupos">5.4 Criando gráficos facetados para visualizar subgrupos</h2>
+<p>O ggplot2 permite criar gráficos facetados, onde cada painel representa um subconjunto de dados de acordo com uma variável categórica. Isso facilita a comparação de padrões em diferentes grupos.</p>
+<p>Exemplo de gráfico de barras facetado:</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Criando um gráfico de barras facetado por uma variável categórica ggplot(data = dataset, aes(x = variavel_categorica)) +   geom_bar() +   facet_wrap(~ variavel_subgrupos) +   labs(title = "Gráfico de Barras Facetado", x = "Categoria", y = "Frequência")</code></p>
+<p>Neste tópico, exploramos alguns recursos avançados do ggplot2, como adicionar efeitos especiais aos gráficos, dividir o gráfico em painéis usando o recurso “grid”, reduzir sobreposições de pontos com “jitter” e criar gráficos facetados para visualizar subgrupos. Essas técnicas permitem uma apresentação mais sofisticada e informativa dos dados. Nos próximos tópicos, aprenderemos sobre outros recursos avançados, como a adição de escalas discretas e contínuas, labels, legendas e mais opções de personalização.</p>
+</section>
+</section>
+<section id="tópico-6-aplicação-dos-conceitos-em-bases-de-dados-reais" class="level1">
+<h1>Tópico 6: Aplicação dos conceitos em bases de dados reais</h1>
+<p>Neste tópico, iremos aplicar os conceitos aprendidos anteriormente utilizando a base de dados fornecida. Faremos a visualização de dados gerais (Idade, Altura, Gênero cinematográfico, Gênero musical e Atividade física) e também a visualização dos resultados da Escala de bem-estar Warwick-Edinburgh e dos traços de personalidade (extroversão e neuroticismo) com gráficos específicos.</p>
+<section id="visualização-de-dados-gerais" class="level2">
+<h2 class="anchored" data-anchor-id="visualização-de-dados-gerais">6.1 Visualização de dados gerais</h2>
+<p>Vamos criar gráficos para visualizar os dados gerais da base, utilizando diferentes tipos de gráficos adequados para cada tipo de variável.</p>
+<ul>
+<li><p>Gráfico de barras para o Gênero cinematográfico e Gênero musical.</p></li>
+<li><p>Gráfico de dispersão para Idade e Altura, mostrando a relação entre essas duas variáveis.</p></li>
+<li><p>Gráfico de barras ou gráfico de pizza para a variável Atividade física, exibindo a distribuição das categorias.</p></li>
+</ul>
+</section>
+<section id="visualização-dos-resultados-da-escala-de-bem-estar-warwick-edinburgh" class="level2">
+<h2 class="anchored" data-anchor-id="visualização-dos-resultados-da-escala-de-bem-estar-warwick-edinburgh">6.2 Visualização dos resultados da Escala de bem-estar Warwick-Edinburgh</h2>
+<p>Vamos criar gráficos para visualizar os resultados da Escala de bem-estar Warwick-Edinburgh, que é uma escala Likert com pontuação de 0 a 4 para diferentes itens. Utilizaremos gráficos de barras, boxplots ou outros gráficos adequados para representar as pontuações e analisar a distribuição dos escores de bem-estar.</p>
+</section>
+<section id="visualização-dos-traços-de-personalidade-extroversão-e-neuroticismo" class="level2">
+<h2 class="anchored" data-anchor-id="visualização-dos-traços-de-personalidade-extroversão-e-neuroticismo">6.3 Visualização dos traços de personalidade (extroversão e neuroticismo)</h2>
+<p>Vamos criar gráficos para visualizar os traços de personalidade (extroversão e neuroticismo) utilizando gráficos de barras, boxplots ou gráficos de dispersão para representar a relação entre os itens e os traços de personalidade. Além disso, iremos considerar a inversão das pontuações de alguns itens, conforme explicado na base de dados.</p>
+</section>
+<section id="considerações-finais" class="level2">
+<h2 class="anchored" data-anchor-id="considerações-finais">6.4 Considerações finais</h2>
+<p>Neste tópico, aplicamos os conceitos aprendidos em visualização de dados com ggplot2 em uma base de dados real. Visualizamos dados gerais, os resultados da Escala de bem-estar Warwick-Edinburgh e os traços de personalidade (extroversão e neuroticismo) usando diferentes tipos de gráficos. Essa prática nos permitiu explorar como as ferramentas do ggplot2 podem ser poderosas para criar gráficos informativos e visualmente atraentes. Continuando, nos próximos tópicos, aprenderemos sobre recursos avançados adicionais do ggplot2 e como aprimorar ainda mais nossas habilidades em visualização de dados em R.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

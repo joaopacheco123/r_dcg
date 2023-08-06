@@ -9,42 +9,55 @@ bibliography: references.bib
 
 ## Quarto
 
-Quarto é uma versão multilíngue e [de última geração](https://quarto-org.translate.goog/docs/faq/rmarkdown.html?_x_tr_sl=en&_x_tr_tl=pt&_x_tr_hl=pt-BR&_x_tr_pto=wapp) do R Markdown da Posit e inclui dezenas de novos recursos e capacidades, ao mesmo tempo em que é capaz de renderizar a maioria dos arquivos Rmd existentes sem modificação.
+-   Sistema de publicação técnica da Posit
 
-Neste tutorial, mostraremos como usar o RStudio com o Quarto. Você editará o código e o markdown no RStudio da mesma forma que faria com qualquer documento computacional (por exemplo, R Markdown) e visualizará o documento renderizado na guia Viewer enquanto trabalha.
+-   Código aberto
+
+-   Última geração
+
+-   Inclui múltiplos formatos, como criar apresentações, artigos, websites
+
+-   Tem várias capacidades, como de escrever código, equações, citações, referências, figuras, paineis, tabelas, etc.
+
+-   Permite também publicar o conteúdo com facilidade
+
+Neste tutorial, mostrarei como usar o RStudio com o Quarto.
+
+Você editará o código no RStudio da mesma forma que faria com qualquer documento e visualizará o documento renderizado na guia Viewer enquanto trabalha.
 
 Você pode optar por renderizar o seu `.qmd` como HTML ou em outros formatos, como PDF, MS Word, etc.
 
-O Quarto é uma biblioteca R que permite a criação de documentos dinâmicos e interativos com código R e texto em um formato semelhante ao Markdown. É muito útil para criar relatórios, apresentações ou até mesmo artigos com análises de dados incorporadas.
+## Instalação
 
-## **Instalação**
-
-Para começar, certifique-se de ter o R instalado em seu computador, em sua versão mais recente. Você pode baixar a versão mais recente do R em [**https://cran.r-project.org/**](https://cran.r-project.org/).
+Para começar, certifique-se de ter o R instalado em seu computador, em sua versão mais recente. Você pode baixar a versão mais recente do R em <https://cran.r-project.org/>.
 
 Certifique-se de ter instalado os pacotes `tidyverse`e `palmerpenguins`:
 
-```         
-install.packages("tidyverse") 
-install.packages("palmerpenguins")
-```
+`install.packages("tidyverse") install.packages("palmerpenguins")`
 
-Baixe o documento abaixo no site para criar o seu primeiro documento `.qmd`.
+Instale também o programa Quarto:
 
-Use o botão **Render** no RStudio para renderizar o arquivo e visualizar a saída com um único clique ou atalho de teclado (Ctrl+Shift+K).
+<https://quarto.org/docs/get-started/>
 
-## **Criando um documento**
+Baixe esse [documento](https://quarto.org/docs/get-started/hello/rstudio/_hello.qmd) para criar o seu primeiro documento `.qmd`.
 
-Agora que o pacote está instalado, vamos criar um novo documento Quarto. É importante lembrar que os arquivos Quarto possuem a extensão **`.qmd`**. Abra um novo arquivo no RStudio e salve-o com a extensão **`.qmd`**.
+Use o botão Render no RStudio para renderizar o arquivo e visualizar a saída com um único clique ou atalho de teclado (Ctrl+Shift+K).
 
-## **Sintaxe básica**
+## Criando um documento
 
-Os documentos Quarto são muito semelhantes aos arquivos Markdown, mas também permitem incorporar código R que será executado e seus resultados serão exibidos no documento final. Vamos ver alguns exemplos básicos da sintaxe.
+Agora que o pacote está instalado, vamos criar um novo documento Quarto.
 
-Em seguida, vamos voltar nossa atenção para o conteúdo do nosso documento Quarto. O arquivo contém três tipos de conteúdo: um cabeçalho YAML, blocos de código e texto de marcação.
+Arquivos Quarto possuem a extensão `.qmd`.
 
-### **Cabeçalho YAML**
+Abra um novo arquivo no RStudio e salve-o com a extensão `.qmd`.
 
-Um cabeçalho YAML (opcional) demarcado por três traços ( `---`) em cada extremidade.
+## Sintaxe básica
+
+O arquivo contém três tipos de conteúdo: um cabeçalho YAML, blocos de código e texto de marcação.
+
+### Cabeçalho YAML
+
+Um cabeçalho na linguagem YAML demarcado por três traços ( `---`) em cada extremidade.
 
 ```         
 --- 
@@ -58,7 +71,7 @@ Quando renderizado, o `title`, `"Hello, Quarto"`, aparecerá na parte superior d
 
 A sintaxe básica do YAML usa pares chave-valor no formato `key: value`. Outros campos YAML comumente encontrados em cabeçalhos de documentos incluem metadados como `author`, `subtitle`, `date`bem como opções de personalização como `theme`, `fontcolor`, `fig-width`etc. Você pode descobrir todos os campos YAML disponíveis para documentos HTML [aqui](https://quarto-org.translate.goog/docs/reference/formats/html.html?_x_tr_sl=en&_x_tr_tl=pt&_x_tr_hl=pt-BR&_x_tr_pto=wapp) . Os campos YAML disponíveis variam de acordo com o formato do documento, por exemplo, veja [aqui](https://quarto-org.translate.goog/docs/reference/formats/pdf.html?_x_tr_sl=en&_x_tr_tl=pt&_x_tr_hl=pt-BR&_x_tr_pto=wapp) os campos YAML para documentos PDF e [aqui](https://quarto-org.translate.goog/docs/reference/formats/docx.html?_x_tr_sl=en&_x_tr_tl=pt&_x_tr_hl=pt-BR&_x_tr_pto=wapp) para MS Word.
 
-### **Pedaços de código**
+### Pedaços de código
 
 Blocos de código R identificados com `{r}`opções de bloco (opcional), no estilo YAML, identificados por `#|`no início da linha.
 
@@ -73,7 +86,7 @@ Nesse caso, o `label`da parte do código é `load-packages`, e definimos `includ
 
 Além de renderizar o documento completo para visualizar os resultados dos blocos de código, você também pode executar cada bloco de código interativamente no editor do RStudio clicando no ![](https://d33wubrfki0l68.cloudfront.net/18153fb9953057ee5cff086122bd26f9cee8fe93/3aba9/images/notebook-run-chunk.png)ícone ou no atalho de teclado (⇧⌘⏎). O RStudio executa o código e exibe os resultados embutidos em seu arquivo ou no console, dependendo de sua preferência.
 
-### **Títulos e texto**
+### Títulos e texto
 
 `# Título 1`
 
@@ -85,7 +98,7 @@ Além de renderizar o documento completo para visualizar os resultados dos bloco
 
 Use o modo "Visual" para facilitar o seu trabalho!
 
-### **Código R**
+### Código R
 
 O código R é inserido entre blocos de código cercados por três acentos graves (\`\`\`). O resultado da execução do código será mostrado abaixo do bloco de código.
 
@@ -140,11 +153,11 @@ ggplot(mpg, aes(x = hwy, y = cty, color = displ)) +
 
 ### Inserindo listas
 
--   sdf
+-   Linha 1
 
--   sdf
+-   Linha 2
 
--   sdf
+-   Linha 3
 
 Inserindo lista numerada:
 
@@ -160,10 +173,10 @@ Você pode também adicionar referências [@devleesschauwer2022] e rodapés[^1] 
 
 [^1]: Rodapé 1
 
-## **Conclusão**
+## Conclusão
 
-O Quarto é uma ferramenta poderosa para criar relatórios e documentos interativos com análises de dados incorporadas. Você pode combinar texto formatado, código R e gráficos em um único documento, facilitando a comunicação e a apresentação de suas análises.
+O Quarto é uma ferramenta poderosa para criar relatórios e documentos interativos com análises de dados incorporadas.
 
-Este tutorial abordou apenas o básico do Quarto, mas há muito mais recursos para explorar. Você pode personalizar a aparência do documento, adicionar interatividade e muito mais. Para saber mais detalhes e recursos avançados, você pode consultar a documentação oficial do pacote Quarto.
+Você pode combinar texto formatado, código R e gráficos em um único documento, facilitando a comunicação e a apresentação de suas análises.
 
-Espero que este tutorial tenha sido útil para começar com o Quarto em R. Divirta-se explorando essa ferramenta para criar documentos dinâmicos e interativos!
+Para saber mais detalhes e recursos avançados, você pode consultar a documentação oficial do pacote Quarto.

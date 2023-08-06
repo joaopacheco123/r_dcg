@@ -116,31 +116,40 @@ div.csl-indent {
 
 <section id="quarto" class="level2">
 <h2 class="anchored" data-anchor-id="quarto">Quarto</h2>
-<p>Quarto é uma versão multilíngue e <a href="https://quarto-org.translate.goog/docs/faq/rmarkdown.html?_x_tr_sl=en&amp;_x_tr_tl=pt&amp;_x_tr_hl=pt-BR&amp;_x_tr_pto=wapp">de última geração</a> do R Markdown da Posit e inclui dezenas de novos recursos e capacidades, ao mesmo tempo em que é capaz de renderizar a maioria dos arquivos Rmd existentes sem modificação.</p>
-<p>Neste tutorial, mostraremos como usar o RStudio com o Quarto. Você editará o código e o markdown no RStudio da mesma forma que faria com qualquer documento computacional (por exemplo, R Markdown) e visualizará o documento renderizado na guia Viewer enquanto trabalha.</p>
+<ul>
+<li><p>Sistema de publicação técnica da Posit</p></li>
+<li><p>Código aberto</p></li>
+<li><p>Última geração</p></li>
+<li><p>Inclui múltiplos formatos, como criar apresentações, artigos, websites</p></li>
+<li><p>Tem várias capacidades, como de escrever código, equações, citações, referências, figuras, paineis, tabelas, etc.</p></li>
+<li><p>Permite também publicar o conteúdo com facilidade</p></li>
+</ul>
+<p>Neste tutorial, mostrarei como usar o RStudio com o Quarto.</p>
+<p>Você editará o código no RStudio da mesma forma que faria com qualquer documento e visualizará o documento renderizado na guia Viewer enquanto trabalha.</p>
 <p>Você pode optar por renderizar o seu <code>.qmd</code> como HTML ou em outros formatos, como PDF, MS Word, etc.</p>
-<p>O Quarto é uma biblioteca R que permite a criação de documentos dinâmicos e interativos com código R e texto em um formato semelhante ao Markdown. É muito útil para criar relatórios, apresentações ou até mesmo artigos com análises de dados incorporadas.</p>
 </section>
 <section id="instalação" class="level2">
-<h2 class="anchored" data-anchor-id="instalação"><strong>Instalação</strong></h2>
-<p>Para começar, certifique-se de ter o R instalado em seu computador, em sua versão mais recente. Você pode baixar a versão mais recente do R em <a href="https://cran.r-project.org/"><strong>https://cran.r-project.org/</strong></a>.</p>
+<h2 class="anchored" data-anchor-id="instalação">Instalação</h2>
+<p>Para começar, certifique-se de ter o R instalado em seu computador, em sua versão mais recente. Você pode baixar a versão mais recente do R em <a href="https://cran.r-project.org/" class="uri">https://cran.r-project.org/</a>.</p>
 <p>Certifique-se de ter instalado os pacotes <code>tidyverse</code>e <code>palmerpenguins</code>:</p>
-<pre><code>install.packages("tidyverse") 
-install.packages("palmerpenguins")</code></pre>
-<p>Baixe o documento abaixo no site para criar o seu primeiro documento <code>.qmd</code>.</p>
-<p>Use o botão <strong>Render</strong> no RStudio para renderizar o arquivo e visualizar a saída com um único clique ou atalho de teclado (Ctrl+Shift+K).</p>
+<p><code>install.packages("tidyverse") install.packages("palmerpenguins")</code></p>
+<p>Instale também o programa Quarto:</p>
+<p><a href="https://quarto.org/docs/get-started/" class="uri">https://quarto.org/docs/get-started/</a></p>
+<p>Baixe esse <a href="https://quarto.org/docs/get-started/hello/rstudio/_hello.qmd">documento</a> para criar o seu primeiro documento <code>.qmd</code>.</p>
+<p>Use o botão Render no RStudio para renderizar o arquivo e visualizar a saída com um único clique ou atalho de teclado (Ctrl+Shift+K).</p>
 </section>
 <section id="criando-um-documento" class="level2">
-<h2 class="anchored" data-anchor-id="criando-um-documento"><strong>Criando um documento</strong></h2>
-<p>Agora que o pacote está instalado, vamos criar um novo documento Quarto. É importante lembrar que os arquivos Quarto possuem a extensão <strong><code>.qmd</code></strong>. Abra um novo arquivo no RStudio e salve-o com a extensão <strong><code>.qmd</code></strong>.</p>
+<h2 class="anchored" data-anchor-id="criando-um-documento">Criando um documento</h2>
+<p>Agora que o pacote está instalado, vamos criar um novo documento Quarto.</p>
+<p>Arquivos Quarto possuem a extensão <code>.qmd</code>.</p>
+<p>Abra um novo arquivo no RStudio e salve-o com a extensão <code>.qmd</code>.</p>
 </section>
 <section id="sintaxe-básica" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="sintaxe-básica"><strong>Sintaxe básica</strong></h2>
-<p>Os documentos Quarto são muito semelhantes aos arquivos Markdown, mas também permitem incorporar código R que será executado e seus resultados serão exibidos no documento final. Vamos ver alguns exemplos básicos da sintaxe.</p>
-<p>Em seguida, vamos voltar nossa atenção para o conteúdo do nosso documento Quarto. O arquivo contém três tipos de conteúdo: um cabeçalho YAML, blocos de código e texto de marcação.</p>
+<h2 class="anchored" data-anchor-id="sintaxe-básica">Sintaxe básica</h2>
+<p>O arquivo contém três tipos de conteúdo: um cabeçalho YAML, blocos de código e texto de marcação.</p>
 <section id="cabeçalho-yaml" class="level3">
-<h3 class="anchored" data-anchor-id="cabeçalho-yaml"><strong>Cabeçalho YAML</strong></h3>
-<p>Um cabeçalho YAML (opcional) demarcado por três traços ( <code>---</code>) em cada extremidade.</p>
+<h3 class="anchored" data-anchor-id="cabeçalho-yaml">Cabeçalho YAML</h3>
+<p>Um cabeçalho na linguagem YAML demarcado por três traços ( <code>---</code>) em cada extremidade.</p>
 <pre><code>--- 
 title: "Hello, Quarto" 
 format: html 
@@ -150,19 +159,19 @@ editor: visual
 <p>A sintaxe básica do YAML usa pares chave-valor no formato <code>key: value</code>. Outros campos YAML comumente encontrados em cabeçalhos de documentos incluem metadados como <code>author</code>, <code>subtitle</code>, <code>date</code>bem como opções de personalização como <code>theme</code>, <code>fontcolor</code>, <code>fig-width</code>etc. Você pode descobrir todos os campos YAML disponíveis para documentos HTML <a href="https://quarto-org.translate.goog/docs/reference/formats/html.html?_x_tr_sl=en&amp;_x_tr_tl=pt&amp;_x_tr_hl=pt-BR&amp;_x_tr_pto=wapp">aqui</a> . Os campos YAML disponíveis variam de acordo com o formato do documento, por exemplo, veja <a href="https://quarto-org.translate.goog/docs/reference/formats/pdf.html?_x_tr_sl=en&amp;_x_tr_tl=pt&amp;_x_tr_hl=pt-BR&amp;_x_tr_pto=wapp">aqui</a> os campos YAML para documentos PDF e <a href="https://quarto-org.translate.goog/docs/reference/formats/docx.html?_x_tr_sl=en&amp;_x_tr_tl=pt&amp;_x_tr_hl=pt-BR&amp;_x_tr_pto=wapp">aqui</a> para MS Word.</p>
 </section>
 <section id="pedaços-de-código" class="level3">
-<h3 class="anchored" data-anchor-id="pedaços-de-código"><strong>Pedaços de código</strong></h3>
+<h3 class="anchored" data-anchor-id="pedaços-de-código">Pedaços de código</h3>
 <p>Blocos de código R identificados com <code>{r}</code>opções de bloco (opcional), no estilo YAML, identificados por <code>#|</code>no início da linha.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load-packages </span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false  </span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins) </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load-packages </span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false  </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins) </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Nesse caso, o <code>label</code>da parte do código é <code>load-packages</code>, e definimos <code>include</code>como <code>false</code>para indicar que não queremos a parte em si ou qualquer uma de suas saídas nos documentos renderizados.</p>
 <p>Além de renderizar o documento completo para visualizar os resultados dos blocos de código, você também pode executar cada bloco de código interativamente no editor do RStudio clicando no <img src="https://d33wubrfki0l68.cloudfront.net/18153fb9953057ee5cff086122bd26f9cee8fe93/3aba9/images/notebook-run-chunk.png" class="img-fluid">ícone ou no atalho de teclado (⇧⌘⏎). O RStudio executa o código e exibe os resultados embutidos em seu arquivo ou no console, dependendo de sua preferência.</p>
 </section>
 <section id="títulos-e-texto" class="level3">
-<h3 class="anchored" data-anchor-id="títulos-e-texto"><strong>Títulos e texto</strong></h3>
+<h3 class="anchored" data-anchor-id="títulos-e-texto">Títulos e texto</h3>
 <p><code># Título 1</code></p>
 <p><code>## Título 2</code></p>
 <p><code>### Título 3</code></p>
@@ -170,7 +179,7 @@ editor: visual
 <p>Use o modo “Visual” para facilitar o seu trabalho!</p>
 </section>
 <section id="código-r" class="level3">
-<h3 class="anchored" data-anchor-id="código-r"><strong>Código R</strong></h3>
+<h3 class="anchored" data-anchor-id="código-r">Código R</h3>
 <p>O código R é inserido entre blocos de código cercados por três acentos graves (```). O resultado da execução do código será mostrado abaixo do bloco de código.</p>
 <p><code>```{r} # Exemplo de código R</code></p>
 <p><code>x &lt;- 1:5 mean(x)</code></p>
@@ -216,17 +225,17 @@ editor: visual
 <p>Você pode incorporar gráficos gerados pelo R diretamente no documento usando o bloco de código R.</p>
 <p>A opção echo: false desativa a impressão do código (somente a saída é exibida).</p>
 <div class="page-columns page-full">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> hwy, <span class="at">y =</span> cty, <span class="at">color =</span> cyl)) <span class="sc">+</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>() <span class="sc">+</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> hwy, <span class="at">y =</span> cty, <span class="at">color =</span> displ)) <span class="sc">+</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">option =</span> <span class="st">"E"</span>) <span class="sc">+</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> hwy, <span class="at">y =</span> cty, <span class="at">color =</span> cyl)) <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>() <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> hwy, <span class="at">y =</span> cty, <span class="at">color =</span> displ)) <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">option =</span> <span class="st">"E"</span>) <span class="sc">+</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-mpg" class="cell column-page quarto-layout-panel">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -255,9 +264,9 @@ editor: visual
 <section id="inserindo-listas" class="level3">
 <h3 class="anchored" data-anchor-id="inserindo-listas">Inserindo listas</h3>
 <ul>
-<li><p>sdf</p></li>
-<li><p>sdf</p></li>
-<li><p>sdf</p></li>
+<li><p>Linha 1</p></li>
+<li><p>Linha 2</p></li>
+<li><p>Linha 3</p></li>
 </ul>
 <p>Inserindo lista numerada:</p>
 <ol type="1">
@@ -272,10 +281,10 @@ editor: visual
 <p>Você pode também adicionar referências <span class="citation" data-cites="devleesschauwer2022">(<a href="#ref-devleesschauwer2022" role="doc-biblioref">Devleesschauwer et al. 2022</a>)</span> e rodapés<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> no seu documento com facilidade.</p>
 </section>
 <section id="conclusão" class="level2">
-<h2 class="anchored" data-anchor-id="conclusão"><strong>Conclusão</strong></h2>
-<p>O Quarto é uma ferramenta poderosa para criar relatórios e documentos interativos com análises de dados incorporadas. Você pode combinar texto formatado, código R e gráficos em um único documento, facilitando a comunicação e a apresentação de suas análises.</p>
-<p>Este tutorial abordou apenas o básico do Quarto, mas há muito mais recursos para explorar. Você pode personalizar a aparência do documento, adicionar interatividade e muito mais. Para saber mais detalhes e recursos avançados, você pode consultar a documentação oficial do pacote Quarto.</p>
-<p>Espero que este tutorial tenha sido útil para começar com o Quarto em R. Divirta-se explorando essa ferramenta para criar documentos dinâmicos e interativos!</p>
+<h2 class="anchored" data-anchor-id="conclusão">Conclusão</h2>
+<p>O Quarto é uma ferramenta poderosa para criar relatórios e documentos interativos com análises de dados incorporadas.</p>
+<p>Você pode combinar texto formatado, código R e gráficos em um único documento, facilitando a comunicação e a apresentação de suas análises.</p>
+<p>Para saber mais detalhes e recursos avançados, você pode consultar a documentação oficial do pacote Quarto.</p>
 
 </section>
 

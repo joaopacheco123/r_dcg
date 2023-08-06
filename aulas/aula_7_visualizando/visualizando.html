@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Visualizando dados e modelando em R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="visualizando_files/libs/clipboard/clipboard.min.js"></script>
+<script src="visualizando_files/libs/quarto-html/quarto.js"></script>
+<script src="visualizando_files/libs/quarto-html/popper.min.js"></script>
+<script src="visualizando_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="visualizando_files/libs/quarto-html/anchor.min.js"></script>
+<link href="visualizando_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="visualizando_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="visualizando_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="visualizando_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="visualizando_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="visualizando.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Visualizando dados e modelando em R</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="objetivo-da-aula" class="level1">
+<h1>Objetivo da aula</h1>
+<p>Introduzi-los à visualização de dados usando a linguagem R, apresentando a função plot() para criar diferentes tipos de gráficos. Além disso, abordaremos conceitos básicos de estatística inferencial e como modelar a relação entre duas variáveis.</p>
+</section>
+<section id="tópicos-da-aula" class="level1">
+<h1>Tópicos da aula</h1>
+<ol type="1">
+<li><p>Introdução à visualização de dados</p>
+<ol type="1">
+<li>Importância da visualização na análise de dados</li>
+</ol></li>
+<li><p>Tipos de gráficos disponíveis em R</p>
+<ol type="1">
+<li><p>A função plot() em R</p></li>
+<li><p>Sintaxe básica do plot()</p></li>
+<li><p>Gráfico de dispersão (scatter plot)</p></li>
+<li><p>Gráfico de linha (line plot)</p></li>
+<li><p>Gráfico de barras (bar plot)</p></li>
+<li><p>Gráfico de pizza (pie plot)</p></li>
+<li><p>Gráfico de boxplot (box plot)</p></li>
+</ol></li>
+<li><p>Estatística inferencial básica</p>
+<ol type="1">
+<li><p>Conceitos fundamentais da estatística inferencial</p></li>
+<li><p>População e amostra</p></li>
+<li><p>Média, mediana e moda</p></li>
+<li><p>Desvio padrão e variância</p></li>
+<li><p>Intervalo de confiança</p></li>
+<li><p>Teste de hipóteses (introdução)</p></li>
+</ol></li>
+<li><p>Modelando a relação entre duas variáveis</p>
+<ol type="1">
+<li><p>Regressão linear simples</p></li>
+<li><p>Coeficiente de correlação</p></li>
+<li><p>Interpretação dos resultados da regressão</p></li>
+<li><p>Exemplos práticos de modelagem</p></li>
+</ol></li>
+<li><p>Lista de exercícios</p>
+<ol type="1">
+<li><p>Resolução de problemas práticos utilizando</p></li>
+<li><p>Aplicação dos conhecimentos adquiridos em visualização e modelagem</p></li>
+</ol></li>
+</ol>
+<p>Essa estrutura deve fornecer uma introdução sólida sobre a visualização de dados no R, a função plot() e como modelar a relação entre duas variáveis usando técnicas de estatística inferencial. A lista de exercícios é importante para consolidar o conhecimento adquirido e permitir que vocês pratiquem suas habilidades em R.</p>
+</section>
+<section id="introdução-à-visualização-de-dados" class="level1">
+<h1>Introdução à visualização de dados</h1>
+<p>A visualização de dados é uma etapa crucial na análise de informações em qualquer projeto de ciência de dados ou pesquisa. Por meio de gráficos e plots, podemos transformar dados brutos em representações visuais compreensíveis, o que facilita a identificação de padrões, tendências e insights importantes. A visualização não apenas torna os dados mais acessíveis, mas também auxilia na comunicação efetiva dos resultados para uma audiência diversa.</p>
+<section id="importância-da-visualização-na-análise-de-dados" class="level2">
+<h2 class="anchored" data-anchor-id="importância-da-visualização-na-análise-de-dados">Importância da visualização na análise de dados</h2>
+<p>A visualização de dados desempenha um papel fundamental nos seguintes aspectos:</p>
+<section id="a-identificação-de-padrões-e-tendências" class="level3">
+<h3 class="anchored" data-anchor-id="a-identificação-de-padrões-e-tendências">a) Identificação de padrões e tendências</h3>
+<p>Visualizar dados permite que você identifique rapidamente padrões e tendências que podem não ser aparentes ao examinar apenas as tabelas de números. Através de gráficos, podemos detectar relações entre variáveis, sazonalidades e outros comportamentos relevantes.</p>
+</section>
+<section id="b-comunicação-eficaz" class="level3">
+<h3 class="anchored" data-anchor-id="b-comunicação-eficaz">b) Comunicação eficaz</h3>
+<p>Gráficos e plots facilitam a comunicação dos resultados e insights para um público não técnico. As representações visuais são mais fáceis de serem compreendidas e podem tornar a análise de dados mais acessível a pessoas com diferentes níveis de conhecimento em estatística e ciência de dados.</p>
+</section>
+<section id="c-tomada-de-decisão-embasada" class="level3">
+<h3 class="anchored" data-anchor-id="c-tomada-de-decisão-embasada">c) Tomada de decisão embasada</h3>
+<p>Com dados visualizados de forma adequada, tomadores de decisão podem basear suas escolhas em evidências concretas. Gráficos bem elaborados fornecem informações claras e confiáveis, auxiliando na formulação de estratégias e soluções.</p>
+</section>
+</section>
+</section>
+<section id="tipos-de-gráficos-disponíveis-em-r" class="level1">
+<h1>Tipos de gráficos disponíveis em R</h1>
+<p>O R oferece uma ampla variedade de pacotes e funções para a criação de gráficos e plots. Nesta aula, exploraremos alguns dos principais tipos de gráficos disponíveis usando a função <code>plot()</code>.</p>
+<section id="sintaxe-básica-do-plot" class="level2">
+<h2 class="anchored" data-anchor-id="sintaxe-básica-do-plot">Sintaxe básica do plot()</h2>
+<p>Antes de criarmos os diferentes tipos de gráficos, é importante entender a sintaxe básica da função <code>plot()</code> em R. A função <code>plot()</code> é utilizada para produzir gráficos simples e geralmente aceita argumentos como os valores das variáveis que queremos plotar, além de parâmetros adicionais para personalizar a aparência do gráfico.</p>
+<p>Aqui está a sintaxe básica da função <code>plot()</code>:</p>
+<pre><code>RCopy code</code></pre>
+<p><code>plot(x, y, type = "p", col = "blue", main = "Título do Gráfico", xlab = "Rótulo do Eixo X", ylab = "Rótulo do Eixo Y")</code></p>
+<ul>
+<li><p><code>x</code>: Vetor de valores para o eixo x.</p></li>
+<li><p><code>y</code>: Vetor de valores para o eixo y.</p></li>
+<li><p><code>type</code>: Tipo de gráfico. Pode ser “p” (pontos), “l” (linha), “b” (pontos e linha), “h” (histograma) e outros.</p></li>
+<li><p><code>col</code>: Cor do gráfico.</p></li>
+<li><p><code>main</code>: Título do gráfico.</p></li>
+<li><p><code>xlab</code>: Rótulo do eixo x.</p></li>
+<li><p><code>ylab</code>: Rótulo do eixo y.</p></li>
+</ul>
+<p>Agora, vamos criar diferentes tipos de gráficos usando a função <code>plot()</code>:</p>
+</section>
+<section id="gráfico-de-dispersão-scatter-plot" class="level2">
+<h2 class="anchored" data-anchor-id="gráfico-de-dispersão-scatter-plot">Gráfico de dispersão (scatter plot)</h2>
+<p>O gráfico de dispersão é usado para exibir a relação entre duas variáveis numéricas. Cada ponto no gráfico representa uma observação com os valores correspondentes das duas variáveis. É útil para identificar a correlação entre as variáveis.</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Exemplo de gráfico de dispersão x &lt;- c(1, 2, 3, 4, 5) y &lt;- c(3, 5, 4, 6, 8) plot(x, y, main = "Gráfico de Dispersão", xlab = "Variável X", ylab = "Variável Y", pch = 16, col = "blue")</code></p>
+</section>
+<section id="gráfico-de-linha-line-plot" class="level2">
+<h2 class="anchored" data-anchor-id="gráfico-de-linha-line-plot">Gráfico de linha (line plot)</h2>
+<p>O gráfico de linha é utilizado para mostrar a evolução de uma variável ao longo do tempo ou de outro eixo contínuo. É útil para destacar tendências e mudanças ao longo de uma série temporal.</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Exemplo de gráfico de linha x &lt;- c(1, 2, 3, 4, 5) y &lt;- c(3, 5, 4, 6, 8) plot(x, y, type = "l", main = "Gráfico de Linha", xlab = "Tempo", ylab = "Valores", col = "red")</code></p>
+</section>
+<section id="gráfico-de-barras-bar-plot" class="level2">
+<h2 class="anchored" data-anchor-id="gráfico-de-barras-bar-plot">Gráfico de barras (bar plot)</h2>
+<p>O gráfico de barras é uma representação visual de dados categóricos. Cada barra representa uma categoria e a altura da barra representa a quantidade ou frequência dessa categoria.</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Exemplo de gráfico de barras categorias &lt;- c("A", "B", "C", "D") valores &lt;- c(10, 15, 8, 12) barplot(valores, names.arg = categorias, main = "Gráfico de Barras", xlab = "Categorias", ylab = "Valores", col = "green")</code></p>
+</section>
+<section id="gráfico-de-pizza-pie-plot" class="level2">
+<h2 class="anchored" data-anchor-id="gráfico-de-pizza-pie-plot">Gráfico de pizza (pie plot)</h2>
+<p>O gráfico de pizza é outra forma de representar dados categóricos. As fatias da pizza representam as categorias e suas proporções em relação ao todo.</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Exemplo de gráfico de pizza categorias &lt;- c("A", "B", "C", "D") valores &lt;- c(25, 15, 30, 20) pie(valores, labels = categorias, main = "Gráfico de Pizza", col = c("red", "blue", "green", "orange"))</code></p>
+</section>
+<section id="gráfico-de-boxplot-box-plot" class="level2">
+<h2 class="anchored" data-anchor-id="gráfico-de-boxplot-box-plot">Gráfico de boxplot (box plot)</h2>
+<p>O gráfico de boxplot é utilizado para representar a distribuição de dados numéricos e identificar valores atípicos. É útil para comparar diferentes grupos ou variáveis.</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Exemplo de gráfico de boxplot grupo1 &lt;- c(10, 15, 20, 25, 30) grupo2 &lt;- c(5, 8, 12, 18, 24) boxplot(grupo1, grupo2, names = c("Grupo 1", "Grupo 2"), main = "Gráfico de Boxplot", col = c("blue", "green"))</code></p>
+</section>
+</section>
+<section id="estatística-inferencial-básica" class="level1">
+<h1>Estatística inferencial básica</h1>
+<p>A estatística inferencial é uma área da estatística que visa fazer inferências e tirar conclusões sobre uma população com base em uma amostra de dados coletados. Nesta parte da aula, iremos abordar os conceitos fundamentais da estatística inferencial e algumas das principais técnicas utilizadas.</p>
+<section id="conceitos-fundamentais-da-estatística-inferencial" class="level2">
+<h2 class="anchored" data-anchor-id="conceitos-fundamentais-da-estatística-inferencial">Conceitos fundamentais da estatística inferencial</h2>
+<p>Na estatística inferencial, trabalhamos com incerteza, pois estamos usando uma amostra para tentar entender uma população maior. Para isso, utilizamos técnicas estatísticas para fazer inferências sobre os parâmetros populacionais com base nos dados da amostra.</p>
+</section>
+<section id="população-e-amostra" class="level2">
+<h2 class="anchored" data-anchor-id="população-e-amostra">População e amostra</h2>
+<ul>
+<li><p>População: É o conjunto completo de todos os elementos que estamos interessados em estudar e obter conclusões. Representa o grupo total que desejamos analisar, mas nem sempre é possível examinar toda a população devido a restrições de tempo, recursos ou praticidade.</p></li>
+<li><p>Amostra: É uma parte representativa da população, selecionada para estudo e análise. A amostra deve ser escolhida de forma aleatória e representar, de maneira precisa, as características da população.</p></li>
+</ul>
+</section>
+<section id="média-mediana-e-moda" class="level2">
+<h2 class="anchored" data-anchor-id="média-mediana-e-moda">Média, mediana e moda</h2>
+<ul>
+<li>Média: É a soma de todos os valores dividida pelo número total de observações. É a medida de tendência central mais comumente utilizada e pode ser influenciada por valores extremos (outliers).</li>
+</ul>
+<pre><code>RCopy code</code></pre>
+<p><code># Exemplo de cálculo da média dados &lt;- c(10, 15, 12, 8, 20) media &lt;- mean(dados) media</code></p>
+<ul>
+<li>Mediana: É o valor que separa a metade inferior e a metade superior de um conjunto de dados ordenados. É menos sensível a valores extremos do que a média.</li>
+</ul>
+<pre><code>RCopy code</code></pre>
+<p><code># Exemplo de cálculo da mediana dados &lt;- c(10, 15, 12, 8, 20) mediana &lt;- median(dados) mediana</code></p>
+<ul>
+<li>Moda: É o valor que ocorre com maior frequência em um conjunto de dados.</li>
+</ul>
+<pre><code>RCopy code</code></pre>
+<p><code># Exemplo de cálculo da moda dados &lt;- c(10, 15, 12, 8, 20, 15, 12) moda &lt;- table(dados) moda &lt;- as.numeric(names(moda)[moda == max(moda)]) moda</code></p>
+</section>
+<section id="desvio-padrão-e-variância" class="level2">
+<h2 class="anchored" data-anchor-id="desvio-padrão-e-variância">Desvio padrão e variância</h2>
+<ul>
+<li>Desvio padrão: É uma medida de dispersão que indica o quanto os valores do conjunto de dados se afastam da média. Quanto maior o desvio padrão, mais dispersos estão os dados.</li>
+</ul>
+<pre><code>RCopy code</code></pre>
+<p><code># Exemplo de cálculo do desvio padrão dados &lt;- c(10, 15, 12, 8, 20) desvio_padrao &lt;- sd(dados) desvio_padrao</code></p>
+<ul>
+<li>Variância: É outra medida de dispersão que indica a média dos quadrados dos desvios em relação à média. É o quadrado do desvio padrão.</li>
+</ul>
+<pre><code>RCopy code</code></pre>
+<p><code># Exemplo de cálculo da variância dados &lt;- c(10, 15, 12, 8, 20) variancia &lt;- var(dados) variancia</code></p>
+</section>
+<section id="intervalo-de-confiança" class="level2">
+<h2 class="anchored" data-anchor-id="intervalo-de-confiança">Intervalo de confiança</h2>
+<p>O intervalo de confiança é uma estimativa estatística que fornece um intervalo de valores plausíveis para um parâmetro populacional com base nos dados da amostra. É uma forma de expressar a incerteza associada à estimativa do parâmetro.</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Exemplo de cálculo do intervalo de confiança para a média dados &lt;- c(10, 15, 12, 8, 20) intervalo_confianca &lt;- t.test(dados)$conf.int intervalo_confianca</code></p>
+</section>
+<section id="teste-de-hipóteses" class="level2">
+<h2 class="anchored" data-anchor-id="teste-de-hipóteses">Teste de hipóteses</h2>
+<p>O teste de hipóteses é uma técnica estatística usada para tomar decisões sobre uma afirmação ou hipótese relacionada a um parâmetro populacional. Consiste em formular duas hipóteses, uma hipótese nula (H0) e uma hipótese alternativa (Ha), e utilizar dados da amostra para determinar se há evidências suficientes para rejeitar a hipótese nula em favor da hipótese alternativa.</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Exemplo de teste de hipóteses para a média dados &lt;- c(10, 15, 12, 8, 20) teste_hipotese &lt;- t.test(dados, mu = 13) teste_hipotese</code></p>
+<p>Nesta parte da aula, aprendemos conceitos fundamentais da estatística inferencial, como população e amostra, medidas de tendência central (média, mediana e moda), medidas de dispersão (desvio padrão e variância), intervalo de confiança e introdução ao teste de hipóteses. Esses conceitos são essenciais para a interpretação e análise de dados, bem como para as próximas etapas de modelagem.</p>
+</section>
+</section>
+<section id="modelando-a-relação-entre-duas-variáveis" class="level1">
+<h1>Modelando a relação entre duas variáveis</h1>
+<p>Nesta parte da aula, abordaremos técnicas de modelagem que nos permitirão entender e quantificar a relação entre duas variáveis. A modelagem é uma ferramenta poderosa na análise de dados, pois nos permite fazer previsões e inferências com base nos padrões identificados.</p>
+<section id="regressão-linear-simples" class="level2">
+<h2 class="anchored" data-anchor-id="regressão-linear-simples">Regressão linear simples</h2>
+<p>A regressão linear simples é uma técnica estatística que busca modelar a relação entre duas variáveis quantitativas: uma variável independente (X) e uma variável dependente (Y). A regressão linear procura encontrar a melhor reta que se ajusta aos pontos no gráfico de dispersão, minimizando a soma dos erros quadráticos. A equação da regressão linear é dada por:</p>
+<p><span class="math display">\[
+Y=β0​+β1​⋅X+ε
+\]</span></p>
+<p>Onde:</p>
+<ul>
+<li><p>𝑌 é a variável dependente;</p></li>
+<li><p>𝑋 é a variável independente;</p></li>
+<li><p>β0​ é o intercepto (ponto em que a reta cruza o eixo Y);</p></li>
+<li><p>β1​ é o coeficiente de inclinação (representa a variação em 𝑌 associada a uma unidade de variação em 𝑋);</p></li>
+<li><p>ε é o erro aleatório.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo de regressão linear simples </span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>) </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>) </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x) </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x)
+
+Residuals:
+         1          2          3          4          5 
+-7.772e-16  9.000e-01 -1.200e+00 -3.000e-01  6.000e-01 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)    1.900      0.995   1.910   0.1522  
+x              1.100      0.300   3.667   0.0351 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.9487 on 3 degrees of freedom
+Multiple R-squared:  0.8176,    Adjusted R-squared:  0.7568 
+F-statistic: 13.44 on 1 and 3 DF,  p-value: 0.03508</code></pre>
+</div>
+</div>
+<p>Interpretação do resultado do modelo:</p>
+<p>O modelo de regressão linear obtido foi:</p>
+<p>�=1.900+1.100⋅�+�Y=1.900+1.100⋅X+ε</p>
+<p>Aqui estão os principais aspectos a serem observados na saída do modelo:</p>
+<ol type="1">
+<li><p>Coeficientes:</p>
+<ul>
+<li><p>Intercepto (�0β0​): O valor do intercepto é 1.900. Isso significa que quando a variável independente (�X) é igual a zero, o valor estimado da variável dependente (�Y) é 1.900.</p></li>
+<li><p>Coeficiente de inclinação (�1β1​): O valor do coeficiente de inclinação é 1.100. Isso indica que, para cada unidade de aumento em �X, espera-se um aumento de 1.100 em �Y.</p></li>
+</ul></li>
+<li><p>Teste de hipóteses:</p>
+<ul>
+<li><p>Para o intercepto (�0β0​): O valor p (Pr(&gt;|t|)) associado ao intercepto é 0.1522. Como esse valor é maior que 0.05, não temos evidências suficientes para rejeitar a hipótese nula de que o intercepto é igual a zero.</p></li>
+<li><p>Para o coeficiente de inclinação (�1β1​): O valor p (Pr(&gt;|t|)) associado ao coeficiente de inclinação é 0.0351. Como esse valor é menor que 0.05, temos evidências estatisticamente significativas para rejeitar a hipótese nula de que o coeficiente de inclinação é igual a zero. Isso indica que o coeficiente de inclinação é significativamente diferente de zero, ou seja, a variável independente (�X) tem um efeito significativo na variável dependente (�Y).</p></li>
+</ul></li>
+<li><p>Coeficiente de determinação (R-quadrado):</p>
+<ul>
+<li>O coeficiente de determinação (�2R2) é igual a 0.8176, o que significa que aproximadamente 81.76% da variação em �Y é explicada pela variação em �X. Isso indica que o modelo de regressão linear explica bem os dados e a relação entre as duas variáveis.</li>
+</ul></li>
+<li><p>Residual standard error:</p>
+<ul>
+<li>O residual standard error é igual a 0.9487, que representa o desvio padrão dos resíduos (diferença entre os valores observados e os valores estimados pelo modelo). Quanto menor esse valor, melhor o ajuste do modelo aos dados.</li>
+</ul></li>
+</ol>
+<p>Em resumo, o modelo de regressão linear indica que existe uma relação significativa entre as variáveis �X e �Y, onde �Y aumenta em média 1.100 unidades para cada unidade de aumento em �X. O modelo explica cerca de 81.76% da variação observada em �Y. O intercepto não é estatisticamente significativo, o que significa que não há evidências suficientes para afirmar que o valor de �Y é diferente de zero quando �X é igual a zero. No entanto, o coeficiente de inclinação é estatisticamente significativo, indicando que �X tem um efeito significativo em �Y.</p>
+</section>
+<section id="coeficiente-de-correlação" class="level2">
+<h2 class="anchored" data-anchor-id="coeficiente-de-correlação">Coeficiente de correlação</h2>
+<p>O coeficiente de correlação (r) é uma medida que quantifica a força e a direção da relação linear entre duas variáveis quantitativas. O coeficiente de correlação varia entre -1 e 1. Um valor próximo de 1 indica uma forte correlação positiva, um valor próximo de -1 indica uma forte correlação negativa e um valor próximo de 0 indica uma correlação fraca ou inexistente.</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Exemplo de cálculo do coeficiente de correlação x &lt;- c(1, 2, 3, 4, 5) y &lt;- c(3, 5, 4, 6, 8) correlacao &lt;- cor(x, y) correlacao</code></p>
+</section>
+<section id="interpretação-dos-resultados-da-regressão" class="level2">
+<h2 class="anchored" data-anchor-id="interpretação-dos-resultados-da-regressão">Interpretação dos resultados da regressão</h2>
+<p>Ao realizar uma análise de regressão, é importante interpretar os resultados obtidos. O resumo do modelo nos fornece informações sobre os coeficientes estimados, o coeficiente de determinação (�2R2) e outras estatísticas relevantes. A interpretação dos resultados nos ajuda a compreender a relação entre as variáveis e a avaliar a qualidade do modelo.</p>
+</section>
+<section id="exemplos-práticos-de-modelagem" class="level2">
+<h2 class="anchored" data-anchor-id="exemplos-práticos-de-modelagem">Exemplos práticos de modelagem</h2>
+<p>Agora, vamos aplicar a regressão linear a um conjunto de dados real e fazer a análise de um modelo resultante. Escolha um conjunto de dados adequado para a análise de regressão e explore os resultados do modelo para obter insights relevantes.</p>
+<pre><code>RCopy code</code></pre>
+<p><code># Exemplo prático de modelagem com regressão linear # (Insira aqui o código e a descrição do conjunto de dados utilizado)</code></p>
+<p>Nesta parte da aula, aprendemos sobre a regressão linear simples, uma técnica para modelar a relação entre duas variáveis quantitativas, e o coeficiente de correlação, que quantifica a intensidade dessa relação. Além disso, discutimos a interpretação dos resultados da regressão e a importância de aplicar a modelagem em conjuntos de dados reais para obter insights valiosos. A modelagem é uma ferramenta poderosa que pode ser usada para previsões e tomada de decisões informadas.</p>
+</section>
+</section>
+<section id="lista-de-exercícios" class="level1">
+<h1>Lista de exercícios</h1>
+<section id="resolução-de-problemas-práticos-utilizando-r" class="level2">
+<h2 class="anchored" data-anchor-id="resolução-de-problemas-práticos-utilizando-r">Resolução de problemas práticos utilizando R</h2>
+<ol type="1">
+<li><p>Baixe um conjunto de dados de sua escolha (pode ser de um repositório público ou uma planilha própria) e importe-o para o R.</p></li>
+<li><p>Realize a limpeza e pré-processamento dos dados, tratando valores ausentes e realizando transformações necessárias.</p></li>
+<li><p>Crie diferentes tipos de gráficos (scatter plot, line plot, bar plot, pie plot, box plot) para explorar visualmente as relações e tendências dos dados.</p></li>
+<li><p>Calcule a média, mediana, moda, desvio padrão e variância das variáveis quantitativas do conjunto de dados.</p></li>
+<li><p>Calcule o coeficiente de correlação entre pares de variáveis quantitativas para identificar possíveis relações lineares.</p></li>
+</ol>
+</section>
+<section id="aplicação-dos-conhecimentos-adquiridos-em-visualização-e-modelagem" class="level2">
+<h2 class="anchored" data-anchor-id="aplicação-dos-conhecimentos-adquiridos-em-visualização-e-modelagem">Aplicação dos conhecimentos adquiridos em visualização e modelagem</h2>
+<ol type="1">
+<li><p>Escolha duas variáveis quantitativas do conjunto de dados utilizado anteriormente e crie um scatter plot para visualizar sua relação.</p></li>
+<li><p>Realize uma regressão linear simples entre essas duas variáveis e interprete os resultados obtidos, considerando o valor do coeficiente de correlação.</p></li>
+<li><p>Explore diferentes técnicas de visualização para representar os resultados da regressão (pode utilizar bibliotecas como ggplot2).</p></li>
+<li><p>Identifique possíveis outliers no conjunto de dados e analise como eles afetam a regressão e a relação entre as variáveis.</p></li>
+<li><p>Utilize o intervalo de confiança para a média de uma variável quantitativa do conjunto de dados e interprete-o em termos do contexto do problema.</p></li>
+<li><p>Formule uma hipótese relacionada a uma das variáveis do conjunto de dados e realize um teste de hipóteses para verificar sua validade.</p></li>
+</ol>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
