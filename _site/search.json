@@ -1,0 +1,156 @@
+[
+  {
+    "objectID": "aulas/aula_2_quarto/Quarto.html",
+    "href": "aulas/aula_2_quarto/Quarto.html",
+    "title": "Quarto",
+    "section": "",
+    "text": "Sistema de publicação técnica da Posit\nCódigo aberto\nÚltima geração\nInclui múltiplos formatos, como criar apresentações, artigos, websites\nTem várias capacidades, como de escrever código, equações, citações, referências, figuras, paineis, tabelas, etc.\nPermite também publicar o conteúdo com facilidade\n\nNeste tutorial, mostrarei como usar o RStudio com o Quarto.\nVocê editará o código no RStudio da mesma forma que faria com qualquer documento e visualizará o documento renderizado na guia Viewer enquanto trabalha.\nVocê pode optar por renderizar o seu .qmd como HTML ou em outros formatos, como PDF, MS Word, etc."
+  },
+  {
+    "objectID": "aulas/aula_2_quarto/Quarto.html#introdução",
+    "href": "aulas/aula_2_quarto/Quarto.html#introdução",
+    "title": "Quarto",
+    "section": "",
+    "text": "Sistema de publicação técnica da Posit\nCódigo aberto\nÚltima geração\nInclui múltiplos formatos, como criar apresentações, artigos, websites\nTem várias capacidades, como de escrever código, equações, citações, referências, figuras, paineis, tabelas, etc.\nPermite também publicar o conteúdo com facilidade\n\nNeste tutorial, mostrarei como usar o RStudio com o Quarto.\nVocê editará o código no RStudio da mesma forma que faria com qualquer documento e visualizará o documento renderizado na guia Viewer enquanto trabalha.\nVocê pode optar por renderizar o seu .qmd como HTML ou em outros formatos, como PDF, MS Word, etc."
+  },
+  {
+    "objectID": "aulas/aula_2_quarto/Quarto.html#instalação",
+    "href": "aulas/aula_2_quarto/Quarto.html#instalação",
+    "title": "Quarto",
+    "section": "Instalação",
+    "text": "Instalação\nPara começar, certifique-se de ter o R instalado em seu computador, em sua versão mais recente. Você pode baixar a versão mais recente do R em https://cran.r-project.org/.\nCertifique-se de ter instalado os pacotes tidyversee palmerpenguins:\n\n# install.packages(\"tidyverse\")\n# install.packages(\"palmerpenguins\")\n\nInstale também o programa Quarto:\nhttps://quarto.org/docs/get-started/\nBaixe esse documento para criar o seu primeiro documento .qmd.\nUse o botão Render no RStudio para renderizar o arquivo e visualizar a saída com um único clique ou atalho de teclado (Ctrl+Shift+K)."
+  },
+  {
+    "objectID": "aulas/aula_2_quarto/Quarto.html#criando-um-documento",
+    "href": "aulas/aula_2_quarto/Quarto.html#criando-um-documento",
+    "title": "Quarto",
+    "section": "Criando um documento",
+    "text": "Criando um documento\nAgora que o pacote está instalado, vamos criar um novo documento Quarto.\nArquivos Quarto possuem a extensão .qmd.\nAbra um novo arquivo no RStudio e salve-o com a extensão .qmd."
+  },
+  {
+    "objectID": "aulas/aula_2_quarto/Quarto.html#sintaxe-básica",
+    "href": "aulas/aula_2_quarto/Quarto.html#sintaxe-básica",
+    "title": "Quarto",
+    "section": "Sintaxe básica",
+    "text": "Sintaxe básica\nTodo arquivo sempre começa com um cabeçalho, na linguagem YAML, e pode conter outros conteúdos, como:\n\nTexto\nCódigo\nFiguras\nTabelas\n\n\nCabeçalho YAML\nUm cabeçalho na linguagem YAML demarcado por três traços ( ---) em cada extremidade.\n--- \ntitle: \"Quarto\" \nformat: html \neditor: visual \n---\nQuando renderizado, o title, \"Quarto\", aparecerá na parte superior do documento renderizado com um tamanho de fonte maior do que o restante do documento.\nOs outros dois campos YAML denotam que a saída deve estar em formato (format) html e o documento deve abrir no editor visual por padrão.\nA sintaxe básica do YAML usa pares chave-valor no formato key: value.\nOutros campos YAML comumente encontrados em cabeçalhos de documentos incluem:\n\nMetadados como author, subtitle, date\nOpções de personalização como theme, fontcolor, etc.\n\nVocê pode descobrir todos os campos YAML disponíveis para documentos HTML aqui . Os campos YAML disponíveis variam de acordo com o formato do documento, por exemplo, veja aqui os campos YAML para documentos PDF e aqui para MS Word.\n\n\nTexto normal\nEscreva texto normalmente no editor.\n\n\nPedaços de código\nBlocos de código R identificados com {r}opções de bloco (opcional), no estilo YAML, identificados por #|no início da linha.\n```{r}\n#| label: load-packages \n#| include: false  \nlibrary(tidyverse) \nlibrary(palmerpenguins) \n```\nNesse caso, o labelda parte do código é load-packages, e definimos includecomo falsepara indicar que não queremos a parte em si ou qualquer uma de suas saídas nos documentos renderizados.\nAlém de renderizar o documento completo para visualizar os resultados dos blocos de código, você também pode executar cada bloco de código interativamente no editor.\nO resultado da execução do código será mostrado abaixo do bloco de código.\n\n# Exemplo de código R\nx &lt;- 1:5 \nmean(x)\n\n[1] 3\n\n\nVocê pode adicionar opções ao código executável como este:\n\n\n[1] 4"
+  },
+  {
+    "objectID": "aulas/aula_2_quarto/Quarto.html#títulos-e-texto",
+    "href": "aulas/aula_2_quarto/Quarto.html#títulos-e-texto",
+    "title": "Quarto",
+    "section": "Títulos e texto",
+    "text": "Títulos e texto\nUse o modo “Visual” para facilitar o seu trabalho!\n# Título 1\n## Título 2\n### Título 3\nTexto normal."
+  },
+  {
+    "objectID": "aulas/aula_2_quarto/Quarto.html#tabelas",
+    "href": "aulas/aula_2_quarto/Quarto.html#tabelas",
+    "title": "Quarto",
+    "section": "Tabelas",
+    "text": "Tabelas\nVocê também pode criar tabelas:\n\n\n\nColuna 1\nColuna 2\nColuna 3\n\n\n\n\nA\n1\nx\n\n\nB\n2\ny\n\n\nC\n3\nz"
+  },
+  {
+    "objectID": "aulas/aula_2_quarto/Quarto.html#gráficos",
+    "href": "aulas/aula_2_quarto/Quarto.html#gráficos",
+    "title": "Quarto",
+    "section": "Gráficos",
+    "text": "Gráficos\nVocê pode incorporar gráficos gerados pelo R diretamente no documento usando o bloco de código R.\nA opção echo: false desativa a impressão do código (somente a saída é exibida).\n\nlibrary(ggplot2)\n\nggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +\n  geom_point(alpha = 0.5, size = 2) +\n  scale_color_viridis_c() +\n  theme_minimal()\n\nggplot(mpg, aes(x = hwy, y = cty, color = displ)) +\n  geom_point(alpha = 0.5, size = 2) +\n  scale_color_viridis_c(option = \"E\") +\n  theme_minimal()\n\n\n\n\n\n\n\n(a) Color by number of cylinders\n\n\n\n\n\n\n\n(b) Color by engine displacement, in liters\n\n\n\n\nFigure 1: City and highway mileage for 38 popular models of cars."
+  },
+  {
+    "objectID": "aulas/aula_2_quarto/Quarto.html#inserindo-listas",
+    "href": "aulas/aula_2_quarto/Quarto.html#inserindo-listas",
+    "title": "Quarto",
+    "section": "Inserindo listas",
+    "text": "Inserindo listas\n\nLinha 1\nLinha 2\nLinha 3\n\nInserindo lista numerada:\n\nLinha 1\nLinha 2\nLinha 3"
+  },
+  {
+    "objectID": "aulas/aula_2_quarto/Quarto.html#inserindo-referências",
+    "href": "aulas/aula_2_quarto/Quarto.html#inserindo-referências",
+    "title": "Quarto",
+    "section": "Inserindo referências",
+    "text": "Inserindo referências\nVocê pode também adicionar referências (Devleesschauwer et al. 2022) e rodapés1 no seu documento com facilidade."
+  },
+  {
+    "objectID": "aulas/aula_2_quarto/Quarto.html#conclusão",
+    "href": "aulas/aula_2_quarto/Quarto.html#conclusão",
+    "title": "Quarto",
+    "section": "Conclusão",
+    "text": "Conclusão\nO Quarto é uma ferramenta poderosa para criar relatórios e documentos interativos com análises de dados incorporadas.\nVocê pode combinar texto formatado, código R e gráficos em um único documento, facilitando a comunicação e a apresentação de suas análises.\nPara saber mais detalhes e recursos avançados, você pode consultar a documentação oficial do pacote Quarto."
+  },
+  {
+    "objectID": "aulas/aula_2_quarto/Quarto.html#footnotes",
+    "href": "aulas/aula_2_quarto/Quarto.html#footnotes",
+    "title": "Quarto",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nRodapé 1↩︎"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Análise de dados em saúde mental",
+    "section": "",
+    "text": "Logo Mental Health Epidemiology Group"
+  },
+  {
+    "objectID": "index.html#estudos-observacionais-e-psicometria-em-linguagem-r",
+    "href": "index.html#estudos-observacionais-e-psicometria-em-linguagem-r",
+    "title": "Análise de dados em saúde mental",
+    "section": "Estudos observacionais e psicometria em linguagem R",
+    "text": "Estudos observacionais e psicometria em linguagem R"
+  },
+  {
+    "objectID": "index.html#professores",
+    "href": "index.html#professores",
+    "title": "Análise de dados em saúde mental",
+    "section": "Professores",
+    "text": "Professores\n\nProf. Dr. Maurício Scopel Hoffmann\nProf. MSc. João Pedro Pacheco\n\nJoão Villanova do Amaral"
+  },
+  {
+    "objectID": "index.html#identificação-do-curso",
+    "href": "index.html#identificação-do-curso",
+    "title": "Análise de dados em saúde mental",
+    "section": "Identificação do curso",
+    "text": "Identificação do curso\nDepartamento de ensino: Neuropsiquiatria\nCarga horária total: 30 horas\nCarga horária dividida entre: Teórica (15h) e Prática (15h)."
+  },
+  {
+    "objectID": "index.html#objetivo-da-disciplina",
+    "href": "index.html#objetivo-da-disciplina",
+    "title": "Análise de dados em saúde mental",
+    "section": "Objetivo da disciplina",
+    "text": "Objetivo da disciplina\nCapacitar o aluno a entender e aplicar análises de dados observacionais utilizando o software livre R, na plataforma RStudio/Posit. Aprender conceitos e análises básicas em estudos epidemiológicos utilizando técnicas de regressão, psicometria e equações estruturais (análises fatoriais, modelos cross-lagged e de crescimento latente). Portanto, ao final da disciplina, o aluno deverá saber aplicar os modelos e conceitos em bancos de dados longitudinais, analisar o dado utilizando tais modelos, analisar propriedades psicométricas de instrumentos que visem mensurar comportamentos, emoções e habilidades em geral, bem como reportar e discutir os resultados das análises, utilizando o software R."
+  },
+  {
+    "objectID": "index.html#objetivos-específicos",
+    "href": "index.html#objetivos-específicos",
+    "title": "Análise de dados em saúde mental",
+    "section": "Objetivos específicos",
+    "text": "Objetivos específicos\n\nAprendizado da linguagem R e seus componentes e operações básicas\nCapacitar para manipulação de bancos de dados, análises descritivas e representação de resultados em tabelas e gráficos\nCapacitar para análises básicas de modelos de regressão generalizados\nCapacitar para análises utilizando equações estruturais\nCapacitar para análise exploratória e confirmatória fatorial.\nCapacitar para análise de invariância de medida\nCapacitar para análise de teoria de resposta ao item\nCapacitar para análise de modelos cross-lagged longitudinais\nCapacitar para análise de crescimento latente\nInferências causais utilizando modelos de equação estrutural"
+  },
+  {
+    "objectID": "index.html#ementa",
+    "href": "index.html#ementa",
+    "title": "Análise de dados em saúde mental",
+    "section": "Ementa",
+    "text": "Ementa\nEssa é uma disciplina teórico-prática destinada aos alunos de graduação do curso de medicina e psicologia, bem como pós-graduação de áreas afins. Possui os seguintes conteúdos a serem trabalhados, a fim de atingir os objetivos:\n\nUnidade 1\n\nIntrodução à Linguagem R\nElaborando relatórios com o Quarto\nEstrutura de dados\nImportando e manipulando dados\nEstatística descritiva\nVisualizando dados e modelando\nGráficos avançados usando ggplot2\n\n\n\nUnidade 2\n\nAnálises de regressão linear, logística e de Poisson em dados transversais e longitudinais.\nModelos mistos para dados transversais e longitudinais.\nPesos para correções de representatividade amostral.\nPrincípios e aplicação da Equação Estrutural e inferência causal.\nAnálise fatorial exploratória – Análise de questionário utilizando o pacote psych e análise gráfica utilizando o pacote EGAnet.\nAnálise fatorial confirmatória – Análise de instrumento/escala sintomática utilizando os pacotes lavaan, semPlot e semTools.\nInvariância de medida – Análise de invariância utilizando os pacotes lavaan, semPlot e semTools.\nTeorias da Resposta ao Item – Análise de instrumento/escala utilizando os pacotes psych, ltm e mirt, e avaliação das curvas de característica e informação específica dos itens e geral do instrumento.\nMediação e Moderação.\nModelos cross-lagged – Planejamento e testagem de modelo cross-lagged utilizando os pacotes lavaan, semPlot e semTools.\nModelos de crescimento latente (Latent growth models).\n\n\n\nUnidade 3\n\nBoas práticas em codificação e analise de dados\nComo utilizar o Git\nComo utilizar o Github\nOpen Science Framework"
+  },
+  {
+    "objectID": "index.html#instruções",
+    "href": "index.html#instruções",
+    "title": "Análise de dados em saúde mental",
+    "section": "Instruções",
+    "text": "Instruções\nPara as aulas práticas, serão disponibilizados banco de dado livre e código inicial para que o aluno comece a criar seu próprio código de análise, que será utilizado para a avaliação. A nota final do aluno será calculada com a participação nas aulas (40%) e a entrega de códigos de análise em R, que estejam corretos e preparados para a análise do banco de dados que será disponibilizado."
+  },
+  {
+    "objectID": "index.html#bibliografia-básica",
+    "href": "index.html#bibliografia-básica",
+    "title": "Análise de dados em saúde mental",
+    "section": "Bibliografia básica",
+    "text": "Bibliografia básica\n\nALCOFORADO, L. F. Utilizando A Linguagem R: Conceitos, manipulação, visualização, modelagem e elaboração de relatórios. Alta Books; 1ª edição, 2021.\nR IN ACTION.\nGROLEMUND, G., WICKHAM, H. R for Data Science: Import, Tidy, Transform, Visualize, and Model Data. O’Reilly Media, 2ª edição, 2023 (https://r4ds.hadley.nz/)\nKLINE, R.B. Principles and practice of structural equation modeling. The Guilford Press. 4ª edição, 2016.\nVAN BORK, R. Interpreting Psychometric Models. 2019."
+  },
+  {
+    "objectID": "index.html#bibliografia-complementar",
+    "href": "index.html#bibliografia-complementar",
+    "title": "Análise de dados em saúde mental",
+    "section": "Bibliografia complementar",
+    "text": "Bibliografia complementar\n\nFIELD, A., MILES, J., FIELD, Z. Discovering Statistics Using R. Sage Publishing, 2012.\nKABACOFF, R.I. R in Action: Data analysis and graphics with R. Manning. 2a edição.\nEPSKAMP, S. Network Psychometrics. 2017.\nORTH, U., CLARK, D. A., DONNELLAN, M. B., ROBINS, R .W. Testing Prospective Effects in Longitudinal Research: Comparing Seven Competing Cross-Lagged Models. Journal of Personality and Social Psychology, 120, 1013-1034, 2021.\nSVETINA, D., RUTKOWSKI. L. Multiple-Group Invariance with Categorical Outcomes Using Updated Guidelines: An Illustration Using M plus and the lavaan/semTools Packages. Structural Equation Modeling A Multidisciplinary Journal, April 2019.\nWARDENAAR, K. J. Latent Class Growth Analysis and Growth Mixture Modeling using R: A tutorial for two R-packages and a comparison with Mplus. 2022 - https://psyarxiv.com/m58wx/\nTHISSEN, D. Item Response Theory for Scores on Tests Including Polytomous Items with Ordered Responses. Applied Psychological Measurement, 19, 39-49,1995."
+  }
+]
