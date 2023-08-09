@@ -14,10 +14,25 @@ editor_options:
 ---
 
 ## Ideias
+
+-   seta para ver comandos anteriores
+-   vector indices
+-   typeof(), class()
+-   função rm(), list=ls()
+-   working directory
+-   criando projetos (getwd(), setwd())
+-   atalhos
+-   aumentar tela rstudio, layout
+-   mudar tema rstudio
+-   highlight function calls
+-   regra de nomeação de objetos
+-   r is case sentitive
+-   generic functions
 -   começar pelo R console e dps entrar no rstudio
 -   Falar de modo geral sobre linguagem de programacao
 -   Falar do R console, o que representa o output \[1\]
--   quando aparece o \+ no console
+-   functions generic
+-   quando aparece o + no console
 -   mensagens de erro
 -   R como calculadora
 -   cancelar comandos
@@ -26,13 +41,50 @@ editor_options:
 
 ## Introdução
 
-R e R studio são softwares gratuitos.
+### Por que aprender R?
 
-R é baseado em sintaxe (linguagem), não em point-and-click.
+-   Saber programar é um superpoder
+-   Bonito e barato
+-   Criado pensando-se em análise estatística
+-   Não existe linguagem melhor *no ambiente acadêmico*
+-   R é baseado em sintaxe (linguagem), não em point-and-click
 
--   Mais flexibilidade
+## Instalação
 
--   Facilita gravar todas as transformações nos dados e análises
+### Instalando R e RStudio
+
+1)  R: <http://www.r-project.org>
+2)  RStudio: <https://www.rstudio.com/>
+
+### R vs Rstudio
+
+-   Rodando um primeiro programa no R: "Hello, world!" no modo console
+
+![Rconsole](imagens_aula_1/fig1_rconsole.png)
+
+-   \> é o prompt, solicitando um input
+
+-   O output é acompanhado de um número \[1\], que representa a posição
+    daquele item. Isso será mais útil em outputs com vários elementos
+
+-   Caso queira manter o que foi escrito salvo, basta salvar em um
+    arquivo de texto
+
+![Arquivo de texto com código em R](imagens_aula_1/fig2_textfile.png)
+
+-   Podemos rodar o código com a função source(), especificando o
+    caminho para o arquivo de texto (no meu caso,
+    "C:/Users/User/Documents/r_dcg/aulas/aula_1_introdução/hello_world.R")
+
+-   O Rstudio vem para juntar tudo isso em uma ferramente completa e
+    intuitiva. É chamado de ambiente integrado de desenvolvimento (IDE
+    na sigla em inglês)
+    
+![Rstudio](imagens_aula_1/fig3_rstudio.png)
+1) Script (o arquivo de texto)
+2) Ambiente (onde ficarão as variáveis)
+3) R console (o output do seu código aparecerá aqui)
+4) ???
 
 ### **Objetos**
 
@@ -82,13 +134,6 @@ O software básico do R já vem com várias funções pré-instaladas.
 Para adicionar funções, é necessário a instalação de pacotes (próximo
 tópico).
 
-## Instalação
-
-### Instalando R e RStudio
-
-1)  R: <http://www.r-project.org>
-2)  RStudio: <https://www.rstudio.com/>
-
 ### Instalando pacotes
 
 ```{r}
@@ -110,3 +155,82 @@ Esta página permite explorar os pacotes, por tópicos:
 <https://cran.r-project.org/web/views/>
 
 ![](imagens/Capturar1.PNG)
+
+## Algumas funções importantes
+
+### Comentário
+
+O símbolo \# é utilizado para fazer comentários no seu código.
+
+`{r} # Isto é um comentário.}`
+
+### Atribuir
+
+O símbolo \<- é utilizado para atribuir o que quer que esteja na direita
+ao objeto à esquerda.
+
+`{r} # Atribuindo valor '1' a x x <- 1  # Visualizando x  # Atribuindo valor "1+2" x <- 1+2 x  # Verificando se x é menor que 2 isTRUE(x<2)}`
+
+Repare que para verificar o resultado, basta escrever 'x', e o programa
+devolve que x é 1.
+
+### Concatenar
+
+A função "c()" irá concatenar valores/argumentos incluídos na função.
+
+```{r}
+# Concatenando valores no objeto 'meus.dados' 
+meus.dados <- c(1, 2, 3)  
+# Visualizando 
+meus.dados
+```
+
+Existem duas variações dessa função: cbind() e rbind(). A primeira
+combina objetos como colunas, a segunda como linhas. Exemplo:
+
+```{r}
+# Criando vetores 
+sexo <- c("mas", "fem", "mas", "fem", "mas") 
+idade <- c(12, 21, 33, 25, 36) 
+status_estudante <- c(TRUE, FALSE, TRUE, FALSE, TRUE)  
+# Concatenando como colunas diferentes 
+meus.dados <- cbind(sexo, idade, status_estudante)  
+# Verificando a estrutura 
+str(meus.dados)   
+# A estrutura não parece correta... melhor salvar como data.frame 
+meus.dados <- data.frame(sexo, idade, status_estudante) 
+str(meus.dados)
+```
+
+Vimos que a função data.frame também é importante, por isso vamos
+explorá-la mais adiante.
+
+### Ajuda
+
+-   pedir sugestões para chatgpt
+
+A função "help()" traz uma página que descreve a função, seus argumentos
+e dá alguns exemplos.
+
+```{r}
+
+#| eval: false 
+#| include: false  
+# Pedindo ajuda com uma função 
+help(mean)  
+# Escrever "?" também funciona como help() 
+?mean  
+# Pedindo ajuda com um pacote 
+help(psych) 
+?psych
+??
+```
+
+### Exemplos
+
+A função "example()"
+
+```{r}
+# Solicitando exemplo da funcão "mean" 
+example("mean")
+```
