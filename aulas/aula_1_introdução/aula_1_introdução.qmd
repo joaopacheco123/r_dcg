@@ -13,38 +13,12 @@ editor_options:
     wrap: 72
 ---
 
-## Ideias
-
--   seta para ver comandos anteriores
--   vector indices
--   typeof(), class()
--   função rm(), list=ls()
--   working directory
--   criando projetos (getwd(), setwd())
--   atalhos
--   aumentar tela rstudio, layout
--   mudar tema rstudio
--   highlight function calls
--   regra de nomeação de objetos
--   r is case sentitive
--   generic functions
--   começar pelo R console e dps entrar no rstudio
--   Falar de modo geral sobre linguagem de programacao
--   Falar do R console, o que representa o output \[1\]
--   functions generic
--   quando aparece o + no console
--   mensagens de erro
--   R como calculadora
--   cancelar comandos
--   comentarios
--   estilo de sintaxe
-
 ## Introdução
 
 ### Por que aprender R?
 
 -   Saber programar é um superpoder
--   Bonito e barato
+-   Bom e barato. O R é um software de código aberto, o que significa que ele é gratuito e que a comunidade pode contribuir para o seu desenvolvimento.
 -   Criado pensando-se em análise estatística
 -   Não existe linguagem melhor *no ambiente acadêmico*
 -   R é baseado em sintaxe (linguagem), não em point-and-click
@@ -57,17 +31,25 @@ editor_options:
 2)  RStudio: <https://www.rstudio.com/>
 
 ### R vs Rstudio
+O **R** é a linguagem de programação em si. Foi criado em 1993 por Ross Ihaka e Robert Gentleman na Universidade de Auckland, Nova Zelândia. Eles desenvolveram R como uma implementação alternativa e livre da linguagem S, outra ferramenta importante para análise de dados na época.
 
--   Rodando um primeiro programa no R: "Hello, world!" no modo console
+Para utilizá-la, vamos primeiro abrir o *Rterm*, a versão do R em linha de comando.
 
-![Rconsole](imagens_aula_1/fig1_rconsole.png)
+![Rodando um primeiro programa no R: "Hello, world!" no modo console](imagens_aula_1/fig1_rconsole.png)
 
 -   \> é o prompt, solicitando um input
 
 -   O output é acompanhado de um número \[1\], que representa a posição
-    daquele item. Isso será mais útil em outputs com vários elementos
+    daquele item. Isso será mais útil em outputs com vários elementos (veja no código abaixo)
+    
+```{r}
+print(1:50)
+```
 
--   Caso queira manter o que foi escrito salvo, basta salvar em um
+
+-   Para ver o que foi escrito anteriormente, basta apertar ↑ em seu teclado
+
+-   Caso queira manter seu código salvo, salve em um
     arquivo de texto
 
 ![Arquivo de texto com código em R](imagens_aula_1/fig2_textfile.png)
@@ -79,31 +61,100 @@ editor_options:
 -   O Rstudio vem para juntar tudo isso em uma ferramente completa e
     intuitiva. É chamado de ambiente integrado de desenvolvimento (IDE
     na sigla em inglês)
-    
+
 ![Rstudio](imagens_aula_1/fig3_rstudio.png)
-1) Script (o arquivo de texto)
-2) Ambiente (onde ficarão as variáveis)
-3) R console (o output do seu código aparecerá aqui)
-4) ???
 
-### **Objetos**
+1)  **Script** (o arquivo de texto)
+2)  **Ambiente** (onde ficarão as variáveis)
+3)  **R console** (você pode escrever o código aqui também)
+4)  **Output** (arquivos, gráficos, ajuda, pacotes)
 
-R grava seus dados em 'objetos' - aba 'environment'
+### Seu primeiro projeto no Rstudio
+No *RStudio*, um projeto é uma estrutura unificada para organizar códigos, dados e arquivos associados a uma análise específica.
 
-### **Funções**
+Para criar um novo projeto, basta clicar em "Arquivo" -> " Novo projeto" e selecionar se deseja criar o projeto em uma nova pasta ou em uma pasta existente.
 
-São tipos especiais de objetos que realizam ações sobre outros objetos.
+![Criando novo projeto no Rstudio](imagens_aula_1/fig4_newproject.png)
 
-Muito da funcionalidade do R se dá através da aplicação de funções aos
-dados.
+Quando criamos um projeto, automaticamente a pasta selecionada torna-se o seu *Working Directory*. Você entenderá por que isso é relevante no decorrer do curso. Por enquanto, lembre sempre de criar um projeto novo quando for trabalhar em uma nova proposta. Agora que criou o seu projeto, vamos aprender um pouco mais de R.
 
-Exemplo: isTRUE(x) - teste de se 'x' é verdade
+### Sintaxe
+Por ser uma linguagem de programação de alto nível, a sintaxe do R se aproxima da linguagem escrita. Existem diversas formas de se escrever um mesmo bloco de código. Mesmo que muitas dessas formas funcionem, devemos tentar seguir uma forma de escrita que seja clara, concisa e siga algumas regras de estilo.
 
-### **Operadores**
+Para saber mais sobre essas regras, visite: <https://style.tidyverse.org/index.html>
 
-São sinais que também realizam ações sobre objetos.
+### Objetos
 
-#### **Aritméticos**
+Tudo no R é um objeto, desde estruturas de dados mais primitivas, como números, até estruturas mais complexas, como funções e data frames. A ideia de objeto em R é um pouco diferente de outras linguagens de programação, mas não se preocupe com isso no momento. 
+
+Vamos criar um objeto do tipo numérico, com nome "x".
+
+```{r}
+x <- 5
+```
+
+O símbolo "\<-" designa um valor (à direita) para a variável x (à esquerda). Essa atribuição também pode ser feita com o sinal de "=", porém não é recomendado.
+
+```{r}
+print(x)
+```
+
+Você pode agora referenciar diretamente o variável x, que possui valor "5". Se quiser saber o tipo da variável "x", basta utilizar a função `typeof()`.
+
+Caso deseje, um novo valor pode ser atribuído à "x":
+
+```{r}
+x <- "oi"
+```
+
+Note que o valor pode ser de um tipo diferente.
+
+```{r}
+print(x)
+```
+
+Pode ainda ser uma outra variável:
+
+```{r}
+y <- 10
+
+x <- y
+
+print(x)
+```
+
+Ou uma operação matemática:
+
+```{r}
+x <- y + 1
+
+print(x)
+```
+
+Sempre que possível, comente o seu código. Comentários são feitos com o símbolo \# e o texto em seguida é ignorado pelo R no momento da execução do código. Essa é uma boa prática em qualquer linguagem de programação e pode te ajudar a lembrar o que foi feito em cada linha de código. Acredite, você irá esquecer.
+
+```{r}
+# Imprimindo no console o valor de y
+print(y)
+```
+
+Por último, lembre que no R há diferenciação entre letras maiúsculas e minúsculas. 
+
+### Environment
+Essa aba permite a visualização dos objetos já carregados na sessão ativa do R. 
+
+![Environment](imagens_aula_1/fig5_environment.png)
+
+Caso deseje remover algum objeto, basta utilizar a função `rm()`. Para remover todos os objetos carregados, digite no console `rm(list = ls())`.
+
+```{r}
+rm(x)
+```
+
+### Operadores
+São símbolos que realizam ações sobre objetos.
+
+#### Aritméticos
 
 | Operador   | Descrição                   |
 |------------|-----------------------------|
@@ -113,7 +164,7 @@ São sinais que também realizam ações sobre objetos.
 | /          | divisão                     |
 | \^ ou \*\* | exponenciação / potenciação |
 
-#### **Lógicos e de comparação**
+#### Lógicos e de comparação
 
 | Operador | Descrição          |
 |----------|--------------------|
@@ -127,110 +178,98 @@ São sinais que também realizam ações sobre objetos.
 | x \| y   | 'x' ou 'y'         |
 | x & y    | 'x' e 'y'          |
 
-### **Pacotes**
+Sugiro que teste os operadores para criar maior familiaridade.
 
-O software básico do R já vem com várias funções pré-instaladas.
+### Funções
+São tipos especiais de objetos que realizam ações sobre outros objetos e podem retornar um valor. Muito da funcionalidade do R se dá através da aplicação de funções aos dados. Funções tem a seguinte estrutura: `função(argumento)`. Recomendo ativar a opção de destacar as chamadas de função no Rstudio: 
 
-Para adicionar funções, é necessário a instalação de pacotes (próximo
-tópico).
+"Tools" -> "Global Options" -> "Code" -> "Highlight function calls" 
 
-### Instalando pacotes
+Exemplo de função utilizada anteriormente no capítulo: `print()`.
+
+Aprenderemos novas funções durante o decorrer do curso, não se preocupe em decorá-las no momento. 
+
+### Pacotes
+Os pacotes são conjuntos de funções, dados e documentações. O software básico do R já vem com alguns pacotes pré-instalados. Para adicionar novos pacotes, é necessário instalá-los.
 
 ```{r}
+#| eval: false
+
+# A função abaixo instala pacotes
 install.packages("psych")
 
-# Para instalar com as dependências:
+# Para instalar com as dependências
 install.packages("psych", dependencies = TRUE)
 ```
 
 Depois, é importante carregar o pacote para utilizá-lo:
 
 ```{r}
+#| eval: false
+
+# Carregando o pacote psych
 library(psych)
 ```
 
+Podemos também utilizar funções de um pacote sem carregá-lo, por meio da sintaxe `{nome do pacote}::função()`
+
+```{r}
+#| eval: false
+
+psych::fa()
+```
+
+Isso também pode ser útil quando mais de um pacote possuir funções com mesmo nome. Para garantir que a função desejada seja executada, podemos utilizar a técnica descrita acima.
+
 ### Explorando pacotes
+É possível ver os pacotes instalados na aba "packages" do painel de output do Rstudio.
 
-Esta página permite explorar os pacotes, por tópicos:
-<https://cran.r-project.org/web/views/>
 
-![](imagens/Capturar1.PNG)
-
-## Algumas funções importantes
-
-### Comentário
-
-O símbolo \# é utilizado para fazer comentários no seu código.
-
-`{r} # Isto é um comentário.}`
-
-### Atribuir
-
-O símbolo \<- é utilizado para atribuir o que quer que esteja na direita
-ao objeto à esquerda.
-
-`{r} # Atribuindo valor '1' a x x <- 1  # Visualizando x  # Atribuindo valor "1+2" x <- 1+2 x  # Verificando se x é menor que 2 isTRUE(x<2)}`
-
-Repare que para verificar o resultado, basta escrever 'x', e o programa
-devolve que x é 1.
-
-### Concatenar
-
-A função "c()" irá concatenar valores/argumentos incluídos na função.
-
-```{r}
-# Concatenando valores no objeto 'meus.dados' 
-meus.dados <- c(1, 2, 3)  
-# Visualizando 
-meus.dados
-```
-
-Existem duas variações dessa função: cbind() e rbind(). A primeira
-combina objetos como colunas, a segunda como linhas. Exemplo:
-
-```{r}
-# Criando vetores 
-sexo <- c("mas", "fem", "mas", "fem", "mas") 
-idade <- c(12, 21, 33, 25, 36) 
-status_estudante <- c(TRUE, FALSE, TRUE, FALSE, TRUE)  
-# Concatenando como colunas diferentes 
-meus.dados <- cbind(sexo, idade, status_estudante)  
-# Verificando a estrutura 
-str(meus.dados)   
-# A estrutura não parece correta... melhor salvar como data.frame 
-meus.dados <- data.frame(sexo, idade, status_estudante) 
-str(meus.dados)
-```
-
-Vimos que a função data.frame também é importante, por isso vamos
-explorá-la mais adiante.
+![Pacotes instalados](imagens_aula_1/fig6_packages.png)
 
 ### Ajuda
 
--   pedir sugestões para chatgpt
-
-A função "help()" traz uma página que descreve a função, seus argumentos
-e dá alguns exemplos.
-
 ```{r}
-
 #| eval: false 
-#| include: false  
+
 # Pedindo ajuda com uma função 
-help(mean)  
-# Escrever "?" também funciona como help() 
+help(mean) 
+
+# A mesma função também pode ser utilizada para pacotes
+help(psych)
+
+# O help search irá buscar páginas relacionadas ao termo inserido
+help.search("linear regression")
+
+# Escrever "?" funciona como help() 
 ?mean  
-# Pedindo ajuda com um pacote 
-help(psych) 
-?psych
-??
-```
 
-### Exemplos
+# Escrever "??" funciona como help.search()
+??mean
 
-A função "example()"
+# Caso esteja em dúvida sobre uma função em seu script, pode selecioná-la e apertar a tecla f1
+# Teste na função abaixo
+mean()
 
-```{r}
-# Solicitando exemplo da funcão "mean" 
+# A função example traz exemplos de uso de uma determinada função
 example("mean")
 ```
+
+Acima estão alguns modos de buscar ajuda no R. Entretanto, na maior parte do tempo, essa ajuda será pelo google. Pode ter certeza que alguém já passou pelo mesmo problema que você. E a resposta estará no google.
+
+### Valorize as mensagens de erro!
+As mensagens de erro são feitas para ajudar o programador, não somente pra frustrá-lo. Dedique um momento para interpretar o que a mensagem está comunicando. Mesmo que à primeira vista pareça confusa, ela contém pistas valiosas sobre onde e por que algo deu errado. 
+
+```{r}
+#| error: true
+
+# Exemplo de erro
+print(x)
+```
+
+No início, elas aparecerão com maior frequência. Entretanto, a ausência delas não significa que seu código esteja certo. Ele pode estar sintaticamente correto, mas ainda assim produzir resultados inesperados ou incorretos. Não hesite em usar ferramentas como o ChatGPT para decifrar onde estão os erros no seu código, seja criativo.
+
+
+
+
+
