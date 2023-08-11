@@ -78,7 +78,7 @@ print(1:50)
 
 -   Podemos rodar o código com a função source(), especificando o
     caminho para o arquivo de texto (no meu caso,
-    "C:/Users/User/Documents/r_dcg/aulas/aula_1_introdução/hello_world.R")
+    "C:/Users/joao/OneDrive/Documentos/r_dcg/aulas/aula_1_introdução/hello_world.R")
     
 ## Rstudio
 
@@ -119,25 +119,24 @@ x <- 5
 
 O símbolo "\<-" designa um valor (à direita) para a variável x (à esquerda). Essa atribuição também pode ser feita com o sinal de "=", porém não é recomendado.
 
+Para rodar uma linha de código, aperte "ctrl + enter" ou aperte o botão de rodar o código, conforme imagem abaixo:
+
+![Rodando o código](imagens_aula_1/fig7_runcode.png)
+
+Você pode agora referenciar diretamente o variável x, que possui valor "5". Se quiser saber o tipo da variável "x", basta utilizar a função `typeof()`.
+
 ```{r}
 print(x)
 ```
-
-Você pode agora referenciar diretamente o variável x, que possui valor "5". Se quiser saber o tipo da variável "x", basta utilizar a função `typeof()`.
 
 Caso deseje, um novo valor pode ser atribuído à "x":
 
 ```{r}
 x <- "oi"
-```
-
-Note que o valor pode ser de um tipo diferente.
-
-```{r}
 print(x)
 ```
 
-Pode ainda ser uma outra variável:
+Note que "x" pode receber o valor de uma outra variável:
 
 ```{r}
 y <- 10
@@ -154,6 +153,8 @@ x <- y + 1
 
 print(x)
 ```
+
+No decorrer da disciplina veremos que podemos atribuir qualquer valor para "x", até mesmo funções.
 
 Sempre que possível, comente o seu código. Comentários são feitos com o símbolo \# e o texto em seguida é ignorado pelo R no momento da execução do código. Essa é uma boa prática em qualquer linguagem de programação e pode te ajudar a lembrar o que foi feito em cada linha de código. Acredite, você irá esquecer.
 
