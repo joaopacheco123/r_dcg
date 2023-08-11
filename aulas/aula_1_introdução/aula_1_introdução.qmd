@@ -1,17 +1,12 @@
 ---
 title: "Aula 1. Introdução ao R"
 author: "João Amaral"
-format: 
-  revealjs:
-    scrollable: true
-    smaller: true
-    theme: night
-execute: 
-  echo: true
+format: html
 editor_options:
   chunk_output_type: console
 ---
-## Slack: Meio de comunicação da disciplina 
+
+## Slack: Meio de comunicação da disciplina
 
 ![QR Code Slack](imagens_aula_1/Slack.png)
 
@@ -36,7 +31,6 @@ editor_options:
 | 22/09/2023 | Gráficos avançados usando ggplot2 | João Pacheco |
 | Assíncrona | Avaliação 1                       | Todos        |
 
-
 # Introdução
 
 ## Por que aprender R?
@@ -53,6 +47,7 @@ editor_options:
 2)  RStudio: <https://www.rstudio.com/>
 
 ## R vs Rstudio
+
 O **R** é a linguagem de programação em si. Foi criado em 1993 por Ross Ihaka e Robert Gentleman na Universidade de Auckland, Nova Zelândia. Eles desenvolveram R como uma implementação alternativa e livre da linguagem S, outra ferramenta importante para análise de dados na época.
 
 Para utilizá-la, vamos primeiro abrir o *Rterm*, a versão do R em linha de comando.
@@ -61,30 +56,25 @@ Para utilizá-la, vamos primeiro abrir o *Rterm*, a versão do R em linha de com
 
 -   \> é o prompt, solicitando um input
 
--   O output é acompanhado de um número \[1\], que representa a posição
-    daquele item. Isso será mais útil em outputs com vários elementos (veja no código abaixo)
-    
+-   O output é acompanhado de um número \[1\], que representa a posição daquele item. Isso será mais útil em outputs com vários elementos (veja no código abaixo)
+
 ```{r}
 print(1:50)
 ```
 
-
 -   Para ver o que foi escrito anteriormente, basta apertar ↑ em seu teclado
 
--   Caso queira manter seu código salvo, salve em um
-    arquivo de texto
+## Salvando arquivos
+
+-   Caso queira manter seu código salvo, salve em um arquivo de texto
 
 ![Arquivo de texto com código em R](imagens_aula_1/fig2_textfile.png)
 
--   Podemos rodar o código com a função source(), especificando o
-    caminho para o arquivo de texto (no meu caso,
-    "C:/Users/joao/OneDrive/Documentos/r_dcg/aulas/aula_1_introdução/hello_world.R")
-    
+-   Podemos rodar o código com a função source(), especificando o caminho para o arquivo de texto (no meu caso, "C:/Users/joao/OneDrive/Documentos/r_dcg/aulas/aula_1_introdução/hello_world.R")
+
 ## Rstudio
 
--   O Rstudio vem para juntar tudo isso em uma ferramente completa e
-    intuitiva. É chamado de ambiente integrado de desenvolvimento (IDE
-    na sigla em inglês)
+-   O Rstudio vem para juntar tudo isso em uma ferramente completa e intuitiva. É chamado de ambiente integrado de desenvolvimento (IDE na sigla em inglês)
 
 ![Rstudio](imagens_aula_1/fig3_rstudio.png)
 
@@ -94,24 +84,26 @@ print(1:50)
 4)  **Output** (arquivos, gráficos, ajuda, pacotes)
 
 ## Seu primeiro projeto no Rstudio
+
 No *RStudio*, um projeto é uma estrutura unificada para organizar códigos, dados e arquivos associados a uma análise específica.
 
-Para criar um novo projeto, basta clicar em "Arquivo" -> " Novo projeto" e selecionar se deseja criar o projeto em uma nova pasta ou em uma pasta existente.
+Para criar um novo projeto, basta clicar em "Arquivo" -\> " Novo projeto" e selecionar se deseja criar o projeto em uma nova pasta ou em uma pasta existente.
 
 ![Criando novo projeto no Rstudio](imagens_aula_1/fig4_newproject.png)
 
 Quando criamos um projeto, automaticamente a pasta selecionada torna-se o seu *Working Directory*. Você entenderá por que isso é relevante no decorrer do curso. Por enquanto, lembre sempre de criar um projeto novo quando for trabalhar em uma nova proposta. Agora que criou o seu projeto, vamos aprender um pouco mais de R.
 
 ## Sintaxe
+
 Por ser uma linguagem de programação de alto nível, a sintaxe do R se aproxima da linguagem escrita. Existem diversas formas de se escrever um mesmo bloco de código. Mesmo que muitas dessas formas funcionem, devemos tentar seguir uma forma de escrita que seja clara, concisa e siga algumas regras de estilo.
 
 Para saber mais sobre essas regras, visite: <https://style.tidyverse.org/index.html>
 
 ## Objetos
 
-Tudo no R é um objeto, desde estruturas de dados mais primitivas, como números, até estruturas mais complexas, como funções e data frames. A ideia de objeto em R é um pouco diferente de outras linguagens de programação, mas não se preocupe com isso no momento. 
+Tudo no R é um objeto, desde estruturas de dados mais primitivas, como números, até estruturas mais complexas, como funções e data frames. A ideia de objeto em R é um pouco diferente de outras linguagens de programação, mas não se preocupe com isso no momento.
 
-Vamos criar um objeto do tipo numérico, com nome "x".
+Vamos criar um objeto (variável) do tipo numérico, com nome "x".
 
 ```{r}
 x <- 5
@@ -163,10 +155,11 @@ Sempre que possível, comente o seu código. Comentários são feitos com o sím
 print(y)
 ```
 
-Por último, lembre que no R há diferenciação entre letras maiúsculas e minúsculas. 
+Por último, lembre que no R há diferenciação entre letras maiúsculas e minúsculas.
 
 ## Environment
-Essa aba permite a visualização dos objetos já carregados na sessão ativa do R. 
+
+Essa aba permite a visualização dos objetos já carregados na sessão ativa do R.
 
 ![Environment](imagens_aula_1/fig5_environment.png)
 
@@ -177,6 +170,7 @@ rm(x)
 ```
 
 ## Operadores
+
 São símbolos que realizam ações sobre objetos.
 
 #### Aritméticos
@@ -205,16 +199,104 @@ São símbolos que realizam ações sobre objetos.
 
 Sugiro que teste os operadores para criar maior familiaridade.
 
-## Funções
-São tipos especiais de objetos que realizam ações sobre outros objetos e podem retornar um valor. Muito da funcionalidade do R se dá através da aplicação de funções aos dados. Funções tem a seguinte estrutura: `função(argumento)`. Recomendo ativar a opção de destacar as chamadas de função no Rstudio: 
+## Estruturas de controle
 
-"Tools" -> "Global Options" -> "Code" -> "Highlight function calls" 
+### Loops
+Permite que um conjunto de instruções seja executado n vezes. O mais utilizado é o "for" loop. 
+
+Tem a seguinte estrutura:
+```{r}
+#| eval: false
+
+for(var in objeto_iteravel) {
+  # faça algo
+}
+```
+
+Exemplos de for loop:
+```{r}
+# Iterando em um vetor numérico
+for(i in 1:10) {
+  print(i)
+}
+
+# Iterando em um vetor de caracteres
+## Criando um vetor 
+nomes <- c("joao", "mauricio", "joao pedro")
+
+# O loop pode iterar por vetores, listas, etc
+for(nome in nomes) {
+  print(nome)
+}
+```
+
+
+### If-else
+É uma estrutura de controle condicional. Avalia se determinado argumento é verdadeiro e, caso seja, executa a linha de código em seguida. Podemos especificar um comportamento se a condição for falsa com o "else". 
+
+```{r}
+#| eval: false
+
+# Estrutura do if
+if(condição) {
+  # faça isso
+} else {
+  # faça essa outra coisa
+}
+```
+
+Olhe o exemplo abaixo:
+```{r}
+x <- 1
+
+if(x == 2) {
+  print("x tem o valor de 2")
+} else {
+  print("Essa condição é falsa!")
+}
+```
+
+O "if" também pode ser utilizado dentro de um loop:
+```{r}
+# Cria vetor numeros
+numeros <- c(1, 2, 3, 4, 5)
+
+# For loop com if 
+for(numero in numeros) {
+  # Avalia se a condição é verdadeira
+  if((numero %% 2) == 0) {
+    print(paste({numero}, "é par"))
+  } else {
+    print(paste({numero}, "é ímpar"))
+  }
+}
+
+```
+
+
+## Funções
+
+São tipos especiais de objetos que realizam ações sobre outros objetos e podem retornar um valor. Muito da funcionalidade do R se dá através da aplicação de funções aos dados. Funções tem a seguinte estrutura: `função(argumento)`. Recomendo ativar a opção de destacar as chamadas de função no Rstudio:
+
+"Tools" -\> "Global Options" -\> "Code" -\> "Highlight function calls"
 
 Exemplo de função utilizada anteriormente no capítulo: `print()`.
 
-Aprenderemos novas funções durante o decorrer do curso, não se preocupe em decorá-las no momento. 
+Para criar sua própria função:
+```{r}
+# Criando função para somar dois valores
+somar <- function(x, y) {
+  return(x + y)
+}
+
+somar(1,2)
+```
+
+
+Aprenderemos novas funções durante o decorrer do curso, não se preocupe em decorá-las no momento.
 
 ## Pacotes
+
 Os pacotes são conjuntos de funções, dados e documentações. O software básico do R já vem com alguns pacotes pré-instalados. Para adicionar novos pacotes, é necessário instalá-los.
 
 ```{r}
@@ -247,8 +329,8 @@ psych::fa()
 Isso também pode ser útil quando mais de um pacote possuir funções com mesmo nome. Para garantir que a função desejada seja executada, podemos utilizar a técnica descrita acima.
 
 ## Explorando pacotes
-É possível ver os pacotes instalados na aba "packages" do painel de output do Rstudio.
 
+É possível ver os pacotes instalados na aba "packages" do painel de output do Rstudio.
 
 ![Pacotes instalados](imagens_aula_1/fig6_packages.png)
 
@@ -283,7 +365,8 @@ example("mean")
 Acima estão alguns modos de buscar ajuda no R. Entretanto, na maior parte do tempo, essa ajuda será pelo google. Pode ter certeza que alguém já passou pelo mesmo problema que você. E a resposta estará no google.
 
 ## Valorize as mensagens de erro!
-As mensagens de erro são feitas para ajudar o programador, não somente pra frustrá-lo. Dedique um momento para interpretar o que a mensagem está comunicando. Mesmo que à primeira vista pareça confusa, ela contém pistas valiosas sobre onde e por que algo deu errado. 
+
+As mensagens de erro são feitas para ajudar o programador, não somente pra frustrá-lo. Dedique um momento para interpretar o que a mensagem está comunicando. Mesmo que à primeira vista pareça confusa, ela contém pistas valiosas sobre onde e por que algo deu errado.
 
 ```{r}
 #| error: true
@@ -293,8 +376,3 @@ print(x)
 ```
 
 No início, elas aparecerão com maior frequência. Entretanto, a ausência delas não significa que seu código esteja certo. Ele pode estar sintaticamente correto, mas ainda assim produzir resultados inesperados ou incorretos. Não hesite em usar ferramentas como o ChatGPT para decifrar onde estão os erros no seu código, seja criativo.
-
-
-
-
-
