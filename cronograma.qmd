@@ -23,21 +23,8 @@ editor: visual
 ### Aula 1. Introdução à Linguagem R
 
 -   Apresentação do cronograma da primeira unidade
--   Explicações sobre a prova: arquivo markdown respondendo perguntas específicas conforme cada aula no banco de dados gerado. O código deve rodar e gerar resultados corretos conforme o gabarito.
 -   Introdução à Linguagem R
-    -   Instalação
-    -   Ambiente do RStudio
-    -   Script com comandos
-    -   Operações matemáticas
-    -   Objetos, funções, operadores
-    -   Números, vetores, tabelas de dados e matrizes
-    -   Instalando e carregando pacotes
--   Apresentação dos livros principais
-    -   Utilizando a linguagem R
-    -   Discovering statistics using R (Andy Field)
-    -   R in Action
-    -   R Cookbook
--   Lista de exercícios
+-   Sugestão de bibliografia
 
 ### Aula 2. Quarto
 

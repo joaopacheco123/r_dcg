@@ -1,21 +1,45 @@
 ---
-title: "Aula 1. Introdução"
+title: "Aula 1. Introdução ao R"
 author: "João Amaral"
-format:
-  html:
-    toc: true
-    toc_float:
-      collapsed: true
-      smooth_scrool: true
+format: 
+  revealjs:
+    scrollable: true
+    smaller: true
+    theme: night
+execute: 
+  echo: true
 editor_options:
   chunk_output_type: console
-  markdown: 
-    wrap: 72
 ---
+## Slack: Meio de comunicação da disciplina 
 
-## Introdução
+![QR Code Slack](imagens_aula_1/Slack.png)
 
-### Por que aprender R?
+<https://join.slack.com/t/dcganlisededa-zvp6871/shared_invite/zt-1zux7ihme-ucqJZtO6tyCur_Vu650upw>
+
+## Questionário para ser preenchido para a próxima aula
+
+![QR Code Questionário](imagens_aula_1/Forms.png)
+
+<https://forms.gle/MBc2Syi1fCrxiXQHA>
+
+## Cronograma: Parte 1 da disciplina
+
+| Dia        | Assunto                           | Professor    |
+|------------|-----------------------------------|--------------|
+| 11/08/2023 | Introdução à Linguagem R          | João Amaral  |
+| 11/08/2023 | Quarto                            | João Pacheco |
+| 18/08/2023 | Estrutura de dados                | João Pacheco |
+| 25/08/2023 | Manipulando dados com dplyr       | João Amaral  |
+| 01/09/2023 | Estatística descritiva e tabelas  | João Amaral  |
+| 15/09/2023 | Visualizando dados e modelando    | João Pacheco |
+| 22/09/2023 | Gráficos avançados usando ggplot2 | João Pacheco |
+| Assíncrona | Avaliação 1                       | Todos        |
+
+
+# Introdução
+
+## Por que aprender R?
 
 -   Saber programar é um superpoder
 -   Bom e barato. O R é um software de código aberto, o que significa que ele é gratuito e que a comunidade pode contribuir para o seu desenvolvimento.
@@ -23,14 +47,12 @@ editor_options:
 -   Não existe linguagem melhor *no ambiente acadêmico*
 -   R é baseado em sintaxe (linguagem), não em point-and-click
 
-## Instalação
-
-### Instalando R e RStudio
+## Instalando R e RStudio
 
 1)  R: <http://www.r-project.org>
 2)  RStudio: <https://www.rstudio.com/>
 
-### R vs Rstudio
+## R vs Rstudio
 O **R** é a linguagem de programação em si. Foi criado em 1993 por Ross Ihaka e Robert Gentleman na Universidade de Auckland, Nova Zelândia. Eles desenvolveram R como uma implementação alternativa e livre da linguagem S, outra ferramenta importante para análise de dados na época.
 
 Para utilizá-la, vamos primeiro abrir o *Rterm*, a versão do R em linha de comando.
@@ -57,6 +79,8 @@ print(1:50)
 -   Podemos rodar o código com a função source(), especificando o
     caminho para o arquivo de texto (no meu caso,
     "C:/Users/User/Documents/r_dcg/aulas/aula_1_introdução/hello_world.R")
+    
+## Rstudio
 
 -   O Rstudio vem para juntar tudo isso em uma ferramente completa e
     intuitiva. É chamado de ambiente integrado de desenvolvimento (IDE
@@ -69,7 +93,7 @@ print(1:50)
 3)  **R console** (você pode escrever o código aqui também)
 4)  **Output** (arquivos, gráficos, ajuda, pacotes)
 
-### Seu primeiro projeto no Rstudio
+## Seu primeiro projeto no Rstudio
 No *RStudio*, um projeto é uma estrutura unificada para organizar códigos, dados e arquivos associados a uma análise específica.
 
 Para criar um novo projeto, basta clicar em "Arquivo" -> " Novo projeto" e selecionar se deseja criar o projeto em uma nova pasta ou em uma pasta existente.
@@ -78,12 +102,12 @@ Para criar um novo projeto, basta clicar em "Arquivo" -> " Novo projeto" e selec
 
 Quando criamos um projeto, automaticamente a pasta selecionada torna-se o seu *Working Directory*. Você entenderá por que isso é relevante no decorrer do curso. Por enquanto, lembre sempre de criar um projeto novo quando for trabalhar em uma nova proposta. Agora que criou o seu projeto, vamos aprender um pouco mais de R.
 
-### Sintaxe
+## Sintaxe
 Por ser uma linguagem de programação de alto nível, a sintaxe do R se aproxima da linguagem escrita. Existem diversas formas de se escrever um mesmo bloco de código. Mesmo que muitas dessas formas funcionem, devemos tentar seguir uma forma de escrita que seja clara, concisa e siga algumas regras de estilo.
 
 Para saber mais sobre essas regras, visite: <https://style.tidyverse.org/index.html>
 
-### Objetos
+## Objetos
 
 Tudo no R é um objeto, desde estruturas de dados mais primitivas, como números, até estruturas mais complexas, como funções e data frames. A ideia de objeto em R é um pouco diferente de outras linguagens de programação, mas não se preocupe com isso no momento. 
 
@@ -140,7 +164,7 @@ print(y)
 
 Por último, lembre que no R há diferenciação entre letras maiúsculas e minúsculas. 
 
-### Environment
+## Environment
 Essa aba permite a visualização dos objetos já carregados na sessão ativa do R. 
 
 ![Environment](imagens_aula_1/fig5_environment.png)
@@ -151,7 +175,7 @@ Caso deseje remover algum objeto, basta utilizar a função `rm()`. Para remover
 rm(x)
 ```
 
-### Operadores
+## Operadores
 São símbolos que realizam ações sobre objetos.
 
 #### Aritméticos
@@ -180,7 +204,7 @@ São símbolos que realizam ações sobre objetos.
 
 Sugiro que teste os operadores para criar maior familiaridade.
 
-### Funções
+## Funções
 São tipos especiais de objetos que realizam ações sobre outros objetos e podem retornar um valor. Muito da funcionalidade do R se dá através da aplicação de funções aos dados. Funções tem a seguinte estrutura: `função(argumento)`. Recomendo ativar a opção de destacar as chamadas de função no Rstudio: 
 
 "Tools" -> "Global Options" -> "Code" -> "Highlight function calls" 
@@ -189,7 +213,7 @@ Exemplo de função utilizada anteriormente no capítulo: `print()`.
 
 Aprenderemos novas funções durante o decorrer do curso, não se preocupe em decorá-las no momento. 
 
-### Pacotes
+## Pacotes
 Os pacotes são conjuntos de funções, dados e documentações. O software básico do R já vem com alguns pacotes pré-instalados. Para adicionar novos pacotes, é necessário instalá-los.
 
 ```{r}
@@ -221,13 +245,13 @@ psych::fa()
 
 Isso também pode ser útil quando mais de um pacote possuir funções com mesmo nome. Para garantir que a função desejada seja executada, podemos utilizar a técnica descrita acima.
 
-### Explorando pacotes
+## Explorando pacotes
 É possível ver os pacotes instalados na aba "packages" do painel de output do Rstudio.
 
 
 ![Pacotes instalados](imagens_aula_1/fig6_packages.png)
 
-### Ajuda
+## Ajuda
 
 ```{r}
 #| eval: false 
@@ -257,7 +281,7 @@ example("mean")
 
 Acima estão alguns modos de buscar ajuda no R. Entretanto, na maior parte do tempo, essa ajuda será pelo google. Pode ter certeza que alguém já passou pelo mesmo problema que você. E a resposta estará no google.
 
-### Valorize as mensagens de erro!
+## Valorize as mensagens de erro!
 As mensagens de erro são feitas para ajudar o programador, não somente pra frustrá-lo. Dedique um momento para interpretar o que a mensagem está comunicando. Mesmo que à primeira vista pareça confusa, ela contém pistas valiosas sobre onde e por que algo deu errado. 
 
 ```{r}
