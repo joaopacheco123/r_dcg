@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="João Pedro Gonçalves Pacheco">
 
 <title>Introdução às estruturas de dados e tipos de variáveis em R</title>
 <style>
@@ -75,7 +76,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="estrutura.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#i.-classes-de-objetos-em-r" id="toc-i.-classes-de-objetos-em-r" class="nav-link active" data-scroll-target="#i.-classes-de-objetos-em-r">I. Classes de objetos em R</a>
+  <ul class="collapse">
+  <li><a href="#a.-numérico" id="toc-a.-numérico" class="nav-link" data-scroll-target="#a.-numérico">A. Numérico</a></li>
+  <li><a href="#b.-caractere-character" id="toc-b.-caractere-character" class="nav-link" data-scroll-target="#b.-caractere-character">B. Caractere (<em>character</em>)</a></li>
+  <li><a href="#c.-lógico-booleano" id="toc-c.-lógico-booleano" class="nav-link" data-scroll-target="#c.-lógico-booleano">C. Lógico (Booleano)</a></li>
+  <li><a href="#d.-fator" id="toc-d.-fator" class="nav-link" data-scroll-target="#d.-fator">D. Fator</a></li>
+  <li><a href="#e.-data-e-hora" id="toc-e.-data-e-hora" class="nav-link" data-scroll-target="#e.-data-e-hora">E. Data e Hora</a></li>
+  </ul></li>
+  <li><a href="#ii.-estruturas-de-dados-básicas-em-r" id="toc-ii.-estruturas-de-dados-básicas-em-r" class="nav-link" data-scroll-target="#ii.-estruturas-de-dados-básicas-em-r">II. Estruturas de dados básicas em R</a>
+  <ul class="collapse">
+  <li><a href="#a.-vetores" id="toc-a.-vetores" class="nav-link" data-scroll-target="#a.-vetores">A. Vetores</a></li>
+  <li><a href="#b.-matrizes" id="toc-b.-matrizes" class="nav-link" data-scroll-target="#b.-matrizes">B. Matrizes</a></li>
+  <li><a href="#c.-sequências-arrays" id="toc-c.-sequências-arrays" class="nav-link" data-scroll-target="#c.-sequências-arrays">C. Sequências (<em>arrays</em>)</a></li>
+  <li><a href="#d.-listas" id="toc-d.-listas" class="nav-link" data-scroll-target="#d.-listas">D. Listas</a></li>
+  <li><a href="#e.-dataframes" id="toc-e.-dataframes" class="nav-link" data-scroll-target="#e.-dataframes">E. Dataframes</a></li>
+  </ul></li>
+  <li><a href="#iii.-coerção-e-conversão-de-tipo" id="toc-iii.-coerção-e-conversão-de-tipo" class="nav-link" data-scroll-target="#iii.-coerção-e-conversão-de-tipo">III. Coerção e conversão de tipo</a>
+  <ul class="collapse">
+  <li><a href="#a.-coerção-implícita" id="toc-a.-coerção-implícita" class="nav-link" data-scroll-target="#a.-coerção-implícita">A. Coerção implícita</a></li>
+  <li><a href="#b.-coerção-explícita-usando-funções-as.numeric-as.character-as.logical-etc." id="toc-b.-coerção-explícita-usando-funções-as.numeric-as.character-as.logical-etc." class="nav-link" data-scroll-target="#b.-coerção-explícita-usando-funções-as.numeric-as.character-as.logical-etc.">B. Coerção explícita usando funções (as.numeric, as.character, as.logical, etc.)</a></li>
+  </ul></li>
+  <li><a href="#iv.-fatores-em-detalhe" id="toc-iv.-fatores-em-detalhe" class="nav-link" data-scroll-target="#iv.-fatores-em-detalhe">IV. Fatores em detalhe</a>
+  <ul class="collapse">
+  <li><a href="#a.-compreendendo-dados-categóricos" id="toc-a.-compreendendo-dados-categóricos" class="nav-link" data-scroll-target="#a.-compreendendo-dados-categóricos">A. Compreendendo dados categóricos</a></li>
+  <li><a href="#b.-criando-e-trabalhando-com-fatores" id="toc-b.-criando-e-trabalhando-com-fatores" class="nav-link" data-scroll-target="#b.-criando-e-trabalhando-com-fatores">B. Criando e trabalhando com fatores</a></li>
+  <li><a href="#c.-níveis-de-fator-de-reordenação" id="toc-c.-níveis-de-fator-de-reordenação" class="nav-link" data-scroll-target="#c.-níveis-de-fator-de-reordenação">C. Níveis de fator de reordenação</a></li>
+  </ul></li>
+  <li><a href="#v.-práticas-recomendadas-para-trabalhar-com-estruturas-de-dados" id="toc-v.-práticas-recomendadas-para-trabalhar-com-estruturas-de-dados" class="nav-link" data-scroll-target="#v.-práticas-recomendadas-para-trabalhar-com-estruturas-de-dados">V. Práticas recomendadas para trabalhar com estruturas de dados</a>
+  <ul class="collapse">
+  <li><a href="#a.-convenções-de-nomenclatura" id="toc-a.-convenções-de-nomenclatura" class="nav-link" data-scroll-target="#a.-convenções-de-nomenclatura">A. Convenções de nomenclatura</a></li>
+  <li><a href="#b.-dados-organizados-tidy-data" id="toc-b.-dados-organizados-tidy-data" class="nav-link" data-scroll-target="#b.-dados-organizados-tidy-data">B. Dados organizados (tidy data)</a></li>
+  </ul></li>
+  <li><a href="#vi.-conclusão" id="toc-vi.-conclusão" class="nav-link" data-scroll-target="#vi.-conclusão">VI. Conclusão</a></li>
+  <li><a href="#vii.-exercícios-e-exemplos" id="toc-vii.-exercícios-e-exemplos" class="nav-link" data-scroll-target="#vii.-exercícios-e-exemplos">VII. Exercícios e Exemplos</a>
+  <ul class="collapse">
+  <li><a href="#exercício-1" id="toc-exercício-1" class="nav-link" data-scroll-target="#exercício-1">Exercício 1:</a></li>
+  <li><a href="#exercício-2" id="toc-exercício-2" class="nav-link" data-scroll-target="#exercício-2">Exercício 2:</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -87,6 +132,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>João Pedro Gonçalves Pacheco </p>
+          </div>
+  </div>
     
   
     
@@ -95,11 +146,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>Relembrando</p>
+<p>Precisamos, inicialmente, definir o que é um objeto em R.</p>
 <dl>
 <dt>objeto</dt>
 <dd>
-<p>Um <strong>objeto</strong> é qualquer coisa que pode ser associado (e armazenado) em uma variável.</p>
+<p>Um <strong>objeto</strong> é qualquer coisa que pode ser associada (e armazenada) em uma variável.</p>
 </dd>
 </dl>
 <p>As variáveis em R não são predefinidas; elas assumem o tipo (classe) do objeto que for atribuído a elas.</p>
@@ -328,7 +379,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">aprovado =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>)</span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Manipulando dataframes (adicionando, removendo, renomeando colunas)</p>
+<section id="manipulando-dataframes-adicionando-removendo-renomeando-colunas" class="level4">
+<h4 class="anchored" data-anchor-id="manipulando-dataframes-adicionando-removendo-renomeando-colunas">Manipulando dataframes (adicionando, removendo, renomeando colunas)</h4>
 <p>Adicionar colunas: você pode adicionar novas colunas a um quadro de dados usando o operador de atribuição ($ ou []).</p>
 <p>Removendo colunas: Use a função subset() para excluir colunas indesejadas.</p>
 <p>Renomeando colunas: Use a função names() para alterar os nomes das colunas.</p>
@@ -342,7 +394,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Renomeando colunas</span></span>
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dados_aluno_subset) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Nome"</span>, <span class="st">"Pontuação"</span>, <span class="st">"Aprovado"</span>, <span class="st">"Gênero"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Operações básicas (subconjunto, filtragem, classificação)</p>
+</section>
+<section id="operações-básicas-subconjunto-filtragem-classificação" class="level4">
+<h4 class="anchored" data-anchor-id="operações-básicas-subconjunto-filtragem-classificação">Operações básicas (subconjunto, filtragem, classificação)</h4>
 <ul>
 <li><p>Subconjunto de linhas e colunas: você pode usar a indexação para acessar linhas ou colunas específicas em um quadro de dados.</p></li>
 <li><p>Filtragem: Use condições lógicas para filtrar linhas com base em determinados critérios.</p></li>
@@ -362,6 +416,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>sorted_data <span class="ot">&lt;-</span> dados_aluno[<span class="fu">order</span>(<span class="sc">-</span>dados_aluno<span class="sc">$</span>pontuação), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Observação: os dataframes são estruturas de dados fundamentais para trabalhar com conjuntos de dados do mundo real em R. Eles permitem que você armazene e manipule dados de forma eficaz para várias tarefas de análise e visualização de dados. Os exemplos fornecidos aqui demonstram algumas operações básicas, mas há muito mais funções e técnicas disponíveis para manipulação de quadros de dados em R.</p>
+</section>
 </section>
 </section>
 <section id="iii.-coerção-e-conversão-de-tipo" class="level2">
