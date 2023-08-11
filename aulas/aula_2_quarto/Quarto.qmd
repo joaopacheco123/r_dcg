@@ -1,11 +1,15 @@
 ---
 title: "Quarto"
-author: Prof. João Pedro G. Pacheco
+author: "Prof. João Pedro G. Pacheco"
 format:
   html: 
       theme: cosmo
       toc: true
   pdf: default
+  revealjs:
+    scrollable: true
+    smaller: true
+    theme: night
 editor: visual
 bibliography: references.bib
 ---
@@ -34,7 +38,7 @@ Você pode optar por renderizar o seu `.qmd` como HTML ou em outros formatos, co
 
 Para começar, certifique-se de ter o R instalado em seu computador, em sua versão mais recente. Você pode baixar a versão mais recente do R em <https://cran.r-project.org/>.
 
-Certifique-se de ter instalado os pacotes `tidyverse`e `palmerpenguins`:
+Certifique-se de ter instalado os pacotes `tidyverse` e `palmerpenguins`:
 
 ```{r}
 # install.packages("tidyverse")
