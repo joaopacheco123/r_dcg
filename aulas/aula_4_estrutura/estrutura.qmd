@@ -1,16 +1,17 @@
 ---
 title: "Introdução às estruturas de dados e tipos de variáveis em R"
+author: João Pedro Gonçalves Pacheco
 format:
-  html: default
-  pdf: default
+  html: 
+    toc: true
 editor: visual
 ---
 
-Relembrando
+Precisamos, inicialmente, definir o que é um objeto em R.
 
 objeto
 
-:   Um **objeto** é qualquer coisa que pode ser associado (e armazenado) em uma variável.
+:   Um **objeto** é qualquer coisa que pode ser associada (e armazenada) em uma variável.
 
 As variáveis em R não são predefinidas; elas assumem o tipo (classe) do objeto que for atribuído a elas.
 
@@ -278,7 +279,7 @@ dados_aluno <- data.frame(
 )
 ```
 
-Manipulando dataframes (adicionando, removendo, renomeando colunas)
+#### Manipulando dataframes (adicionando, removendo, renomeando colunas)
 
 Adicionar colunas: você pode adicionar novas colunas a um quadro de dados usando o operador de atribuição (\$ ou \[\]).
 
@@ -297,7 +298,7 @@ dados_aluno_subset <- subset(dados_aluno, select = -idade)
 names(dados_aluno_subset) <- c("Nome", "Pontuação", "Aprovado", "Gênero")
 ```
 
-Operações básicas (subconjunto, filtragem, classificação)
+#### Operações básicas (subconjunto, filtragem, classificação)
 
 -   Subconjunto de linhas e colunas: você pode usar a indexação para acessar linhas ou colunas específicas em um quadro de dados.
 
@@ -460,7 +461,7 @@ average_score <- mean(pontuação_aluno)
 
 Evite usar nomes como "média" ou "dados" para suas variáveis
 
-### B. Dados organizados (tidy data) 
+### B. Dados organizados (tidy data)
 
 #### O que são dados organizados?
 
