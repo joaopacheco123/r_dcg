@@ -25,6 +25,81 @@ atribui a *x* o valor (inteiro) 1, e é perfeitamente válido reatribuir:
 
 A classe define a forma que o objeto será manipulado pelas diferentes funções.
 
+Para essa aula, nós vamos utilizar o banco de dados gerado pela turma. Vamos carregá-lo:
+
+```{r}
+library(readxl)
+dados_turma_1 <- read_excel("dados_turma_1.xlsx")
+View(dados_turma_1)
+
+# Agora experimente carregar os dados através do painel direito (Import Dataset...)
+
+# Visualize os dados clicando no objeto na aba "Environment".
+```
+
+Vamos fazer uma limpeza inicial nesse banco de dados para facilitar a leitura.
+
+```{r}
+# Removendo a primeira linha (row)
+dados_turma_1 <- dados_turma_1[-1,]
+
+# Vamos remover também a primeira coluna, que é apenas o carimbo de data e hora.
+dados_turma_1 <- dados_turma_1[,-1]
+```
+
+Agora veja o código para visualizar algumas estatísticas da idade dos participantes:
+
+```{r}
+summary(dados_turma_1$`Idade (em anos, somente número)`)
+```
+
+Visualize esses dados em um gráfico de barras:
+
+```{r}
+barplot(table(dados_turma_1$`Idade (em anos, somente número)`))
+```
+
+Ok, agora vamos começar a falar da estrutura desses dados no R.
+
+Vamos rodar o código abaixo só para renomear as colunas para nomes menores e mais fáceis de acessar.
+
+```{r}
+# Novos nomes para as colunas
+novos_nomes <- c(
+  "idade",
+  "altura",
+  "cinema",
+  "musica",
+  "atividadefisica",
+  "otimismo",
+  "utilidade",
+  "tranquilidade",
+  "lidarproblemas",
+  "clarezamental",
+  "proximidade",
+  "decisoes",
+  "comunicativo",
+  "depressivo",
+  "reservado",
+  "controleestresse",
+  "energia",
+  "tensao",
+  "entusiasmo",
+  "preocupação",
+  "quietude",
+  "estabilidadeemocional",
+  "assertividade",
+  "temperamento",
+  "timidez",
+  "calma",
+  "sociabilidade",
+  "nervosismo"
+)
+
+# Renomear as colunas
+colnames(dados_turma_1) <- novos_nomes
+```
+
 ## I. Classes de objetos em R
 
 A classe de um objeto é muito importante dentro do R. É a partir dela que as funções e operadores conseguem saber exatamente o que fazer com um objeto.
@@ -33,12 +108,16 @@ Por exemplo, se tentarmos somar "a" e "b", uma mensagem de erro aparecerá. Isso
 
 ```{r}
 #| error: true
-1+1
+1 + 1
 
 "a" + "b"
 ```
 
+Temos, então, algumas classes principais de objetos: **númerico, caractere, lógico, fator e data/hora**.
+
 ### A. Numérico
+
+A classe de objeto numérico se divide em 2: inteiros e duplos.
 
 #### 1. Inteiros
 
@@ -48,10 +127,40 @@ Em R, você pode criar um número inteiro usando a função `as.integer()` ou si
 
 ```{r}
 # Criando uma variável inteira
-meu_integer <- as.integer(42)
+meu_inteiro <- as.integer(42)
 
-# Criando uma variável inteira
-meu_integer <- as.integer(42)
+# Vamos verificar qual é a classe usando a função class()
+class(meu_inteiro)
+
+# Veja que "meu_inteiro" é da classe "integer"
+```
+
+Vamos ver se temos algum inteiro no nosso banco de dados. Para isso, vamos inspecionar com a função sapply(), aplicada a colnames() no banco de dados. Clique aqui para saber mais sobre a explicação da função[^1].
+
+[^1]: Vamos explicar essa função em detalhes:
+
+    1.  **`sapply(dados_turma_1, is.integer)`**: Aqui estamos usando a função **`sapply`**, que é usada para aplicar uma função a cada elemento de uma lista ou vetor. No caso, a lista é **`dados_turma_1`** (seu conjunto de dados). A função que estamos aplicando é **`is.integer`**, que retorna **`TRUE`** se um elemento for do tipo inteiro (integer) e **`FALSE`** caso contrário. Portanto, o resultado dessa parte é um vetor lógico (booleano) indicando para cada coluna se ela contém valores inteiros.
+
+    2.  **`colnames(dados_turma_1)[...]`**: Aqui estamos usando **`colnames(dados_turma_1)`** para obter os nomes das colunas do conjunto de dados. No entanto, queremos filtrar apenas as colunas que contêm valores inteiros. Portanto, usamos o resultado anterior (vetor lógico) como índice para extrair apenas os nomes das colunas onde o resultado é **`TRUE`**.
+
+    Em resumo, o código **`[sapply(dados_turma_1, is.integer)]`** verifica cada coluna do conjunto de dados para determinar se ela contém valores inteiros. O resultado é um vetor lógico indicando quais colunas têm valores inteiros. E então, usando esse vetor lógico como índice, estamos extraindo os nomes das colunas que têm valores inteiros e atribuindo-os à variável **`colunas_com_inteiro`**.
+
+```{r}
+# Inspecionando:
+colunas_com_inteiro <- colnames(dados_turma_1)[sapply(dados_turma_1, is.integer)]
+
+# Veja que ela não encontra nenhum inteiro no momento.
+# Usando a função class(), vemos que "idade" foi salvo como "numeric", que é menos específico.
+class(dados_turma_1$idade)
+
+# Nós podemos alterar "idade" para a classe de número inteiro usando a função as.integer()
+dados_turma_1$idade <- as.integer(dados_turma_1$idade)
+
+# Veja que mudou:
+class(dados_turma_1$idade)
+
+# Agora a nossa função irá reconhecer que temos uma variável de número inteiro no banco de dados.
+colunas_com_inteiro <- colnames(dados_turma_1)[sapply(dados_turma_1, is.integer)]
 ```
 
 #### 2. Duplo (*double/float*)
@@ -60,20 +169,34 @@ Double (também conhecido como *float*) representa números com pontos decimais.
 
 Por padrão, R trata números com pontos decimais como duplos.
 
+Na maioria das situações, você não precisa se preocupar com a diferença entre "numeric", "integer" e "double", pois a classe "numeric" é ampla o suficiente para cobrir todos os tipos.
+
 ```{r}
 # Criando uma variável double
 meu_double <- 3.14
+
+
+colunas_com_duplo <- colnames(dados_turma_1)[sapply(dados_turma_1, is.double)]
+colunas_com_numero <- colnames(dados_turma_1)[sapply(dados_turma_1, is.numeric)]
+colunas_com_numero
 ```
+
+Exercício: Você consegue descobrir qual é a classe de "altura" e como alterá-la para "numeric"?
+
+Exercício 2: Agora que "altura" é uma variável corretamente identificada como numérica, você consegue gerar um boxplot usando a função boxplot()?
 
 ### B. Caractere (*character*)
 
-O tipo de dados *Character* armazena texto ou *strings*.
+O tipo de dados *Character* armazena texto, também chamado de *strings*.
 
 Os valores de texto são colocados entre aspas simples ou duplas.
 
 ```{r}
 # Criando uma variável de caractere
 meu_caractere <- "Olá, Mundo!"
+
+# Vamos ver se "cinema" é "character":
+is.character(dados_turma_1$cinema)
 ```
 
 ### C. Lógico (Booleano)
@@ -97,11 +220,36 @@ Os fatores são úteis na análise estatística e na visualização de dados.
 ```{r}
 # Criando uma variável de fator
 escolaridade <- factor(c("Ensino Médio", "Faculdade", "Graduação", "Ensino Médio", "Graduação"))
+
+# Vamos determinar que "cinema" é fator?
+dados_turma_1$cinema <- as.factor(dados_turma_1$cinema)
+
+# Verifique a classe de "cinema"
+class(dados_turma_1$cinema)
+
+# Inspecionando quais são os fatores em "cinema"
+factor(dados_turma_1$cinema)
+
+# Vamos gerar um gráfico para ver a frequência dos fatores em "cinema"
+plot(dados_turma_1$cinema)
+
+
+# vamos fazer o mesmo com "música"
+dados_turma_1$musica <- as.factor(dados_turma_1$musica)
+plot(dados_turma_1$musica)
+
+# Usando a função table, conseguimos fazer uma tabulação cruzada das variáveis música e cinema.
+table(dados_turma_1$cinema, dados_turma_1$musica)
+
 ```
+
+Dá para ver que na turma temos amantes da ficção científica e do rock.
+
+Quem sabe até o final da primeira parte da disciplina, descobrimos se os roqueiros pontuam mais alto em algum traço de personalidade (extroversão vs introversão, neuroticismo vs estabilidade) em relação aos não roqueiros. Ou se os amantes da ficção científica têm algum traço mais exacerbado de personalidade.
 
 ### E. Data e Hora
 
-R tem classes específicas para lidar com dados de data e hora.
+O R também tem classes específicas para lidar com dados de data e hora (mas não vamos entrar em detalhes nesse momento).
 
 As classes mais comuns são Date, POSIXct e POSIXlt.
 

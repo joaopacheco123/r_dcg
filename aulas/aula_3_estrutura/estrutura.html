@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="João Pedro Gonçalves Pacheco">
+
+<title>Introdução às estruturas de dados e tipos de variáveis em R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="estrutura_files/libs/clipboard/clipboard.min.js"></script>
+<script src="estrutura_files/libs/quarto-html/quarto.js"></script>
+<script src="estrutura_files/libs/quarto-html/popper.min.js"></script>
+<script src="estrutura_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="estrutura_files/libs/quarto-html/anchor.min.js"></script>
+<link href="estrutura_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="estrutura_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="estrutura_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="estrutura_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="estrutura_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#i.-classes-de-objetos-em-r" id="toc-i.-classes-de-objetos-em-r" class="nav-link active" data-scroll-target="#i.-classes-de-objetos-em-r">I. Classes de objetos em R</a>
+  <ul class="collapse">
+  <li><a href="#a.-numérico" id="toc-a.-numérico" class="nav-link" data-scroll-target="#a.-numérico">A. Numérico</a></li>
+  <li><a href="#b.-caractere-character" id="toc-b.-caractere-character" class="nav-link" data-scroll-target="#b.-caractere-character">B. Caractere (<em>character</em>)</a></li>
+  <li><a href="#c.-lógico-booleano" id="toc-c.-lógico-booleano" class="nav-link" data-scroll-target="#c.-lógico-booleano">C. Lógico (Booleano)</a></li>
+  <li><a href="#d.-fator" id="toc-d.-fator" class="nav-link" data-scroll-target="#d.-fator">D. Fator</a></li>
+  <li><a href="#e.-data-e-hora" id="toc-e.-data-e-hora" class="nav-link" data-scroll-target="#e.-data-e-hora">E. Data e Hora</a></li>
+  </ul></li>
+  <li><a href="#ii.-estruturas-de-dados-básicas-em-r" id="toc-ii.-estruturas-de-dados-básicas-em-r" class="nav-link" data-scroll-target="#ii.-estruturas-de-dados-básicas-em-r">II. Estruturas de dados básicas em R</a>
+  <ul class="collapse">
+  <li><a href="#a.-vetores" id="toc-a.-vetores" class="nav-link" data-scroll-target="#a.-vetores">A. Vetores</a></li>
+  <li><a href="#b.-matrizes" id="toc-b.-matrizes" class="nav-link" data-scroll-target="#b.-matrizes">B. Matrizes</a></li>
+  <li><a href="#c.-sequências-arrays" id="toc-c.-sequências-arrays" class="nav-link" data-scroll-target="#c.-sequências-arrays">C. Sequências (<em>arrays</em>)</a></li>
+  <li><a href="#d.-listas" id="toc-d.-listas" class="nav-link" data-scroll-target="#d.-listas">D. Listas</a></li>
+  <li><a href="#e.-dataframes" id="toc-e.-dataframes" class="nav-link" data-scroll-target="#e.-dataframes">E. Dataframes</a></li>
+  </ul></li>
+  <li><a href="#iii.-coerção-e-conversão-de-tipo" id="toc-iii.-coerção-e-conversão-de-tipo" class="nav-link" data-scroll-target="#iii.-coerção-e-conversão-de-tipo">III. Coerção e conversão de tipo</a>
+  <ul class="collapse">
+  <li><a href="#a.-coerção-implícita" id="toc-a.-coerção-implícita" class="nav-link" data-scroll-target="#a.-coerção-implícita">A. Coerção implícita</a></li>
+  <li><a href="#b.-coerção-explícita-usando-funções-as.numeric-as.character-as.logical-etc." id="toc-b.-coerção-explícita-usando-funções-as.numeric-as.character-as.logical-etc." class="nav-link" data-scroll-target="#b.-coerção-explícita-usando-funções-as.numeric-as.character-as.logical-etc.">B. Coerção explícita usando funções (as.numeric, as.character, as.logical, etc.)</a></li>
+  </ul></li>
+  <li><a href="#iv.-fatores-em-detalhe" id="toc-iv.-fatores-em-detalhe" class="nav-link" data-scroll-target="#iv.-fatores-em-detalhe">IV. Fatores em detalhe</a>
+  <ul class="collapse">
+  <li><a href="#a.-compreendendo-dados-categóricos" id="toc-a.-compreendendo-dados-categóricos" class="nav-link" data-scroll-target="#a.-compreendendo-dados-categóricos">A. Compreendendo dados categóricos</a></li>
+  <li><a href="#b.-criando-e-trabalhando-com-fatores" id="toc-b.-criando-e-trabalhando-com-fatores" class="nav-link" data-scroll-target="#b.-criando-e-trabalhando-com-fatores">B. Criando e trabalhando com fatores</a></li>
+  <li><a href="#c.-níveis-de-fator-de-reordenação" id="toc-c.-níveis-de-fator-de-reordenação" class="nav-link" data-scroll-target="#c.-níveis-de-fator-de-reordenação">C. Níveis de fator de reordenação</a></li>
+  </ul></li>
+  <li><a href="#v.-práticas-recomendadas-para-trabalhar-com-estruturas-de-dados" id="toc-v.-práticas-recomendadas-para-trabalhar-com-estruturas-de-dados" class="nav-link" data-scroll-target="#v.-práticas-recomendadas-para-trabalhar-com-estruturas-de-dados">V. Práticas recomendadas para trabalhar com estruturas de dados</a>
+  <ul class="collapse">
+  <li><a href="#a.-convenções-de-nomenclatura" id="toc-a.-convenções-de-nomenclatura" class="nav-link" data-scroll-target="#a.-convenções-de-nomenclatura">A. Convenções de nomenclatura</a></li>
+  <li><a href="#b.-dados-organizados-tidy-data" id="toc-b.-dados-organizados-tidy-data" class="nav-link" data-scroll-target="#b.-dados-organizados-tidy-data">B. Dados organizados (tidy data)</a></li>
+  </ul></li>
+  <li><a href="#vi.-conclusão" id="toc-vi.-conclusão" class="nav-link" data-scroll-target="#vi.-conclusão">VI. Conclusão</a></li>
+  <li><a href="#vii.-exercícios-e-exemplos" id="toc-vii.-exercícios-e-exemplos" class="nav-link" data-scroll-target="#vii.-exercícios-e-exemplos">VII. Exercícios e Exemplos</a>
+  <ul class="collapse">
+  <li><a href="#exercício-1" id="toc-exercício-1" class="nav-link" data-scroll-target="#exercício-1">Exercício 1:</a></li>
+  <li><a href="#exercício-2" id="toc-exercício-2" class="nav-link" data-scroll-target="#exercício-2">Exercício 2:</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introdução às estruturas de dados e tipos de variáveis em R</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>João Pedro Gonçalves Pacheco </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Precisamos, inicialmente, definir o que é um objeto em R.</p>
+<dl>
+<dt>objeto</dt>
+<dd>
+<p>Um <strong>objeto</strong> é qualquer coisa que pode ser associada (e armazenada) em uma variável.</p>
+</dd>
+</dl>
+<p>As variáveis em R não são predefinidas; elas assumem o tipo (classe) do objeto que for atribuído a elas.</p>
+<p>Assim, uma instrução do tipo:</p>
+<p><code>x &lt;- 1</code></p>
+<p>atribui a <em>x</em> o valor (inteiro) 1, e é perfeitamente válido reatribuir:</p>
+<p><code>x &lt;- 2.5</code></p>
+<p>A classe define a forma que o objeto será manipulado pelas diferentes funções.</p>
+<p>Para essa aula, nós vamos utilizar o banco de dados gerado pela turma. Vamos carregá-lo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>dados_turma_1 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"dados_turma_1.xlsx"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(dados_turma_1)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Agora experimente carregar os dados através do painel direito (Import Dataset...)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize os dados clicando no objeto na aba "Environment".</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Vamos fazer uma limpeza inicial nesse banco de dados para facilitar a leitura.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Removendo a primeira linha (row)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dados_turma_1 <span class="ot">&lt;-</span> dados_turma_1[<span class="sc">-</span><span class="dv">1</span>,]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos remover também a primeira coluna, que é apenas o carimbo de data e hora.</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>dados_turma_1 <span class="ot">&lt;-</span> dados_turma_1[,<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Agora veja o código para visualizar algumas estatísticas da idade dos participantes:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dados_turma_1<span class="sc">$</span><span class="st">`</span><span class="at">Idade (em anos, somente número)</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  20.00   21.50   22.50   23.12   25.00   28.00 </code></pre>
+</div>
+</div>
+<p>Visualize esses dados em um gráfico de barras:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(dados_turma_1<span class="sc">$</span><span class="st">`</span><span class="at">Idade (em anos, somente número)</span><span class="st">`</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="estrutura_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Ok, agora vamos começar a falar da estrutura desses dados no R.</p>
+<p>Vamos rodar o código abaixo só para renomear as colunas para nomes menores e mais fáceis de acessar.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Novos nomes para as colunas</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>novos_nomes <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"idade"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"altura"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"cinema"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"musica"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"atividadefisica"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"otimismo"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"utilidade"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"tranquilidade"</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"lidarproblemas"</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"clarezamental"</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"proximidade"</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"decisoes"</span>,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"comunicativo"</span>,</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"depressivo"</span>,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"reservado"</span>,</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"controleestresse"</span>,</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"energia"</span>,</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"tensao"</span>,</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"entusiasmo"</span>,</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"preocupação"</span>,</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">"quietude"</span>,</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">"estabilidadeemocional"</span>,</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">"assertividade"</span>,</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="st">"temperamento"</span>,</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  <span class="st">"timidez"</span>,</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  <span class="st">"calma"</span>,</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sociabilidade"</span>,</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  <span class="st">"nervosismo"</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Renomear as colunas</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(dados_turma_1) <span class="ot">&lt;-</span> novos_nomes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="i.-classes-de-objetos-em-r" class="level2">
+<h2 class="anchored" data-anchor-id="i.-classes-de-objetos-em-r">I. Classes de objetos em R</h2>
+<p>A classe de um objeto é muito importante dentro do R. É a partir dela que as funções e operadores conseguem saber exatamente o que fazer com um objeto.</p>
+<p>Por exemplo, se tentarmos somar “a” e “b”, uma mensagem de erro aparecerá. Isso acontece porque o R sabe que “a” e “b” são objetos do tipo texto.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="st">"a"</span> <span class="sc">+</span> <span class="st">"b"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in "a" + "b": argumento não-numérico para operador binário</code></pre>
+</div>
+</div>
+<p>Temos, então, algumas classes principais de objetos: <strong>númerico, caractere, lógico, fator e data/hora</strong>.</p>
+<section id="a.-numérico" class="level3">
+<h3 class="anchored" data-anchor-id="a.-numérico">A. Numérico</h3>
+<p>A classe de objeto numérico se divide em 2: inteiros e duplos.</p>
+<section id="inteiros" class="level4">
+<h4 class="anchored" data-anchor-id="inteiros">1. Inteiros</h4>
+<p>Inteiros (<em>integers</em>) são números inteiros sem nenhuma vírgula.</p>
+<p>Em R, você pode criar um número inteiro usando a função <code>as.integer()</code> ou simplesmente atribuindo um número inteiro a uma variável.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando uma variável inteira</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>meu_inteiro <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="dv">42</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos verificar qual é a classe usando a função class()</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(meu_inteiro)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "integer"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Veja que "meu_inteiro" é da classe "integer"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Vamos ver se temos algum inteiro no nosso banco de dados. Para isso, vamos inspecionar com a função sapply(), aplicada a colnames() no banco de dados. Clique aqui para saber mais sobre a explicação da função<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspecionando:</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>colunas_com_inteiro <span class="ot">&lt;-</span> <span class="fu">colnames</span>(dados_turma_1)[<span class="fu">sapply</span>(dados_turma_1, is.integer)]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Veja que ela não encontra nenhum inteiro no momento.</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Usando a função class(), vemos que "idade" foi salvo como "numeric", que é menos específico.</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(dados_turma_1<span class="sc">$</span>idade)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Nós podemos alterar "idade" para a classe de número inteiro usando a função as.integer()</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>dados_turma_1<span class="sc">$</span>idade <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(dados_turma_1<span class="sc">$</span>idade)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Veja que mudou:</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(dados_turma_1<span class="sc">$</span>idade)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "integer"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Agora a nossa função irá reconhecer que temos uma variável de número inteiro no banco de dados.</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>colunas_com_inteiro <span class="ot">&lt;-</span> <span class="fu">colnames</span>(dados_turma_1)[<span class="fu">sapply</span>(dados_turma_1, is.integer)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="duplo-doublefloat" class="level4">
+<h4 class="anchored" data-anchor-id="duplo-doublefloat">2. Duplo (<em>double/float</em>)</h4>
+<p>Double (também conhecido como <em>float</em>) representa números com pontos decimais.</p>
+<p>Por padrão, R trata números com pontos decimais como duplos.</p>
+<p>Na maioria das situações, você não precisa se preocupar com a diferença entre “numeric”, “integer” e “double”, pois a classe “numeric” é ampla o suficiente para cobrir todos os tipos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando uma variável double</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>meu_double <span class="ot">&lt;-</span> <span class="fl">3.14</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>colunas_com_duplo <span class="ot">&lt;-</span> <span class="fu">colnames</span>(dados_turma_1)[<span class="fu">sapply</span>(dados_turma_1, is.double)]</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>colunas_com_numero <span class="ot">&lt;-</span> <span class="fu">colnames</span>(dados_turma_1)[<span class="fu">sapply</span>(dados_turma_1, is.numeric)]</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>colunas_com_numero</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "idade"</code></pre>
+</div>
+</div>
+<p>Exercício: Você consegue descobrir qual é a classe de “altura” e como alterá-la para “numeric”?</p>
+<p>Exercício 2: Agora que “altura” é uma variável corretamente identificada como numérica, você consegue gerar um boxplot usando a função boxplot()?</p>
+</section>
+</section>
+<section id="b.-caractere-character" class="level3">
+<h3 class="anchored" data-anchor-id="b.-caractere-character">B. Caractere (<em>character</em>)</h3>
+<p>O tipo de dados <em>Character</em> armazena texto, também chamado de <em>strings</em>.</p>
+<p>Os valores de texto são colocados entre aspas simples ou duplas.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando uma variável de caractere</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>meu_caractere <span class="ot">&lt;-</span> <span class="st">"Olá, Mundo!"</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos ver se "cinema" é "character":</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">is.character</span>(dados_turma_1<span class="sc">$</span>cinema)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+</section>
+<section id="c.-lógico-booleano" class="level3">
+<h3 class="anchored" data-anchor-id="c.-lógico-booleano">C. Lógico (Booleano)</h3>
+<p>O tipo de dados lógicos representa valores binários, TRUE ou FALSE.</p>
+<p>Os valores lógicos geralmente são o resultado de comparações ou operações lógicas.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando uma variável lógica</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>está_chovendo <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>está_ensolarado <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="d.-fator" class="level3">
+<h3 class="anchored" data-anchor-id="d.-fator">D. Fator</h3>
+<p>Fatores são usados para representar dados categóricos com níveis ou categorias distintas.</p>
+<p>Os fatores são úteis na análise estatística e na visualização de dados.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando uma variável de fator</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>escolaridade <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Ensino Médio"</span>, <span class="st">"Faculdade"</span>, <span class="st">"Graduação"</span>, <span class="st">"Ensino Médio"</span>, <span class="st">"Graduação"</span>))</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos determinar que "cinema" é fator?</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>dados_turma_1<span class="sc">$</span>cinema <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(dados_turma_1<span class="sc">$</span>cinema)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Verifique a classe de "cinema"</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(dados_turma_1<span class="sc">$</span>cinema)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspecionando quais são os fatores em "cinema"</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">factor</span>(dados_turma_1<span class="sc">$</span>cinema)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] Ficção científica Ficção científica Suspense          Suspense         
+[5] Drama             Ficção científica Terror            Ficção científica
+Levels: Drama Ficção científica Suspense Terror</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos gerar um gráfico para ver a frequência dos fatores em "cinema"</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dados_turma_1<span class="sc">$</span>cinema)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="estrutura_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># vamos fazer o mesmo com "música"</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>dados_turma_1<span class="sc">$</span>musica <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(dados_turma_1<span class="sc">$</span>musica)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dados_turma_1<span class="sc">$</span>musica)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="estrutura_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Usando a função table, conseguimos fazer uma tabulação cruzada das variáveis música e cinema.</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dados_turma_1<span class="sc">$</span>cinema, dados_turma_1<span class="sc">$</span>musica)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   
+                    Clássico Indie Pop Rock
+  Drama                    0     0   0    1
+  Ficção científica        1     1   1    1
+  Suspense                 0     0   1    1
+  Terror                   0     0   0    1</code></pre>
+</div>
+</div>
+<p>Dá para ver que na turma temos amantes da ficção científica e do rock.</p>
+<p>Quem sabe até o final da primeira parte da disciplina, descobrimos se os roqueiros pontuam mais alto em algum traço de personalidade (extroversão vs introversão, neuroticismo vs estabilidade) em relação aos não roqueiros. Ou se os amantes da ficção científica têm algum traço mais exacerbado de personalidade.</p>
+</section>
+<section id="e.-data-e-hora" class="level3">
+<h3 class="anchored" data-anchor-id="e.-data-e-hora">E. Data e Hora</h3>
+<p>O R também tem classes específicas para lidar com dados de data e hora (mas não vamos entrar em detalhes nesse momento).</p>
+<p>As classes mais comuns são Date, POSIXct e POSIXlt.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando uma variável de data</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>hoje <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2023-07-22"</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando uma variável POSIXct (data e hora com fuso horário)</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>current_datetime <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(<span class="st">"2023-07-22 14:30:00"</span>, <span class="at">tz =</span> <span class="st">"UTC"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="ii.-estruturas-de-dados-básicas-em-r" class="level2">
+<h2 class="anchored" data-anchor-id="ii.-estruturas-de-dados-básicas-em-r">II. Estruturas de dados básicas em R</h2>
+<section id="a.-vetores" class="level3">
+<h3 class="anchored" data-anchor-id="a.-vetores">A. Vetores</h3>
+<section id="criando-vetores" class="level4">
+<h4 class="anchored" data-anchor-id="criando-vetores">Criando vetores</h4>
+<p>Os vetores são a estrutura de dados mais simples em R, representando uma coleção de elementos do mesmo tipo de dados.</p>
+<p>Você pode criar um vetor usando a função c(), que significa “combinar” ou “concatenar”.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando um vetor numérico</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>vetor_numerico <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando um vetor de caractere</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>vetor_caractere <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"maçã"</span>, <span class="st">"banana"</span>, <span class="st">"laranja"</span>)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando um vetor lógico</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>vetor_logico <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="operações-básicas-subconjunto-aritmética-lógica" class="level4">
+<h4 class="anchored" data-anchor-id="operações-básicas-subconjunto-aritmética-lógica">Operações básicas (subconjunto, aritmética, lógica)</h4>
+<p>Subconjunto: Acessando elementos específicos de um vetor usando indexação.</p>
+<p>Aritmética: Realizar operações matemáticas em vetores (por exemplo, adição, subtração, multiplicação).</p>
+<p>Lógico: Executar operações lógicas em vetores (por exemplo, AND, OR).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subconjunto</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>meu_vetor <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">25</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>element_3 <span class="ot">&lt;-</span> meu_vetor[<span class="dv">3</span>] <span class="co"># Acesse o terceiro elemento (15)</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Aritmética</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>vetor1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>vetor2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>)</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>soma_vetor <span class="ot">&lt;-</span> vetor1 <span class="sc">+</span> vetor2 <span class="co"># Adição elementar</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Lógico</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>vetor_logico <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>all_true <span class="ot">&lt;-</span> <span class="fu">all</span>(vetor_logico) <span class="co"># Verifica se todos os elementos são TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="funções-vetoriais-comprimento-soma-média-etc." class="level4">
+<h4 class="anchored" data-anchor-id="funções-vetoriais-comprimento-soma-média-etc.">Funções vetoriais (comprimento, soma, média, etc.)</h4>
+<p>R fornece várias funções para trabalhar com vetores, como calcular o comprimento, soma, média, etc.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>meu_vetor <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">25</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Comprimento do vetor</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>comprimento_vetor <span class="ot">&lt;-</span> <span class="fu">length</span>(meu_vetor)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Soma e média do vetor</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>soma_vetor <span class="ot">&lt;-</span> <span class="fu">sum</span>(meu_vetor)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>vector_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(meu_vetor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="b.-matrizes" class="level3">
+<h3 class="anchored" data-anchor-id="b.-matrizes">B. Matrizes</h3>
+<p>Matrizes são estruturas de dados bidimensionais com linhas e colunas do mesmo tipo de dados.</p>
+<p>Você pode criar uma matriz usando a função matrix().</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando uma matriz</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>my_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Saída:</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># [,1] [,2] [,3]</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co"># [1,] 1 2 3</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co"># [2,] 4 5 6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Operações básicas (subconjunto, aritmética, multiplicação de matrizes)</p>
+<ul>
+<li><p>Subconjunto: Acessando elementos específicos, linhas ou colunas de uma matriz usando indexação.</p></li>
+<li><p>Aritmética: Realização de operações aritméticas elementares em matrizes.</p></li>
+<li><p>Multiplicação de matrizes: Realizando a multiplicação de matrizes usando o operador %*%.</p></li>
+</ul>
+<p>Código de exemplo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subconfiguração</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>my_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>element_2_3 <span class="ot">&lt;-</span> my_matrix[<span class="dv">2</span>, <span class="dv">3</span>] <span class="co"># Acesse o elemento na segunda linha e terceira coluna (6)</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Aritmética</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>matriz1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>matriz2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>soma_matriz <span class="ot">&lt;-</span> matriz1 <span class="sc">+</span> matriz2 <span class="co"># Adição elementar</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiplicação da matriz</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>produto_matriz <span class="ot">&lt;-</span> matriz1 <span class="sc">%*%</span> matriz2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Funções de matriz (dim, rowSums, colSums, etc.)</p>
+<p>R fornece várias funções para trabalhar com matrizes, como obter dimensões, somas de linhas, somas de colunas, etc.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>minha_matriz <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Dimensões da matriz</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>matrix_dimensions <span class="ot">&lt;-</span> <span class="fu">dim</span>(minha_matriz) <span class="co"># Saída: 2 linhas e 3 colunas</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Somas de linhas e somas de colunas</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>row_sums <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(minha_matriz)</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>col_sums <span class="ot">&lt;-</span> <span class="fu">colSums</span>(minha_matriz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="c.-sequências-arrays" class="level3">
+<h3 class="anchored" data-anchor-id="c.-sequências-arrays">C. Sequências (<em>arrays</em>)</h3>
+<p>Arrays são estruturas de dados multidimensionais que podem armazenar elementos do mesmo tipo de dados.</p>
+<p>Você pode criar um array usando a função array().</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando um array</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>my_array <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>), <span class="at">dim =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="d.-listas" class="level3">
+<h3 class="anchored" data-anchor-id="d.-listas">D. Listas</h3>
+<p>As listas são estruturas de dados versáteis que podem conter elementos de diferentes tipos de dados.</p>
+<p>Você pode criar uma lista usando a função list().</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando uma lista</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>minha_lista <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="st">"olá"</span>, <span class="cn">TRUE</span>, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Acessando elementos da lista</p>
+<p>Você pode acessar elementos em uma lista usando indexação ou nomes (se nomeados).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>minha_lista <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="st">"olá"</span>, <span class="cn">TRUE</span>, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>))</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Acessando elementos da lista</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>element_1 <span class="ot">&lt;-</span> minha_lista[[<span class="dv">1</span>]] <span class="co"># Acesse o primeiro elemento (1)</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>element_hello <span class="ot">&lt;-</span> minha_lista[[<span class="dv">2</span>]] <span class="co"># Acesse o segundo elemento</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="e.-dataframes" class="level3">
+<h3 class="anchored" data-anchor-id="e.-dataframes">E. Dataframes</h3>
+<p>Os <em>dataframes</em> são estruturas de dados bidimensionais que armazenam dados em linhas e colunas.</p>
+<p>Cada coluna em um quadro de dados pode ter um tipo de dados diferente.</p>
+<p>Você pode criar um quadro de dados usando a função <code>data.frame()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando um dataframe</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>dados_aluno <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">nome =</span> <span class="fu">c</span>(<span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Charlie"</span>, <span class="st">"David"</span>),</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">idade =</span> <span class="fu">c</span>(<span class="dv">22</span>, <span class="dv">21</span>, <span class="dv">23</span>, <span class="dv">20</span>),</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>     pontuação <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">85</span>, <span class="dv">78</span>, <span class="dv">92</span>, <span class="dv">80</span>),</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">aprovado =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>)</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="manipulando-dataframes-adicionando-removendo-renomeando-colunas" class="level4">
+<h4 class="anchored" data-anchor-id="manipulando-dataframes-adicionando-removendo-renomeando-colunas">Manipulando dataframes (adicionando, removendo, renomeando colunas)</h4>
+<p>Adicionar colunas: você pode adicionar novas colunas a um quadro de dados usando o operador de atribuição ($ ou []).</p>
+<p>Removendo colunas: Use a função subset() para excluir colunas indesejadas.</p>
+<p>Renomeando colunas: Use a função names() para alterar os nomes das colunas.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adicionando uma nova coluna</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>dados_aluno<span class="sc">$</span>genero <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Feminino"</span>, <span class="st">"Masculino"</span>, <span class="st">"Masculino"</span>, <span class="st">"Masculino"</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Removendo uma coluna</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>dados_aluno_subset <span class="ot">&lt;-</span> <span class="fu">subset</span>(dados_aluno, <span class="at">select =</span> <span class="sc">-</span>idade)</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Renomeando colunas</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dados_aluno_subset) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Nome"</span>, <span class="st">"Pontuação"</span>, <span class="st">"Aprovado"</span>, <span class="st">"Gênero"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="operações-básicas-subconjunto-filtragem-classificação" class="level4">
+<h4 class="anchored" data-anchor-id="operações-básicas-subconjunto-filtragem-classificação">Operações básicas (subconjunto, filtragem, classificação)</h4>
+<ul>
+<li><p>Subconjunto de linhas e colunas: você pode usar a indexação para acessar linhas ou colunas específicas em um quadro de dados.</p></li>
+<li><p>Filtragem: Use condições lógicas para filtrar linhas com base em determinados critérios.</p></li>
+<li><p>Classificação: Use a função order() para classificar o quadro de dados com base em uma coluna específica.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subconjunto de linhas e colunas</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Acesse as três primeiras linhas e as colunas "nome" e "pontuação"</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>subset_data <span class="ot">&lt;-</span> dados_aluno[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="fu">c</span>(<span class="st">"nome"</span>, <span class="st">"pontuação"</span>)]</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtrando linhas</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtre os alunos que passaram no exame</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>pass_students <span class="ot">&lt;-</span> dados_aluno[dados_aluno<span class="sc">$</span>passed <span class="sc">==</span> <span class="cn">TRUE</span>, ]</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Classificando quadro de dados</span></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Classifica o quadro de dados pela coluna "score" em ordem decrescente</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>sorted_data <span class="ot">&lt;-</span> dados_aluno[<span class="fu">order</span>(<span class="sc">-</span>dados_aluno<span class="sc">$</span>pontuação), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Observação: os dataframes são estruturas de dados fundamentais para trabalhar com conjuntos de dados do mundo real em R. Eles permitem que você armazene e manipule dados de forma eficaz para várias tarefas de análise e visualização de dados. Os exemplos fornecidos aqui demonstram algumas operações básicas, mas há muito mais funções e técnicas disponíveis para manipulação de quadros de dados em R.</p>
+</section>
+</section>
+</section>
+<section id="iii.-coerção-e-conversão-de-tipo" class="level2">
+<h2 class="anchored" data-anchor-id="iii.-coerção-e-conversão-de-tipo">III. Coerção e conversão de tipo</h2>
+<section id="a.-coerção-implícita" class="level3">
+<h3 class="anchored" data-anchor-id="a.-coerção-implícita">A. Coerção implícita</h3>
+<p>A coerção implícita, também conhecida como coerção de tipo, ocorre quando R converte automaticamente um tipo de dados em outro para executar operações.</p>
+<p>R segue regras específicas para coerção implícita para garantir que as operações possam ser realizadas com sucesso.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplos de coerção implícita</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>numeric_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>character_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"5"</span>, <span class="st">"6"</span>, <span class="st">"7"</span>, <span class="st">"8"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="b.-coerção-explícita-usando-funções-as.numeric-as.character-as.logical-etc." class="level3">
+<h3 class="anchored" data-anchor-id="b.-coerção-explícita-usando-funções-as.numeric-as.character-as.logical-etc.">B. Coerção explícita usando funções (as.numeric, as.character, as.logical, etc.)</h3>
+<p>A coerção explícita permite que você converta explicitamente um tipo de dados em outro usando funções de conversão específicas.</p>
+<p>R fornece várias funções para conversão de tipo explícito, como as.numeric(), as.character(), as.logical(), etc.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplos de coerção explícita</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>numeric_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>caractere_vetor <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"5"</span>, <span class="st">"6"</span>, <span class="st">"7"</span>, <span class="st">"8"</span>)</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Converter character_vector para numeric explicitamente</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>numeric_character_vector <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(caractere_vetor)</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Coerção de numérico para caractere</span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>valor_numérico <span class="ot">&lt;-</span> <span class="dv">42</span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>character_value <span class="ot">&lt;-</span> <span class="fu">as.character</span>(valor_numérico)</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Coerção para lógico (TRUE/FALSE)</span></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>vetor_lógico <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>resultado_lógico <span class="ot">&lt;-</span> <span class="fu">as.logical</span>(vetor_lógico)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Nota: Tenha cuidado com a conversão de tipo, pois pode resultar em resultados inesperados se os dados não puderem ser convertidos com precisão. Por exemplo, converter caracteres não numéricos em numéricos pode resultar em NAs. Sempre valide os dados e certifique-se de que a conversão pretendida é apropriada para sua análise.</p>
+<p>A coerção explícita fornece mais controle sobre as conversões de tipo de dados, permitindo que você assegure que os dados sejam transformados adequadamente antes de uma análise mais aprofundada. A coerção implícita pode ser útil em alguns casos, mas é essencial estar ciente de como o R lida com as conversões de tipo para evitar possíveis problemas em seu código.</p>
+</section>
+</section>
+<section id="iv.-fatores-em-detalhe" class="level2">
+<h2 class="anchored" data-anchor-id="iv.-fatores-em-detalhe">IV. Fatores em detalhe</h2>
+<section id="a.-compreendendo-dados-categóricos" class="level3">
+<h3 class="anchored" data-anchor-id="a.-compreendendo-dados-categóricos">A. Compreendendo dados categóricos</h3>
+<p>Os dados categóricos representam categorias ou grupos discretos e distintos.</p>
+<p>Os dados categóricos podem ser nominais (não ordenados) ou ordinais (ordenados).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dados categóricos nominais</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>eye_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Azul"</span>, <span class="st">"Marrom"</span>, <span class="st">"Verde"</span>, <span class="st">"Verde"</span>, <span class="st">"Marrom"</span>, <span class="st">"Azul"</span>)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Dados categóricos ordinais</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>education_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Ensino Médio"</span>, <span class="st">"Faculdade"</span>, <span class="st">"Graduação"</span>, <span class="st">"Ensino Médio"</span>, <span class="st">"Graduação"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="b.-criando-e-trabalhando-com-fatores" class="level3">
+<h3 class="anchored" data-anchor-id="b.-criando-e-trabalhando-com-fatores">B. Criando e trabalhando com fatores</h3>
+<p>Fatores são usados para representar dados categóricos em R.</p>
+<p>Você pode criar um fator usando a função factor().</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando um fator a partir de dados categóricos nominais</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>eye_colors_factor <span class="ot">&lt;-</span> <span class="fu">factor</span>(eye_colors)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando um fator a partir de dados categóricos ordinais</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>education_levels_factor <span class="ot">&lt;-</span> <span class="fu">factor</span>(education_levels, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Ensino Médio"</span>, <span class="st">"Faculdade"</span>, <span class="st">"Graduação"</span>), <span class="at">ordered =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Trabalhando com fatores:</p>
+<p><code>levels()</code>: Obtenha os níveis/categorias únicos de um fator.</p>
+<p><code>nlevels()</code>: Obtenha o número de níveis/categorias em um fator.</p>
+<p><code>table()</code>: Cria uma tabela de frequência de níveis de fator.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Trabalhando com fatores</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(education_levels_factor) <span class="co"># Output: "High School" "College" "Graduate"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Ensino Médio" "Faculdade"    "Graduação"   </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(education_levels_factor) <span class="co"># Saída: 3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando uma tabela de frequência de níveis de fator</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>frequência_tabela <span class="ot">&lt;-</span> <span class="fu">table</span>(eye_colors_factor)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Saída:</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Azul Marrom Verde</span></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 2 2 2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="c.-níveis-de-fator-de-reordenação" class="level3">
+<h3 class="anchored" data-anchor-id="c.-níveis-de-fator-de-reordenação">C. Níveis de fator de reordenação</h3>
+<p>Em dados ordinais, a ordem dos níveis de fator é importante.</p>
+<p>Você pode alterar a ordem dos níveis de fator usando a função factor() com o argumento de níveis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reordenando os níveis dos fatores</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Digamos que queremos os níveis em ordem crescente de escolaridade</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>education_levels_factor <span class="ot">&lt;-</span> <span class="fu">factor</span>(education_levels, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Ensino Médio"</span>, <span class="st">"Faculdade"</span>, <span class="st">"Graduação"</span>), <span class="at">ordered =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Se quisermos os níveis em ordem decrescente de escolaridade</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>education_levels_factor <span class="ot">&lt;-</span> <span class="fu">factor</span>(education_levels, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Graduação"</span>, <span class="st">"Faculdade"</span>, <span class="st">"Ensino Médio"</span>), <span class="at">ordered =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Você também pode usar a função reorder() para reordenar os níveis de fator com base em uma variável ou critério específico.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reordenando níveis de fator usando reorder()</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>pontuações <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">70</span>, <span class="dv">85</span>, <span class="dv">60</span>, <span class="dv">90</span>)</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>education_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Ensino Médio"</span>, <span class="st">"Faculdade"</span>, <span class="st">"Ensino Médio"</span>, <span class="st">"Graduação"</span>)</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Reordenar education_levels com base nas pontuações</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>reordered_education_levels <span class="ot">&lt;-</span> <span class="fu">reorder</span>(education_levels, pontuações, <span class="at">FUN =</span> mean)</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Use o fator reordenado em análise ou plotagem posterior</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Fatores são essenciais para representar e analisar dados categóricos em R. Compreender a distinção entre dados categóricos nominais e ordinais é crucial para a modelagem e visualização de dados adequada. Ao trabalhar com dados ordenados, reordenar os níveis de fator ajuda a manter a ordem correta em análises e visualizações subsequentes.</p>
+</section>
+</section>
+<section id="v.-práticas-recomendadas-para-trabalhar-com-estruturas-de-dados" class="level2">
+<h2 class="anchored" data-anchor-id="v.-práticas-recomendadas-para-trabalhar-com-estruturas-de-dados">V. Práticas recomendadas para trabalhar com estruturas de dados</h2>
+<section id="a.-convenções-de-nomenclatura" class="level3">
+<h3 class="anchored" data-anchor-id="a.-convenções-de-nomenclatura">A. Convenções de nomenclatura</h3>
+<p>Adotar convenções de nomenclatura consistentes e significativas para estruturas de dados e variáveis é essencial para a legibilidade e manutenção do código.</p>
+<p>Use nomes descritivos que transmitam a finalidade e o conteúdo da estrutura de dados.</p>
+<p>Evite usar nomes que entrem em conflito com palavras reservadas ou funções internas em R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boa convenção de nomenclatura</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>pontuação_aluno <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">85</span>, <span class="dv">78</span>, <span class="dv">92</span>, <span class="dv">80</span>)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>average_score <span class="ot">&lt;-</span> <span class="fu">mean</span>(pontuação_aluno)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Evite usar nomes como “média” ou “dados” para suas variáveis</p>
+</section>
+<section id="b.-dados-organizados-tidy-data" class="level3">
+<h3 class="anchored" data-anchor-id="b.-dados-organizados-tidy-data">B. Dados organizados (tidy data)</h3>
+<section id="o-que-são-dados-organizados" class="level4">
+<h4 class="anchored" data-anchor-id="o-que-são-dados-organizados">O que são dados organizados?</h4>
+<p>Tidy data é uma forma estruturada e padronizada de organizar dados, popularizada por Hadley Wickham. Segue um conjunto de princípios que simplificam a manipulação e análise de dados.</p>
+<p>Em dados organizados, cada variável tem sua própria coluna, cada observação tem sua própria linha e cada valor é colocado em uma célula.</p>
+<p>Dados organizados:</p>
+<ul>
+<li><p>Promovem consistência e clareza</p></li>
+<li><p>Agilizam os fluxos de trabalho de análise de dados</p></li>
+<li><p>Tornam as tarefas de manipulação de dados mais diretas e intuitivas</p></li>
+<li><p>Facilitam a integração perfeita com pacotes populares do R, como o alignr, o dplyr e o ggplot2.</p></li>
+</ul>
+</section>
+<section id="comparação-com-dados-confusos-ou-desarrumados" class="level4">
+<h4 class="anchored" data-anchor-id="comparação-com-dados-confusos-ou-desarrumados">Comparação com dados confusos ou desarrumados</h4>
+<p>Dados confusos carecem de uma estrutura padronizada e podem ter variáveis espalhadas por várias colunas, observações misturadas ou valores de dados colocados em células inadequadas.</p>
+<p><strong>Princípios:</strong></p>
+<ol type="1">
+<li><p><strong>Colunas são variáveis:</strong> Em dados organizados, cada variável no conjunto de dados ocupa sua própria coluna. Isso permite uma identificação clara e fácil acesso a atributos de dados específicos.</p></li>
+<li><p><strong>Linhas são observações:</strong> Cada observação (ou ponto de dados individual) ocupa sua própria linha em dados organizados. Este arranjo permite a fácil identificação de casos ou amostras individuais.</p></li>
+<li><p><strong>Os valores estão nas células:</strong> Cada valor no conjunto de dados é colocado em uma célula específica, correspondente à sua variável e observação. Esse arranjo estruturado permite fácil recuperação e manipulação de dados.</p></li>
+<li><p><strong>Um tipo de dados por tabela:</strong> Cada tabela em dados organizados deve conter apenas um tipo de dados, como quantitativo, categórico ou textual. Essa separação clara simplifica a análise de dados e garante a integridade dos dados.</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dados confusos</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>messy_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">Nome =</span> <span class="fu">c</span>(<span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Charlie"</span>),</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">Math_Score =</span> <span class="fu">c</span>(<span class="dv">85</span>, <span class="dv">78</span>, <span class="dv">92</span>),</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">Science_Score =</span> <span class="fu">c</span>(<span class="dv">90</span>, <span class="dv">88</span>, <span class="dv">76</span>),</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>   <span class="at">English_Score =</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">94</span>, <span class="dv">88</span>)</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Dados organizados (as variáveis estão em colunas)</span></span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>dados_arrumados <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>   <span class="at">Nome =</span> <span class="fu">c</span>(<span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Charlie"</span>),</span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>   <span class="at">Assunto =</span> <span class="fu">c</span>(<span class="st">"Matemática"</span>, <span class="st">"Matemática"</span>, <span class="st">"Matemática"</span>, <span class="st">"Ciência"</span>, <span class="st">"Ciência"</span>, <span class="st">"Ciência"</span>, <span class="st">"Inglês"</span>, <span class="st">"Inglês"</span>, <span class="st">"Inglês"</span>),</span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>   Pontuação <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">85</span>, <span class="dv">78</span>, <span class="dv">92</span>, <span class="dv">90</span>, <span class="dv">88</span>, <span class="dv">76</span>, <span class="dv">80</span>, <span class="dv">94</span>, <span class="dv">88</span>)</span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="vi.-conclusão" class="level2">
+<h2 class="anchored" data-anchor-id="vi.-conclusão">VI. Conclusão</h2>
+<p>Hoje abordamos os conceitos fundamentais de estruturas de dados e tipos de variáveis em R.</p>
+<p>Os tipos de dados em R incluem numérico, caractere, lógico, fator e data/hora.</p>
+<p>Estruturas de dados básicas em R consistem em vetores, matrizes, arrays, listas e dataframes.</p>
+<p>A coerção e a conversão de tipo nos permitem converter dados entre diferentes tipos de forma explícita e implícita.</p>
+<p>Os fatores são essenciais para representar e analisar dados categóricos em R, e aprendemos como criá-los e manipulá-los.</p>
+<p>Exploramos as melhores práticas para trabalhar com estruturas de dados, incluindo convenções de nomenclatura e tidy data.</p>
+</section>
+<section id="vii.-exercícios-e-exemplos" class="level2">
+<h2 class="anchored" data-anchor-id="vii.-exercícios-e-exemplos">VII. Exercícios e Exemplos</h2>
+<section id="exercício-1" class="level3">
+<h3 class="anchored" data-anchor-id="exercício-1">Exercício 1:</h3>
+<p>Crie um vetor numérico contendo temperaturas em Celsius: 25, 30, 22, 28, 21.</p>
+<p>Converta as temperaturas Celsius para Fahrenheit usando a fórmula: Fahrenheit = (Celsius * 9/5) + 32.</p>
+<p>Armazene o resultado em um novo vetor e imprima-o.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exercício 1  </span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>celsius_temperatures <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">22</span>, <span class="dv">28</span>, <span class="dv">21</span>)  </span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>fahrenheit_temperatures <span class="ot">&lt;-</span> (celsius_temperatures <span class="sc">*</span> <span class="dv">9</span><span class="sc">/</span><span class="dv">5</span>) <span class="sc">+</span> <span class="dv">32</span>  </span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fahrenheit_temperatures)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 77.0 86.0 71.6 82.4 69.8</code></pre>
+</div>
+</div>
+</section>
+<section id="exercício-2" class="level3">
+<h3 class="anchored" data-anchor-id="exercício-2">Exercício 2:</h3>
+<p>Crie um vetor de caracteres representando os dias da semana: “Segunda”, “Terça”, …, “Domingo”.</p>
+<p>Converta o vetor de caracteres em um fator com níveis ordenados representando a ordem dos dias em uma semana.</p>
+<p>Imprima o fator com os níveis na ordem correta.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exercício 2  </span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>dias_da_semana <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"segunda"</span>, <span class="st">"terça"</span>, <span class="st">"quarta"</span>, <span class="st">"quinta"</span>, <span class="st">"sexta"</span>, <span class="st">"sábado"</span>, <span class="st">"domingo"</span>)  </span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>ordenado_dias <span class="ot">&lt;-</span> <span class="fu">factor</span>(dias_da_semana, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"segunda"</span>, <span class="st">"terça"</span>, <span class="st">"quarta"</span>, <span class="st">"quinta"</span>, <span class="st">"sexta"</span>, <span class="st">"sábado"</span>, <span class="st">"domingo"</span>), <span class="at">ordered =</span> <span class="cn">TRUE</span>)  </span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ordenado_dias)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] segunda terça   quarta  quinta  sexta   sábado  domingo
+Levels: segunda &lt; terça &lt; quarta &lt; quinta &lt; sexta &lt; sábado &lt; domingo</code></pre>
+</div>
+</div>
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Vamos explicar essa função em detalhes:</p>
+<ol type="1">
+<li><p><strong><code>sapply(dados_turma_1, is.integer)</code></strong>: Aqui estamos usando a função <strong><code>sapply</code></strong>, que é usada para aplicar uma função a cada elemento de uma lista ou vetor. No caso, a lista é <strong><code>dados_turma_1</code></strong> (seu conjunto de dados). A função que estamos aplicando é <strong><code>is.integer</code></strong>, que retorna <strong><code>TRUE</code></strong> se um elemento for do tipo inteiro (integer) e <strong><code>FALSE</code></strong> caso contrário. Portanto, o resultado dessa parte é um vetor lógico (booleano) indicando para cada coluna se ela contém valores inteiros.</p></li>
+<li><p><strong><code>colnames(dados_turma_1)[...]</code></strong>: Aqui estamos usando <strong><code>colnames(dados_turma_1)</code></strong> para obter os nomes das colunas do conjunto de dados. No entanto, queremos filtrar apenas as colunas que contêm valores inteiros. Portanto, usamos o resultado anterior (vetor lógico) como índice para extrair apenas os nomes das colunas onde o resultado é <strong><code>TRUE</code></strong>.</p></li>
+</ol>
+<p>Em resumo, o código <strong><code>[sapply(dados_turma_1, is.integer)]</code></strong> verifica cada coluna do conjunto de dados para determinar se ela contém valores inteiros. O resultado é um vetor lógico indicando quais colunas têm valores inteiros. E então, usando esse vetor lógico como índice, estamos extraindo os nomes das colunas que têm valores inteiros e atribuindo-os à variável <strong><code>colunas_com_inteiro</code></strong>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
