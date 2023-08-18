@@ -1,0 +1,53 @@
+---
+title: "Aula 4 - Importando e manipulando dados"
+author: "João Amaral"
+format: html
+editor: source
+editor_options:
+  chunk_output_type: console
+---
+
+## Trabalhando com dados
+
+Agora que sabemos a sintaxe básica do R, assim como os tipos de dados existentes, podemos começar a realizar tarefas mais complexas.
+
+Os nossos objetos de estudo a partir de agora serão majoritariamente do tipo `data.frame` e `tibble`. A `tibble` é uma evolução da `data.frame`, com algumas melhorias. Para o nosso curso, saiba apenas sobre a existência das duas estruturas.
+
+Existe um fluxo para trabalhar com bancos de dados, mostrado na figura abaixo. 
+
+![Retirada de R for Data Science, 2nd ed.](imagens/fig_1.png)
+
+Nessa aula, veremos como importar, organizar e manipular dados. Para essas tarefas, utilizaremos os pacotes contidos no `tidyverse`, um conjunto de pacotes pensados para ciência de dados, com uma filosofia em comum de organização.
+
+## Importando dados
+
+O passo inicial para se trabalhar com dados é importá-los. Os dados podem vir de diversas fontes: bancos de dados SQL, arquvios \*.csv, arquvivos \*.xlsx, e até mesmo estruturas de dados oriundas de outros programas de análise estatística, como \*.sav (SPSS).
+
+Abaixo estão alguns pacotes e suas respectivas funções para importar dados:
+
+```{r}
+#| eval: false
+
+# Arquivos .csv separados por ","
+readr::read_csv(file = "C://...")
+
+# Arquivos .csv separados por ";"
+readr::read_csv2(file = "C://...")
+
+# Arquivos .xlsx (Excel)
+readxl::read_xlsx(path = "C://...")
+
+# Arquivos .sav (SPSS)
+haven::read_sav(file = "C://...")
+
+# Arquivos .rds
+readr::read_rds(file = "C://...")
+```
+
+Existem diversas funções para realizar essas mesmas importações. Recomendo seguir as funções acima para nos mantermos dentro do universo tidy.
+
+## pipe
+
+## example
+
+## Salvando seu banco de dados alterado

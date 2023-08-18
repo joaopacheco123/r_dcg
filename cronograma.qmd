@@ -7,16 +7,16 @@ editor: visual
 
 ## Cronograma
 
-| Dia        | Assunto                           | Professor    |
-|------------|-----------------------------------|--------------|
-| 11/08/2023 | Introdução à Linguagem R          | João Amaral  |
-| 11/08/2023 | Quarto                            | João Pacheco |
-| 18/08/2023 | Estrutura de dados                | João Pacheco |
-| 25/08/2023 | Manipulando dados com dplyr       | João Amaral  |
-| 01/09/2023 | Estatística descritiva e tabelas  | João Amaral  |
-| 15/09/2023 | Visualizando dados e modelando    | João Pacheco |
-| 22/09/2023 | Gráficos avançados usando ggplot2 | João Pacheco |
-| Assíncrona | Avaliação 1                       | Todos        |
+| Dia        | Assunto                                  | Professor    |
+|------------|------------------------------------------|--------------|
+| 11/08/2023 | Introdução à Linguagem R                 | João Amaral  |
+| 11/08/2023 | Quarto                                   | João Pacheco |
+| 18/08/2023 | Estrutura de dados                       | João Pacheco |
+| 25/08/2023 | Importando e manipulando dados com dplyr | João Amaral  |
+| 01/09/2023 | Estatística descritiva e tabelas         | João Amaral  |
+| 15/09/2023 | Visualizando dados e modelando           | João Pacheco |
+| 22/09/2023 | Gráficos avançados usando ggplot2        | João Pacheco |
+| Assíncrona | Avaliação 1                              | Todos        |
 
 ## Conteúdo detalhado
 
