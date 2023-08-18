@@ -5,6 +5,8 @@ format:
   pdf: 
     toc: true
 editor: visual
+editor_options: 
+  chunk_output_type: console
 ---
 
 {{< pagebreak >}}
@@ -104,7 +106,9 @@ novos_nomes <- c(
 colnames(dados_turma_1) <- novos_nomes
 ```
 
-A classe de um objeto é muito importante dentro do R. É a partir dela que as funções e operadores conseguem saber exatamente o que fazer com um objeto.
+A classe de um objeto é muito importante dentro do R.
+
+É a partir dela que as funções e operadores conseguem saber exatamente o que fazer com um objeto.
 
 Por exemplo, se tentarmos somar "a" e "b", uma mensagem de erro aparecerá. Isso acontece porque o R sabe que "a" e "b" são objetos do tipo texto.
 
@@ -119,7 +123,7 @@ Temos, então, algumas classes principais de objetos: **númerico, caractere, l�
 
 ## A. Numérico
 
-A classe de objeto numérico se divide em 2: inteiros e duplos.
+A classe de objeto numérico se divide em 2: **inteiros** e **duplos**.
 
 ### 1. Inteiros
 
@@ -184,11 +188,13 @@ meu_double <- 3.14
 colunas_com_duplo <- colnames(dados_turma_1)[sapply(dados_turma_1, is.double)]
 colunas_com_numero <- colnames(dados_turma_1)[sapply(dados_turma_1, is.numeric)]
 colunas_com_numero
+
+## typeof()
 ```
 
-Exercício: Você consegue descobrir qual é a classe de "altura" e como alterá-la para "numeric"?
+**Exercício**: Você consegue descobrir qual é a classe de "altura" e como alterá-la para "numeric"?
 
-Exercício 2: Agora que "altura" é uma variável corretamente identificada como numérica, você consegue gerar um boxplot usando a função boxplot()?
+**Exercício 2**: Agora que "altura" é uma variável corretamente identificada como numérica, você consegue gerar um boxplot usando a função boxplot()?
 
 ## B. Caractere (*character*)
 
@@ -242,7 +248,6 @@ factor(dados_turma_1$cinema)
 # Vamos gerar um gráfico para ver a frequência dos fatores em "cinema"
 plot(dados_turma_1$cinema)
 
-
 # vamos fazer o mesmo com "música"
 dados_turma_1$musica <- as.factor(dados_turma_1$musica)
 plot(dados_turma_1$musica)
@@ -264,7 +269,7 @@ As classes mais comuns são Date, POSIXct e POSIXlt.
 
 ```{r}
 # Criando uma variável de data
-hoje <- as.Date("2023-07-22")
+hoje <- as.Date("2023-08-18")
 
 # Criando uma variável POSIXct (data e hora com fuso horário)
 current_datetime <- as.POSIXct("2023-07-22 14:30:00", tz = "UTC")
@@ -298,10 +303,6 @@ Acessar elementos específicos de um vetor usando colchetes:
 ```{r}
 meu_vetor <- c(5, 10, 15, 20, 25)
 elemento_3 <- meu_vetor[3] # Acesse o terceiro elemento (15)
-
-# Veja que se eu salvar "idade" do banco de dados em um objeto, 
-# ele se torna um vetor numérico também
-idade <- dados_turma_1$idade
 ```
 
 Aritmética: Realizar operações matemáticas em vetores (por exemplo, adição, subtração, multiplicação).
@@ -312,10 +313,14 @@ vetor2 <- c(4, 5, 6)
 soma_vetor <- vetor1 + vetor2 # Adição elementar
 
 
+idade <- dados_turma_1$idade
+idade <- as.numeric(idade)
+
 idade+1
 idade/2
 idade*2
 idade-7
+
 
 altura <- dados_turma_1$altura
 altura <- as.numeric(altura)
@@ -364,13 +369,11 @@ Você pode criar uma matriz usando a função matrix().
 ```{r}
 # Criando uma matriz
 minha_matriz <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 2, ncol = 3, byrow = TRUE)
+
 minha_matriz
 
 # Se ,byrow=FALSE, a matriz será preenchida na ordem das colunas
 minha_matriz <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 2, ncol = 3, byrow = FALSE)
-
-# Vamos fazer uma matriz de correlação entre
-
 ```
 
 Operações básicas (subconjunto, aritmética, multiplicação de matrizes)
@@ -384,7 +387,7 @@ Operações básicas (subconjunto, aritmética, multiplicação de matrizes)
 Código de exemplo:
 
 ```{r}
-# Subconfiguração
+# Subconjunto
 my_matrix <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 2, ncol = 3, byrow = TRUE)
 element_2_3 <- my_matrix[2, 3] # Acesse o elemento na segunda linha e terceira coluna (6)
 
@@ -447,7 +450,7 @@ correlation_matrix <- cor(dados_turma_1 %>%
 
 # Visualizar a matriz de correlação
 library(corrplot)
-corrplot(correlation_matrix, method = 'color', order = 'alphabet')
+corrplot(correlation_matrix, method = 'color', order = 'alphabet', type = "lower")
 ```
 
 ## C. Sequências (*arrays*)
@@ -520,7 +523,7 @@ dados_aluno <- data.frame(
 
 ### Manipulando dataframes (adicionando, removendo, renomeando colunas)
 
-Adicionar colunas: você pode adicionar novas colunas a um dataframe s usando o operador de atribuição (\$ ou \[\]).
+Adicionar colunas: você pode adicionar novas colunas a um dataframe usando o operador de atribuição (\$ ou \[\]).
 
 ```{r}
 dados_turma_1$genero <- c("Feminino")
@@ -581,7 +584,7 @@ Subconjunto de linhas e colunas: você pode acessar linhas ou colunas específic
 # Aqui, vamos verificar a quinta linha da terceira coluna: 
 dados_turma_1[5,3]
 
-# Acesse as três primeiras linhas e as colunas "nome" e "pontuação"
+# Acesse as três primeiras linhas e as colunas "nome" e "altura"
 subconjunto_dados_turma_1 <- dados_turma_1[1:3, c("idade", "altura")]
 ```
 
@@ -713,7 +716,7 @@ Use nomes descritivos que transmitam a finalidade e o conteúdo da estrutura de 
 
 Evite usar nomes que entrem em conflito com funções internas em R (p.ex. "mean", "data", "function").
 
-## B. Dados organizados (tidy data)
+## B. Dados organizados (*tidy data*)
 
 *Tidy data* é uma forma estruturada e padronizada de organizar dados, popularizada por Hadley Wickham. Segue um conjunto de princípios que simplificam a manipulação e análise de dados, são eles:
 
