@@ -103,9 +103,26 @@ Você pode descobrir todos os campos YAML disponíveis para documentos HTML [aqu
 
 Escreva texto normalmente no editor.
 
+Introducao - aula 1
+
+| sdfsd | Col2 | Col3 |
+|-------|------|------|
+| sdf   |      |      |
+| sdf   |      |      |
+|       |      |      |
+|       |      |      |
+
+: Tabela 1. Aleatorio
+
 ### Pedaços de código
 
 Blocos de código R identificados com `{r}`opções de bloco (opcional), no estilo YAML, identificados por `#|`no início da linha.
+
+```{r}
+#| include: false 
+x <- 1
+
+```
 
 ```{r}
 #| label: load-packages 
@@ -141,6 +158,16 @@ Você pode adicionar opções ao código executável como este:
 ```
 
 ## Títulos e texto
+
+# Titulo
+
+## Titulo 2
+
+dkjlfkgjsd
+
+## dsfsdf
+
+#### sdfsd
 
 Use o modo "Visual" para facilitar o seu trabalho!
 
@@ -198,6 +225,20 @@ ggplot(mpg, aes(x = hwy, y = cty, color = displ)) +
 
 -   Linha 3
 
+-   sfdsf
+
+-   sdf
+
+-   sdf
+
+1.  sdfsdf
+
+2.  sdfsdf
+
+3.  sdfsd
+
+4.  
+
 Inserindo lista numerada:
 
 1.  Linha 1
@@ -208,9 +249,11 @@ Inserindo lista numerada:
 
 ## Inserindo referências
 
-Você pode também adicionar referências [@devleesschauwer2022] e rodapés[^1] no seu documento com facilidade.
+Você pode [@devleesschauwer2022]também adicionar referências [@devleesschauwer2022] e rodapés[^1] no seu [^2]com facilidade.
 
 [^1]: Rodapé 1
+
+[^2]: skjdaksjdaksj
 
 ## Conclusão
 

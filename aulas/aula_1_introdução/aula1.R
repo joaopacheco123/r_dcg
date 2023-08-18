@@ -1,3 +1,5 @@
+
+
 # Vamos criar um objeto (variável) do tipo numérico, com nome "x".
 x <- 5
 
@@ -105,7 +107,7 @@ i <- 1
 
 # Avalia se condição é verdadeira
 if(i == 2) {
-  print("x tem o valor de 2")
+  print("i tem o valor de 2")
 } else {
   print("Essa condição é falsa!")
 }
@@ -191,5 +193,5 @@ example("mean")
 # Valorize as mensagens de erro!
 
 ## As mensagens de erro são feitas para ajudar o programador, não somente pra frustrá-lo.
-print(x)
+print(j)
 
