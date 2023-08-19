@@ -1,0 +1,345 @@
+---
+title: "Aula 4 - Importando e manipulando dados"
+author: "João Amaral"
+format: html
+editor: source
+editor_options:
+  chunk_output_type: console
+---
+
+
+## Trabalhando com dados
+
+Agora que sabemos a sintaxe básica do R, assim como os tipos de dados existentes, podemos começar a realizar tarefas mais complexas.
+
+Os nossos objetos de estudo a partir de agora serão majoritariamente do tipo `data.frame` e `tibble`. A `tibble` é uma evolução da `data.frame`, com algumas melhorias. Para o nosso curso, saiba apenas sobre a existência das duas estruturas.
+
+Existe um fluxo para trabalhar com bancos de dados, mostrado na figura abaixo. 
+
+![Retirada de R for Data Science, 2nd ed.](imagens/fig_1.png)
+
+Nessa aula, veremos como importar, organizar e manipular dados. Para essas tarefas, utilizaremos os pacotes contidos no `tidyverse`, um conjunto de pacotes pensados para ciência de dados, com uma filosofia em comum de organização.
+
+## Importando dados
+
+O passo inicial para se trabalhar com dados é importá-los. Os dados podem vir de diversas fontes: bancos de dados SQL, arquvios \*.csv, arquvivos \*.xlsx, e até mesmo estruturas de dados oriundas de outros programas de análise estatística, como \*.sav (SPSS).
+
+Abaixo estão alguns pacotes e suas respectivas funções para importar dados:
+
+
+```{r}
+#| eval: false
+
+# Arquivos .csv separados por ","
+readr::read_csv(file = "C://...")
+
+# Arquivos .csv separados por ";"
+readr::read_csv2(file = "C://...")
+
+# Arquivos .xlsx (Excel)
+readxl::read_xlsx(path = "C://...")
+
+# Arquivos .sav (SPSS)
+haven::read_sav(file = "C://...")
+
+# Arquivos .rds
+readr::read_rds(file = "C://...")
+```
+
+
+Existem diversas funções para realizar essas mesmas importações. Recomendo seguir as funções acima para nos mantermos dentro do universo tidy.
+
+## Pipe
+
+O operador pipe é uma forma de encadear várias operacões de forma concisa. Ele pega o que está à sua esquerda e passa para a função à sua direita. A partir do R 4.1.0, foi introduzida uma versão nativa do pipe (`|>`), que antes funcionava apenas pelo pacote `magrittr`, na forma (`%>%`). Para ativá-lo, basta ir nas opções globais do Rstudio, conforme figura abaixo.
+
+
+![Ativando o pipe nativo](imagens/fig_2.png)
+
+Para utilizar o pipe, basta pressionar Ctrl/Cmd + Shift + M, ou apenas digitá-lo manualmente. Tente executar as linhas de código a seguir:
+
+
+```{r}
+# Exemplo de uso do pipe
+
+# Criando um vetor numérico
+vetor <- c(1,2,3,4,5)
+
+# Utilizando o pipe para calcular a média, a partir da função mean()
+vetor |> mean()
+
+# Sem o uso do pipe, a sintaxe seria da seguinte forma
+mean(vetor)
+```
+
+
+Uma observação importante: o pipe sempre passará o objeto à sua esquerda como o **primeiro** argumento da função à direita. Para códigos mais simples, parece não haver muitos benefícios em seu uso, mas logo você entenderá o verdadeiro poder do operador.
+
+## Dados organizados (Tidy)
+> "Tidy datasets are all alike, but every messy dataset is messy in its own way".\
+> \- Hadley Wickham
+
+Devemos seguir três princípios para manter os nossos dados organizados:
+
+1. Cada variável deve representar coluna;
+2. Cada observação deve representar linha;
+3. Cada célula deve possuir um único valor
+
+
+```{r}
+#| output: false
+
+
+library(dplyr)
+
+# Importar dados
+df <- readxl::read_excel("../aula_3_estrutura/dados_turma_1.xlsx")
+
+```
+
+```{r}
+# Vamos dar uma olhada no banco de dados
+glimpse(df)
+```
+
+
+Os dados acima foram foram respondidos pelos alunos da turma 1. Cada linha é a resposta de um aluno. Note que os três princípios foram respeitados. Ainda assim, podemos melhorar o banco de dados. Para isso, exploraremos o pacote `dplyr`, parte central do tidyverse.
+
+## Manipulando dados com  o pacote dplyr
+
+Dentro do tidyverse, utilizaremos frequentemente o operador pipe (`|>`). A sintaxe para manipulação dos dados segue um esqueleto, mostrado abaixo:
+
+
+```{r}
+#| eval: false
+
+# Estrutura básica da manipulação de dados com dplyr
+
+banco_de_dados |> 
+  verbo(ação) |> 
+  outro_verbo(outra_ação)
+  
+```
+
+
+É importante entender a estrutura acima. O primeiro argumento sempre será o banco de dados com o qual estamos trabalhando. Em seguida, utilizamos o operador `|>`, que irá repassar o banco de dados para a função à direita no código (no caso do exemplo, `verbo()`). Utilizei a palavra verbo porque as funções do `dplyr` foram escritas com nomes de formas verbais, para facilitar o entendimento. Veremos cada função mais abaixo. 
+
+Com o uso do `|>`, podemos encadear várias ações consecutivas. Essa é a grande beleza desse instrumento. As três linhas do código acima poderiam ser escritas na mesma linha. Essa separação é para facilitar a leitura do código.
+
+### Os principais verbos do dplyr
+
+#### Verbos que atuam nas linhas
+
+`filter()`: permite filtrar o banco de acordo com a condição desejada
+
+`arrange()`: ordena as observações do banco a partir de uma variável escolhida
+
+`distinct()`: mostra apenas as linhas únicas (não-repetidas) no banco de dados. Também pode ser utilizado para mostrar valores únicos de determinada variável.
+
+#### Verbos que atuam nas colunas
+
+`mutate()`: adiciona novas colunas, baseando-se nas colunas existentes. Também pode alterar o valor de colunas já existentes
+
+`select()`: reduz a quantidade de variáveis no banco de dados, selecionando somente as colunas de interesse
+
+`rename()`: renomeia as colunas do banco de dados    
+
+`relocate()`: alterna a ordem das colunas
+
+
+### Exemplo 
+
+O banco de dados acima possui nomes de colunas separados por espaço. Quando isso ocorrer, o R irá colocar o nome entre **\` \`**. Esse tipo de nomeclatura não é recomendada.
+
+
+```{r}
+# Nome das colunas do banco de dados
+df |> names()
+```
+
+
+Para renomear as colunas, vamos utilizar o verbo/função `rename()`
+
+
+```{r}
+#| eval: false
+
+# Renomeando as variáveis do banco
+df |> 
+  rename(
+    data_preenchimento = `Carimbo de data/hora`,
+    idade = `Idade (em anos, somente número)`,
+    altura = `Altura (em metros, casa decimal separada por ponto)`,
+    cinema = `Gênero cinematográfico preferido`,
+    musica = `Gênero musical preferido`,
+    atividade_fisica = `Quantos vezes por semana, em média, você pratica atividade física?`,
+    otimismo = `Tenho me sentido otimista em relação ao futuro`,
+    utilidade = `Tenho me sentido útil`,
+    tranquilidade = `Tenho me sentido tranquilo`,
+    lidar_problemas = `Tenho lidado bem com os problemas`,
+    clareza_mental = `Tenho pensado com clareza`,
+    proximidade = `Tenho me sentido próximo (a) às outras pessoas`,
+    decisoes = `Tenho sido capaz de tomar as minhas próprias decisões`,
+    comunicativo = `É conversador, comunicativo`,
+    depressivo = `É depressivo, triste`,
+    reservado = `É reservado`,
+    controle_estresse = `É relaxado, controla bem o stress`,
+    energia = `É cheio de energia`,
+    tensao = `Fica tenso com frequência`,
+    entusiasmo = `Gera muito entusiasmo`,
+    preocupacao = `Preocupa-se muito com tudo`,
+    quietude = `Tende a ser quieto, calado`,
+    estabilidade_emocional = `É emocionalmente estável, não se altera facilmente`,
+    assertividade = `É assertivo, não teme expressar o que sente`,
+    temperamento = `É temperamental, muda de humor facilmente`,
+    timidez = `É, às vezes, tímido e inibido`,
+    calma = `Mantém-se calmo nas situações de tensão`,
+    sociabilidade = `É sociável, extrovertido`,
+    nervosismo = `Fica nervoso facilmente`
+  )
+```
+
+
+O novo nome fica à esquerda, seguido do sinal de igualdade e o nome antigo. Vamos dar uma olhada no banco de dados após a modificação.
+
+
+```{r}
+# Visualizar primeiras cinco observações do banco
+
+df |> head(5)
+```
+
+
+Os nomes não foram alterados. Isso ocorreu porque as funções do dplyr apenas retornam um novo banco modificado, porém não alteram o banco original. Para armazenar o novo banco, devemos atribuí-lo a um novo objeto.
+
+
+```{r}
+# Modificando os nomes das colunas e salvando o banco no objeto df_renomeada
+df_renomeada <- df |> 
+  rename(
+    data_preenchimento = `Carimbo de data/hora`,
+    idade = `Idade (em anos, somente número)`,
+    altura = `Altura (em metros, casa decimal separada por ponto)`,
+    cinema = `Gênero cinematográfico preferido`,
+    musica = `Gênero musical preferido`,
+    atividade_fisica = `Quantos vezes por semana, em média, você pratica atividade física?`,
+    otimismo = `Tenho me sentido otimista em relação ao futuro`,
+    utilidade = `Tenho me sentido útil`,
+    tranquilidade = `Tenho me sentido tranquilo`,
+    lidar_problemas = `Tenho lidado bem com os problemas`,
+    clareza_mental = `Tenho pensado com clareza`,
+    proximidade = `Tenho me sentido próximo (a) às outras pessoas`,
+    decisoes = `Tenho sido capaz de tomar as minhas próprias decisões`,
+    comunicativo = `É conversador, comunicativo`,
+    depressivo = `É depressivo, triste`,
+    reservado = `É reservado`,
+    controle_estresse = `É relaxado, controla bem o stress`,
+    energia = `É cheio de energia`,
+    tensao = `Fica tenso com frequência`,
+    entusiasmo = `Gera muito entusiasmo`,
+    preocupacao = `Preocupa-se muito com tudo`,
+    quietude = `Tende a ser quieto, calado`,
+    estabilidade_emocional = `É emocionalmente estável, não se altera facilmente`,
+    assertividade = `É assertivo, não teme expressar o que sente`,
+    temperamento = `É temperamental, muda de humor facilmente`,
+    timidez = `É, às vezes, tímido e inibido`,
+    calma = `Mantém-se calmo nas situações de tensão`,
+    sociabilidade = `É sociável, extrovertido`,
+    nervosismo = `Fica nervoso facilmente`
+  )
+```
+
+
+Vamos supor que gostaríamos de avaliar o bem-estar na turma. Para isso, vamos selecionar algumas variáveis de interesse.
+
+
+```{r}
+
+# Seleciona apenas variáveis de características individuais, gostos e bem-estar
+df_filtrada <- df_renomeada |> 
+  select(idade:decisoes, -cinema) |> 
+  glimpse()
+```
+
+
+Vamos trabalhar apenas com os rockeiros da turma. Assim, podemos filtrar o banco com a função `select()`
+
+
+```{r}
+# Após selecionar, filtra banco para rockeiros
+df_rockeiros <- df_filtrada |> 
+  filter(musica == "Rock") |> 
+  glimpse()
+```
+
+
+Ao checar os tipos das variáveis de cada coluna acima, vemos que há algumas incongruências. Altura, por exemplo, deveria ser uma variável do tipo `double`. `musica`, `atividade_fisica` e as variáveis de bem-estar deveriam ser do tipo fator, visto que são variáveis categóricas.
+
+Vamos então converter as variáveis para os tipos desejados.
+
+
+```{r}
+# Cria vetor com as categorias de atividade fisica
+levels_ativ_fisica <- c("Não pratico atividade física", "Menos do que três vezes na semana", "Entre três e cinco vezes na semana", "Mais do que cinco vezes na semana")
+
+# Cria vetor com as categorias para as respostas do questionário
+levels_likert <- c("Nunca", "Raramente", "Algumas vezes", "Frequentemente", "Sempre")
+
+# Converte variáveis para os tipos desejados
+df_rockeiros_corrigida <- df_rockeiros |>  
+  mutate(
+    altura = as.double(altura),
+    musica = factor(musica),
+    atividade_fisica = factor(atividade_fisica, levels = levels_ativ_fisica , ordered = T),
+    across(otimismo:decisoes, ~ factor(.x, levels = levels_likert, ordered = T))
+  ) |> 
+  glimpse()
+```
+
+
+Agora, vamos criar uma nova variável `bem_estar`, que representa a soma das 5 perguntas do questionário de Warwick-Edinburgh.
+
+| Item |                                                  Resposta  |
+| ---- | -----------------------------------------------------------|
+| Tenho me sentido otimista em relação ao futuro        | 1-2-3-4-5 |
+| Tenho me sentido útil                                 | 1-2-3-4-5 |
+| Tenho me sentido tranquilo                            | 1-2-3-4-5 |
+| Tenho lidado bem com os problemas                     | 1-2-3-4-5 |
+| Tenho pensado com clareza                             | 1-2-3-4-5 |
+| Tenho me sentido próximo (a) às outras pessoas        | 1-2-3-4-5 |
+| Tenho sido capaz de tomar as minhas próprias decisões | 1-2-3-4-5 |
+
+1 = Nunca; 2 = Raramente; 3 = Algumas vezes; 4 = Frequentemente; 5 = Sempre.
+
+Para somar as pontuações, precisamos primeiramente converter o valor das respostas do questionário para um valor numérico. No R, fatores podem ser facilmente convertidos em valores numéricos pela função `as.numeric()`, o que é útil em diversas operações.
+
+
+```{r}
+df_quest_numerico <- df_rockeiros_corrigida |> 
+  mutate(across(otimismo:decisoes, as.numeric)) |> 
+  glimpse()
+  
+```
+
+
+Vamos dar uma olhada nos valores das variáveis do questionário, utilizando a variável `lidar_problemas` como exemplo.
+
+
+```{r}
+df_quest_numerico |> 
+  select(lidar_problemas) |> 
+  distinct() 
+```
+
+```{r}
+# Também com o verbo mutate, cria nova variável bem_estar
+df_bem_estar <- df_rockeiros_corrigida |> 
+  rowwise() |> 
+  mutate(bem_estar = sum(otimismo:decisoes))
+```
+
+
+
+## Salvando seu banco de dados alterado
+
+## Falar de starts_with e etc para finalizar a aula
