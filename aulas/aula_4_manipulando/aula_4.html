@@ -137,10 +137,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Existem diversas funções para realizar essas mesmas importações. Recomendo seguir as funções acima para nos mantermos dentro do universo tidy.</p>
 </section>
 <section id="pipe" class="level2">
-<h2 class="anchored" data-anchor-id="pipe">pipe</h2>
+<h2 class="anchored" data-anchor-id="pipe">Pipe</h2>
+<p>O operador pipe é uma forma de encadear várias operacões de forma concisa. Ele pega o que está à sua esquerda e passa para a função à sua direita. A partir do R 4.1.0, foi introduzida uma versão nativa do pipe (<code>|&gt;</code>), que antes funcionava apenas pelo pacote <code>magrittr</code>, na forma (<code>%&gt;%</code>). Para ativá-lo, basta ir nas opções globais do Rstudio, conforme figura abaixo.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="imagens/fig_2.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Ativando o pipe nativo</figcaption>
+</figure>
+</div>
+<p>Para utilizar o pipe, basta pressionar Ctrl/Cmd + Shift + M, ou apenas digitá-lo manualmente. Tente executar as linhas de código a seguir:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo de uso do pipe</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando um vetor numérico</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>vetor <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Utilizando o pipe para calcular a média, a partir da função mean()</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>vetor <span class="sc">|&gt;</span> <span class="fu">mean</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sem o uso do pipe, a sintaxe seria da seguinte forma</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(vetor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+</div>
+<p>Uma observação importante: o pipe sempre passará o objeto à sua esquerda como o <strong>primeiro</strong> argumento da função à direita. Para códigos mais simples, parece não haver muitos benefícios em seu uso, mas logo você entenderá o verdadeiro poder do operador.</p>
 </section>
-<section id="example" class="level2">
-<h2 class="anchored" data-anchor-id="example">example</h2>
+<section id="dados-organizados-tidy" class="level2">
+<h2 class="anchored" data-anchor-id="dados-organizados-tidy">Dados organizados (Tidy)</h2>
+<blockquote class="blockquote">
+<p>“Tidy datasets are all alike, but every messy dataset is messy in its own way”.<br>
+- Hadley Wickham</p>
+</blockquote>
+<p>TODO: importar um banco de dados bagunçado com o pipe e fazer algo para organizá-lo, já explicando sobre os verbos do dplyr</p>
+<p>Falar sobre a forma de organização ideal</p>
 </section>
 <section id="salvando-seu-banco-de-dados-alterado" class="level2">
 <h2 class="anchored" data-anchor-id="salvando-seu-banco-de-dados-alterado">Salvando seu banco de dados alterado</h2>

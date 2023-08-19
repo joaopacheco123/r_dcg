@@ -46,8 +46,36 @@ readr::read_rds(file = "C://...")
 
 Existem diversas funções para realizar essas mesmas importações. Recomendo seguir as funções acima para nos mantermos dentro do universo tidy.
 
-## pipe
+## Pipe
 
-## example
+O operador pipe é uma forma de encadear várias operacões de forma concisa. Ele pega o que está à sua esquerda e passa para a função à sua direita. A partir do R 4.1.0, foi introduzida uma versão nativa do pipe (`|>`), que antes funcionava apenas pelo pacote `magrittr`, na forma (`%>%`). Para ativá-lo, basta ir nas opções globais do Rstudio, conforme figura abaixo.
+
+
+![Ativando o pipe nativo](imagens/fig_2.png)
+
+Para utilizar o pipe, basta pressionar Ctrl/Cmd + Shift + M, ou apenas digitá-lo manualmente. Tente executar as linhas de código a seguir:
+
+```{r}
+# Exemplo de uso do pipe
+
+# Criando um vetor numérico
+vetor <- c(1,2,3,4,5)
+
+# Utilizando o pipe para calcular a média, a partir da função mean()
+vetor |> mean()
+
+# Sem o uso do pipe, a sintaxe seria da seguinte forma
+mean(vetor)
+```
+
+Uma observação importante: o pipe sempre passará o objeto à sua esquerda como o **primeiro** argumento da função à direita. Para códigos mais simples, parece não haver muitos benefícios em seu uso, mas logo você entenderá o verdadeiro poder do operador.
+
+## Dados organizados (Tidy)
+> "Tidy datasets are all alike, but every messy dataset is messy in its own way".\
+> \- Hadley Wickham
+
+TODO: importar um banco de dados bagunçado com o pipe e fazer algo para organizá-lo, já explicando sobre os verbos do dplyr
+
+Falar sobre a forma de organização ideal
 
 ## Salvando seu banco de dados alterado
