@@ -1,7 +1,9 @@
 ---
 title: "Aula 4 - Importando e manipulando dados"
 author: "João Amaral"
-format: html
+format: 
+  html:
+    toc: true
 editor: source
 editor_options:
   chunk_output_type: console
@@ -13,7 +15,7 @@ Agora que sabemos a sintaxe básica do R, assim como os tipos de dados existente
 
 Os nossos objetos de estudo a partir de agora serão majoritariamente do tipo `data.frame` e `tibble`. A `tibble` é uma evolução da `data.frame`, com algumas melhorias. Para o nosso curso, saiba apenas sobre a existência das duas estruturas.
 
-Existe um fluxo para trabalhar com bancos de dados, mostrado na figura abaixo. 
+Existe um fluxo para trabalhar com bancos de dados, mostrado na figura abaixo.
 
 ![Retirada de R for Data Science, 2nd ed.](imagens/fig_1.png)
 
@@ -50,7 +52,6 @@ Existem diversas funções para realizar essas mesmas importações. Recomendo s
 
 O operador pipe é uma forma de encadear várias operacões de forma concisa. Ele pega o que está à sua esquerda e passa para a função à sua direita. A partir do R 4.1.0, foi introduzida uma versão nativa do pipe (`|>`), que antes funcionava apenas pelo pacote `magrittr`, na forma (`%>%`). Para ativá-lo, basta ir nas opções globais do Rstudio, conforme figura abaixo.
 
-
 ![Ativando o pipe nativo](imagens/fig_2.png)
 
 Para utilizar o pipe, basta pressionar Ctrl/Cmd + Shift + M, ou apenas digitá-lo manualmente. Tente executar as linhas de código a seguir:
@@ -71,14 +72,15 @@ mean(vetor)
 Uma observação importante: o pipe sempre passará o objeto à sua esquerda como o **primeiro** argumento da função à direita. Para códigos mais simples, parece não haver muitos benefícios em seu uso, mas logo você entenderá o verdadeiro poder do operador.
 
 ## Dados organizados (Tidy)
+
 > "Tidy datasets are all alike, but every messy dataset is messy in its own way".\
-> \- Hadley Wickham
+> - Hadley Wickham
 
 Devemos seguir três princípios para manter os nossos dados organizados:
 
-1. Cada variável deve representar coluna;
-2. Cada observação deve representar linha;
-3. Cada célula deve possuir um único valor
+1.  Cada variável deve representar coluna;
+2.  Cada observação deve representar linha;
+3.  Cada célula deve possuir um único valor
 
 ```{r}
 #| output: false
@@ -88,6 +90,7 @@ library(dplyr)
 
 # Importar dados
 df <- readxl::read_excel("../aula_3_estrutura/dados_turma_1.xlsx")
+#df <- readxl::read_excel("aulas/aula_3_estrutura/dados_turma_1.xlsx")
 
 ```
 
@@ -98,7 +101,7 @@ glimpse(df)
 
 Os dados acima foram foram respondidos pelos alunos da turma 1. Cada linha é a resposta de um aluno. Note que os três princípios foram respeitados. Ainda assim, podemos melhorar o banco de dados. Para isso, exploraremos o pacote `dplyr`, parte central do tidyverse.
 
-## Manipulando dados com  o pacote dplyr
+## Manipulando dados com o pacote dplyr
 
 Dentro do tidyverse, utilizaremos frequentemente o operador pipe (`|>`). A sintaxe para manipulação dos dados segue um esqueleto, mostrado abaixo:
 
@@ -113,7 +116,7 @@ banco_de_dados |>
   
 ```
 
-É importante entender a estrutura acima. O primeiro argumento sempre será o banco de dados com o qual estamos trabalhando. Em seguida, utilizamos o operador `|>`, que irá repassar o banco de dados para a função à direita no código (no caso do exemplo, `verbo()`). Utilizei a palavra verbo porque as funções do `dplyr` foram escritas com nomes de formas verbais, para facilitar o entendimento. Veremos cada função mais abaixo. 
+É importante entender a estrutura acima. O primeiro argumento sempre será o banco de dados com o qual estamos trabalhando. Em seguida, utilizamos o operador `|>`, que irá repassar o banco de dados para a função à direita no código (no caso do exemplo, `verbo()`). Utilizei a palavra verbo porque as funções do `dplyr` foram escritas com nomes de formas verbais, para facilitar o entendimento. Veremos cada função mais abaixo.
 
 Com o uso do `|>`, podemos encadear várias ações consecutivas. Essa é a grande beleza desse instrumento. As três linhas do código acima poderiam ser escritas na mesma linha. Essa separação é para facilitar a leitura do código.
 
@@ -121,7 +124,9 @@ Com o uso do `|>`, podemos encadear várias ações consecutivas. Essa é a gran
 
 #### Verbos que atuam nas linhas
 
-`filter()`: permite filtrar o banco de acordo com a condição desejada
+`filter()`: permite filtrar o banco de acordo com a condição desejada[^1]
+
+[^1]: É possível utilizar operadores lógicos (`&` e `|`) dentro do verbo filter para filtrar o banco a partir duas ou mais condições.
 
 `arrange()`: ordena as observações do banco a partir de uma variável escolhida
 
@@ -131,14 +136,19 @@ Com o uso do `|>`, podemos encadear várias ações consecutivas. Essa é a gran
 
 `mutate()`: adiciona novas colunas, baseando-se nas colunas existentes. Também pode alterar o valor de colunas já existentes
 
-`select()`: reduz a quantidade de variáveis no banco de dados, selecionando somente as colunas de interesse
+`select()`: reduz a quantidade de variáveis no banco de dados, selecionando somente as colunas de interesse[^2]
 
-`rename()`: renomeia as colunas do banco de dados    
+[^2]: Existem várias funções auxiliares que você pode usar dentro de `select()`:\
+`starts_with("abc")`: seleciona colunas que começam com "abc".\
+`ends_with("xyz")`: seleciona colunas que terminam com "xyz".\
+`contains("ijk")`: seleciona colunas que contêm "ijk".\
+`num_range("x", 1:3)`: seleciona colunas com x1, x2 e x3.
+
+`rename()`: renomeia as colunas do banco de dados
 
 `relocate()`: alterna a ordem das colunas
 
-
-### Exemplo 
+### Exemplo
 
 O banco de dados acima possui nomes de colunas separados por espaço. Quando isso ocorrer, o R irá colocar o nome entre **\` \`**. Esse tipo de nomeclatura não é recomendada.
 
@@ -190,9 +200,9 @@ df |>
 O novo nome fica à esquerda, seguido do sinal de igualdade e o nome antigo. Vamos dar uma olhada no banco de dados após a modificação.
 
 ```{r}
-# Visualizar primeiras cinco observações do banco
+# Visualizar estrutura do banco
 
-df |> head(5)
+df |> glimpse()
 ```
 
 Os nomes não foram alterados. Isso ocorreu porque as funções do dplyr apenas retornam um novo banco modificado, porém não alteram o banco original. Para armazenar o novo banco, devemos atribuí-lo a um novo objeto.
@@ -233,14 +243,44 @@ df_renomeada <- df |>
   )
 ```
 
-Vamos supor que gostaríamos de avaliar o bem-estar na turma. Para isso, vamos selecionar algumas variáveis de interesse.
+Esse banco de dados não possui uma variável de identificação. Esse tipo de variável garante a singularidade de cada observação. Poderia ser o nome do indivíduo, porém geralmente são números de identificação, para garantir o anonimato. Você deve ter visto também que o primeiro valor de cada variável acima é do tipo `NA`, ou seja, um dado faltante. Isso geralmente ocorre por não-preenchimento de uma variável durante a coleta de dados ou pelo seu preenchimento incorreto. Nesse caso, provavelmente ocorreu porque a primeira observação do banco foi deletada antes da importação. Para criar a variável de identificação, iremos primeiramente excluir a linha com dados faltantes[^3].
+
+[^3]: Existem diversas formas de lidar com dados faltantes. Nesse caso, é somente uma linha do nosso banco e por isso utilizamos o `drop_na()`. Entretanto, em análises mais complexas, essa não é a melhor forma de lidar com esse tipo de dados. Para saber um pouco mais: <https://psicometriaonline.com.br/o-que-sao-dados-faltantes/>
+
+```{r}
+# Excluindo os dados faltantes do banco
+df_renomeada <- df_renomeada |> 
+  tidyr::drop_na()
+```
+
+Agora podemos criar uma nova coluna de identificação utilizando o verbo `mutate()`. Utilizarei o argumento `.before` da função para posicionar a variável no início do banco. 
+
+```{r}
+# Criando variável de identificação e alterando sua posição para o início
+df_renomeada <- df_renomeada |> 
+  mutate(id = row_number(), .before = data_preenchimento) 
+```
+
+```{r}
+#| echo: false
+df_renomeada
+```
+
+Vamos supor que gostaríamos de avaliar o bem-estar na turma. Para isso, vamos selecionar algumas variáveis de interesse [^4].
+
+[^4]: O output de todas as `tibbles` será conforme a função `glimpse()`. Vocês apenas não verão a função sendo executada por escolha do autor.
 
 ```{r}
 
 # Seleciona apenas variáveis de características individuais, gostos e bem-estar
 df_filtrada <- df_renomeada |> 
-  select(idade:decisoes, -cinema) |> 
-  glimpse()
+  select(idade:decisoes, -cinema) 
+```
+
+```{r}
+#| echo: false
+
+df_filtrada |>  glimpse()
 ```
 
 Vamos trabalhar apenas com os rockeiros da turma. Assim, podemos filtrar o banco com a função `select()`
@@ -248,8 +288,13 @@ Vamos trabalhar apenas com os rockeiros da turma. Assim, podemos filtrar o banco
 ```{r}
 # Após selecionar, filtra banco para rockeiros
 df_rockeiros <- df_filtrada |> 
-  filter(musica == "Rock") |> 
-  glimpse()
+  filter(musica == "Rock")
+```
+
+```{r}
+#| echo: false
+
+df_rockeiros |>  glimpse()
 ```
 
 Ao checar os tipos das variáveis de cada coluna acima, vemos que há algumas incongruências. Altura, por exemplo, deveria ser uma variável do tipo `double`. `musica`, `atividade_fisica` e as variáveis de bem-estar deveriam ser do tipo fator, visto que são variáveis categóricas.
@@ -263,21 +308,26 @@ levels_ativ_fisica <- c("Não pratico atividade física", "Menos do que três ve
 # Cria vetor com as categorias para as respostas do questionário
 levels_likert <- c("Nunca", "Raramente", "Algumas vezes", "Frequentemente", "Sempre")
 
-# Converte variáveis para os tipos desejados
+# Converte variáveis para os tipos desejados e cria uma variável id para identificar cada indivíduo
 df_rockeiros_corrigida <- df_rockeiros |>  
   mutate(
     altura = as.double(altura),
     musica = factor(musica),
     atividade_fisica = factor(atividade_fisica, levels = levels_ativ_fisica , ordered = T),
     across(otimismo:decisoes, ~ factor(.x, levels = levels_likert, ordered = T))
-  ) |> 
-  glimpse()
+  )
 ```
 
-Agora, vamos criar uma nova variável `bem_estar`, que representa a soma das 5 perguntas do questionário de Warwick-Edinburgh.
+```{r}
+#| echo: false
 
-| Item |                                                  Resposta  |
-| ---- | -----------------------------------------------------------|
+df_rockeiros_corrigida |>  glimpse()
+```
+
+Agora, vamos criar uma nova variável `bem_estar`, formada pela soma das 5 perguntas do questionário de Warwick-Edinburgh. Em nosso banco, o questionário está representado pelas variáveis `otimismo`, `utilidade`, `tranquilidade`, `lidar_problemas`, `clareza_mental`, `proximidade` e `decisoes`.
+
+| Item                                                  | Resposta  |
+|-------------------------------------------------------|-----------|
 | Tenho me sentido otimista em relação ao futuro        | 1-2-3-4-5 |
 | Tenho me sentido útil                                 | 1-2-3-4-5 |
 | Tenho me sentido tranquilo                            | 1-2-3-4-5 |
@@ -290,30 +340,80 @@ Agora, vamos criar uma nova variável `bem_estar`, que representa a soma das 5 p
 
 Para somar as pontuações, precisamos primeiramente converter o valor das respostas do questionário para um valor numérico. No R, fatores podem ser facilmente convertidos em valores numéricos pela função `as.numeric()`, o que é útil em diversas operações.
 
+:::{.callout-note title="Conversão de fator para valores numéricos"}
+Internamente os fatores são representados por números inteiros no R. Ainda assim, é importante ter cuidado com essa conversão, pois nem sempre você terá os valores numéricos que deseja. 
+
+Para saber mais, veja a seção "Warning" no link: <https://stat.ethz.ch/R-manual/R-devel/library/base/html/factor.html>
+:::
+
 ```{r}
+# Convertendo as variáveis de factor para um valor numérico
 df_quest_numerico <- df_rockeiros_corrigida |> 
-  mutate(across(otimismo:decisoes, as.numeric)) |> 
-  glimpse()
-  
+  mutate(across(otimismo:decisoes, as.numeric))
 ```
-
-Vamos dar uma olhada nos valores das variáveis do questionário, utilizando a variável `lidar_problemas` como exemplo.
 
 ```{r}
-df_quest_numerico |> 
-  select(lidar_problemas) |> 
-  distinct() 
+#| echo: false
+
+df_quest_numerico |>  glimpse()
 ```
 
+Agora que as variáveis de bem-estar estão na forma numérica, podemos somar a pontuação no questionário para cada indivíduo. Perceba que essa operação é através das colunas
 
 ```{r}
 # Também com o verbo mutate, cria nova variável bem_estar
-df_bem_estar <- df_rockeiros_corrigida |> 
+df_bem_estar <- df_quest_numerico |> 
   rowwise() |> 
-  mutate(bem_estar = sum(otimismo:decisoes))
+  mutate(bem_estar = sum(c(otimismo, utilidade, tranquilidade, lidar_problemas, clareza_mental, proximidade, decisoes)))
 ```
 
+```{r}
+#| echo: false
 
-## Salvando seu banco de dados alterado
+df_bem_estar |>  glimpse()
+```
 
-## Falar de starts_with e etc para finalizar a aula
+Todas as operações acima poderiam ser realizadas de forma encadeada. A decisão por separá-las foi para focarmos em somente um verbo por vez. Veja como ficaria:
+
+```{r}
+# Juntando todas as operações acima
+df_bem_estar <- df_renomeada |> 
+  select(idade:decisoes, -cinema) |> 
+  filter(musica == "Rock") |>
+  mutate(
+    id = row_number(), .before = idade,
+    altura = as.double(altura),
+    musica = factor(musica),
+    atividade_fisica = factor(atividade_fisica, levels = levels_ativ_fisica , ordered = T),
+    across(otimismo:decisoes, ~ factor(.x, levels = levels_likert, ordered = T)),
+    across(otimismo:decisoes, as.numeric)
+  ) |> 
+  rowwise() |> 
+  mutate(bem_estar = sum(c(otimismo, utilidade, tranquilidade, lidar_problemas, clareza_mental, proximidade, decisoes))) 
+```
+
+Por último, vamos visualizar a frequência das pontuações por meio de um histograma.
+
+```{r}
+# Visualizando a frequência das pontuações
+df_bem_estar |> 
+  select(bem_estar) |> 
+  pull() |> 
+  hist(xlab = "Escore na escala de Warwick-Edinburgh", ylab = "Frequência", main = "Bem estar na turma ")
+```
+
+## Salvando seu banco de dados alterados
+
+Após manipular os dados de um banco, é importante salvá-los para não precisar rodar o script sempre que quiser ter acesso ao seu banco alterado.
+
+Há diversos formatos nos quais podemos salvar uma `tibble`. Os mais comuns são \*.csv e \*.rds. Dentro do tidyverse, podemos fazer isso com o pacote `readr`.
+
+```{r}
+#| eval: false
+
+# Cria novo arquivo .csv
+readr::write_csv(df_bem_estar, file = "nome_do_arquivo.csv")
+
+# Cria novo arquivo .rds
+readr::write_rds(df_bem_estar, file = "nome_do_arquivo.csv")
+```

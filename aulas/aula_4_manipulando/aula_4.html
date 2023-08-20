@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.3.361">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,10 +72,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="fullcontent">
+<body>
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#trabalhando-com-dados" id="toc-trabalhando-com-dados" class="nav-link active" data-scroll-target="#trabalhando-com-dados">Trabalhando com dados</a></li>
+  <li><a href="#importando-dados" id="toc-importando-dados" class="nav-link" data-scroll-target="#importando-dados">Importando dados</a></li>
+  <li><a href="#pipe" id="toc-pipe" class="nav-link" data-scroll-target="#pipe">Pipe</a></li>
+  <li><a href="#dados-organizados-tidy" id="toc-dados-organizados-tidy" class="nav-link" data-scroll-target="#dados-organizados-tidy">Dados organizados (Tidy)</a></li>
+  <li><a href="#manipulando-dados-com-o-pacote-dplyr" id="toc-manipulando-dados-com-o-pacote-dplyr" class="nav-link" data-scroll-target="#manipulando-dados-com-o-pacote-dplyr">Manipulando dados com o pacote dplyr</a>
+  <ul class="collapse">
+  <li><a href="#os-principais-verbos-do-dplyr" id="toc-os-principais-verbos-do-dplyr" class="nav-link" data-scroll-target="#os-principais-verbos-do-dplyr">Os principais verbos do dplyr</a></li>
+  <li><a href="#exemplo" id="toc-exemplo" class="nav-link" data-scroll-target="#exemplo">Exemplo</a></li>
+  </ul></li>
+  <li><a href="#salvando-seu-banco-de-dados-alterados" id="toc-salvando-seu-banco-de-dados-alterados" class="nav-link" data-scroll-target="#salvando-seu-banco-de-dados-alterados">Salvando seu banco de dados alterados</a></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -181,7 +198,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Importar dados</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"../aula_3_estrutura/dados_turma_1.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"../aula_3_estrutura/dados_turma_1.xlsx"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#df &lt;- readxl::read_excel("aulas/aula_3_estrutura/dados_turma_1.xlsx")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos dar uma olhada no banco de dados</span></span>
@@ -238,14 +256,14 @@ $ `Fica nervoso facilmente`                                            &lt;chr&g
 <h3 class="anchored" data-anchor-id="os-principais-verbos-do-dplyr">Os principais verbos do dplyr</h3>
 <section id="verbos-que-atuam-nas-linhas" class="level4">
 <h4 class="anchored" data-anchor-id="verbos-que-atuam-nas-linhas">Verbos que atuam nas linhas</h4>
-<p><code>filter()</code>: permite filtrar o banco de acordo com a condição desejada</p>
+<p><code>filter()</code>: permite filtrar o banco de acordo com a condição desejada<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p><code>arrange()</code>: ordena as observações do banco a partir de uma variável escolhida</p>
 <p><code>distinct()</code>: mostra apenas as linhas únicas (não-repetidas) no banco de dados. Também pode ser utilizado para mostrar valores únicos de determinada variável.</p>
 </section>
 <section id="verbos-que-atuam-nas-colunas" class="level4">
 <h4 class="anchored" data-anchor-id="verbos-que-atuam-nas-colunas">Verbos que atuam nas colunas</h4>
 <p><code>mutate()</code>: adiciona novas colunas, baseando-se nas colunas existentes. Também pode alterar o valor de colunas já existentes</p>
-<p><code>select()</code>: reduz a quantidade de variáveis no banco de dados, selecionando somente as colunas de interesse</p>
+<p><code>select()</code>: reduz a quantidade de variáveis no banco de dados, selecionando somente as colunas de interesse<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p><code>rename()</code>: renomeia as colunas do banco de dados</p>
 <p><code>relocate()</code>: alterna a ordem das colunas</p>
 </section>
@@ -326,25 +344,41 @@ $ `Fica nervoso facilmente`                                            &lt;chr&g
 </div>
 <p>O novo nome fica à esquerda, seguido do sinal de igualdade e o nome antigo. Vamos dar uma olhada no banco de dados após a modificação.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar primeiras cinco observações do banco</span></span>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar estrutura do banco</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 29
-  `Carimbo de data/hora` Idade (em anos, somente número…¹ Altura (em metros, c…²
-  &lt;dttm&gt;                                            &lt;dbl&gt; &lt;chr&gt;                 
-1 NA                                                   NA &lt;NA&gt;                  
-2 2023-08-11 13:44:19                                  22 1.62                  
-3 2023-08-11 13:45:33                                  22 1.71                  
-4 2023-08-11 13:45:49                                  20 1.79                  
-5 2023-08-11 13:50:47                                  25 1.76                  
-# ℹ abbreviated names: ¹​`Idade (em anos, somente número)`,
-#   ²​`Altura (em metros, casa decimal separada por ponto)`
-# ℹ 26 more variables: `Gênero cinematográfico preferido` &lt;chr&gt;,
-#   `Gênero musical preferido` &lt;chr&gt;,
-#   `Quantos vezes por semana, em média, você pratica atividade física?` &lt;chr&gt;,
-#   `Tenho me sentido otimista em relação ao futuro` &lt;chr&gt;,
-#   `Tenho me sentido útil` &lt;chr&gt;, `Tenho me sentido tranquilo` &lt;chr&gt;, …</code></pre>
+<pre><code>Rows: 17
+Columns: 29
+$ `Carimbo de data/hora`                                               &lt;dttm&gt; …
+$ `Idade (em anos, somente número)`                                    &lt;dbl&gt; N…
+$ `Altura (em metros, casa decimal separada por ponto)`                &lt;chr&gt; N…
+$ `Gênero cinematográfico preferido`                                   &lt;chr&gt; N…
+$ `Gênero musical preferido`                                           &lt;chr&gt; N…
+$ `Quantos vezes por semana, em média, você pratica atividade física?` &lt;chr&gt; N…
+$ `Tenho me sentido otimista em relação ao futuro`                     &lt;chr&gt; N…
+$ `Tenho me sentido útil`                                              &lt;chr&gt; N…
+$ `Tenho me sentido tranquilo`                                         &lt;chr&gt; N…
+$ `Tenho lidado bem com os problemas`                                  &lt;chr&gt; N…
+$ `Tenho pensado com clareza`                                          &lt;chr&gt; N…
+$ `Tenho me sentido próximo (a) às outras pessoas`                     &lt;chr&gt; N…
+$ `Tenho sido capaz de tomar as minhas próprias decisões`              &lt;chr&gt; N…
+$ `É conversador, comunicativo`                                        &lt;chr&gt; N…
+$ `É depressivo, triste`                                               &lt;chr&gt; N…
+$ `É reservado`                                                        &lt;chr&gt; N…
+$ `É relaxado, controla bem o stress`                                  &lt;chr&gt; N…
+$ `É cheio de energia`                                                 &lt;chr&gt; N…
+$ `Fica tenso com frequência`                                          &lt;chr&gt; N…
+$ `Gera muito entusiasmo`                                              &lt;chr&gt; N…
+$ `Preocupa-se muito com tudo`                                         &lt;chr&gt; N…
+$ `Tende a ser quieto, calado`                                         &lt;chr&gt; N…
+$ `É emocionalmente estável, não se altera facilmente`                 &lt;chr&gt; N…
+$ `É assertivo, não teme expressar o que sente`                        &lt;chr&gt; N…
+$ `É temperamental, muda de humor facilmente`                          &lt;chr&gt; N…
+$ `É, às vezes, tímido e inibido`                                      &lt;chr&gt; N…
+$ `Mantém-se calmo nas situações de tensão`                            &lt;chr&gt; N…
+$ `É sociável, extrovertido`                                           &lt;chr&gt; N…
+$ `Fica nervoso facilmente`                                            &lt;chr&gt; N…</code></pre>
 </div>
 </div>
 <p>Os nomes não foram alterados. Isso ocorreu porque as funções do dplyr apenas retornam um novo banco modificado, porém não alteram o banco original. Para armazenar o novo banco, devemos atribuí-lo a um novo objeto.</p>
@@ -383,34 +417,77 @@ $ `Fica nervoso facilmente`                                            &lt;chr&g
 <span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">nervosismo =</span> <span class="st">`</span><span class="at">Fica nervoso facilmente</span><span class="st">`</span></span>
 <span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Vamos supor que gostaríamos de avaliar o bem-estar na turma. Para isso, vamos selecionar algumas variáveis de interesse.</p>
+<p>Esse banco de dados não possui uma variável de identificação. Esse tipo de variável garante a singularidade de cada observação. Poderia ser o nome do indivíduo, porém geralmente são números de identificação, para garantir o anonimato. Você deve ter visto também que o primeiro valor de cada variável acima é do tipo <code>NA</code>, ou seja, um dado faltante. Isso geralmente ocorre por não-preenchimento de uma variável durante a coleta de dados ou pelo seu preenchimento incorreto. Nesse caso, provavelmente ocorreu porque a primeira observação do banco foi deletada antes da importação. Para criar a variável de identificação, iremos primeiramente excluir a linha com dados faltantes<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Seleciona apenas variáveis de características individuais, gostos e bem-estar</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df_filtrada <span class="ot">&lt;-</span> df_renomeada <span class="sc">|&gt;</span> </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(idade<span class="sc">:</span>decisoes, <span class="sc">-</span>cinema) <span class="sc">|&gt;</span> </span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Excluindo os dados faltantes do banco</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df_renomeada <span class="ot">&lt;-</span> df_renomeada <span class="sc">|&gt;</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">drop_na</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Agora podemos criar uma nova coluna de identificação utilizando o verbo <code>mutate()</code>. Utilizarei o argumento <code>.before</code> da função para posicionar a variável no início do banco.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando variável de identificação e alterando sua posição para o início</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df_renomeada <span class="ot">&lt;-</span> df_renomeada <span class="sc">|&gt;</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">row_number</span>(), <span class="at">.before =</span> data_preenchimento) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 17
+<pre><code># A tibble: 15 × 30
+      id data_preenchimento  idade altura cinema         musica atividade_fisica
+   &lt;int&gt; &lt;dttm&gt;              &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;          &lt;chr&gt;  &lt;chr&gt;           
+ 1     1 2023-08-11 13:45:33    22 1.71   Ficção cientí… Cláss… Mais do que cin…
+ 2     2 2023-08-11 13:45:49    20 1.79   Suspense       Pop    Não pratico ati…
+ 3     3 2023-08-11 13:50:47    25 1.76   Suspense       Rock   Entre três e ci…
+ 4     4 2023-08-11 14:16:36    25 1.78   Drama          Rock   Entre três e ci…
+ 5     5 2023-08-12 01:05:19    23 1.77   Ficção cientí… Rock   Menos do que tr…
+ 6     6 2023-08-12 11:36:58    20 1.8    Terror         Rock   Mais do que cin…
+ 7     7 2023-08-12 12:05:59    28 1.74   Ficção cientí… Indie  Menos do que tr…
+ 8     8 2023-08-12 19:02:14    20 1.82   Ficção cientí… Pop    Entre três e ci…
+ 9     9 2023-08-15 09:36:41    23 1.58   Ficção cientí… Rock   Entre três e ci…
+10    10 2023-08-15 14:52:52    20 1.75   Drama          Rock   Mais do que cin…
+11    11 2023-08-15 20:20:23    23 1.92   Drama          Pop    Entre três e ci…
+12    12 2023-08-16 13:59:30    19 1.65   Ficção cientí… Rock   Menos do que tr…
+13    13 2023-08-17 14:48:44    22 1.59   Drama          MPB    Menos do que tr…
+14    14 2023-08-17 20:10:52    23 1.68   Ficção cientí… MPB    Não pratico ati…
+15    15 2023-08-18 12:45:31    20 1.64   Ação           Rock   Menos do que tr…
+# ℹ 23 more variables: otimismo &lt;chr&gt;, utilidade &lt;chr&gt;, tranquilidade &lt;chr&gt;,
+#   lidar_problemas &lt;chr&gt;, clareza_mental &lt;chr&gt;, proximidade &lt;chr&gt;,
+#   decisoes &lt;chr&gt;, comunicativo &lt;chr&gt;, depressivo &lt;chr&gt;, reservado &lt;chr&gt;,
+#   controle_estresse &lt;chr&gt;, energia &lt;chr&gt;, tensao &lt;chr&gt;, entusiasmo &lt;chr&gt;,
+#   preocupacao &lt;chr&gt;, quietude &lt;chr&gt;, estabilidade_emocional &lt;chr&gt;,
+#   assertividade &lt;chr&gt;, temperamento &lt;chr&gt;, timidez &lt;chr&gt;, calma &lt;chr&gt;,
+#   sociabilidade &lt;chr&gt;, nervosismo &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>Vamos supor que gostaríamos de avaliar o bem-estar na turma. Para isso, vamos selecionar algumas variáveis de interesse <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Seleciona apenas variáveis de características individuais, gostos e bem-estar</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>df_filtrada <span class="ot">&lt;-</span> df_renomeada <span class="sc">|&gt;</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(idade<span class="sc">:</span>decisoes, <span class="sc">-</span>cinema) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 15
 Columns: 11
-$ idade            &lt;dbl&gt; NA, 22, 22, 20, 25, 25, 23, 20, 28, 20, 23, 20, 23, 1…
-$ altura           &lt;chr&gt; NA, "1.62", "1.71", "1.79", "1.76", "1.78", "1.77", "…
-$ musica           &lt;chr&gt; NA, "Pop", "Clássico", "Pop", "Rock", "Rock", "Rock",…
-$ atividade_fisica &lt;chr&gt; NA, "Menos do que três vezes na semana", "Mais do que…
-$ otimismo         &lt;chr&gt; NA, "Frequentemente", "Sempre", "Frequentemente", "Al…
-$ utilidade        &lt;chr&gt; NA, "Algumas vezes", "Sempre", "Algumas vezes", "Algu…
-$ tranquilidade    &lt;chr&gt; NA, "Nunca", "Frequentemente", "Algumas vezes", "Rara…
-$ lidar_problemas  &lt;chr&gt; NA, "Nunca", "Algumas vezes", "Algumas vezes", "Algum…
-$ clareza_mental   &lt;chr&gt; NA, "Algumas vezes", "Frequentemente", "Frequentement…
-$ proximidade      &lt;chr&gt; NA, "Sempre", "Frequentemente", "Frequentemente", "Al…
-$ decisoes         &lt;chr&gt; NA, "Frequentemente", "Frequentemente", "Frequentemen…</code></pre>
+$ idade            &lt;dbl&gt; 22, 20, 25, 25, 23, 20, 28, 20, 23, 20, 23, 19, 22, 2…
+$ altura           &lt;chr&gt; "1.71", "1.79", "1.76", "1.78", "1.77", "1.8", "1.74"…
+$ musica           &lt;chr&gt; "Clássico", "Pop", "Rock", "Rock", "Rock", "Rock", "I…
+$ atividade_fisica &lt;chr&gt; "Mais do que cinco vezes na semana", "Não pratico ati…
+$ otimismo         &lt;chr&gt; "Sempre", "Frequentemente", "Algumas vezes", "Algumas…
+$ utilidade        &lt;chr&gt; "Sempre", "Algumas vezes", "Algumas vezes", "Algumas …
+$ tranquilidade    &lt;chr&gt; "Frequentemente", "Algumas vezes", "Raramente", "Rara…
+$ lidar_problemas  &lt;chr&gt; "Algumas vezes", "Algumas vezes", "Algumas vezes", "R…
+$ clareza_mental   &lt;chr&gt; "Frequentemente", "Frequentemente", "Algumas vezes", …
+$ proximidade      &lt;chr&gt; "Frequentemente", "Frequentemente", "Algumas vezes", …
+$ decisoes         &lt;chr&gt; "Frequentemente", "Frequentemente", "Sempre", "Alguma…</code></pre>
 </div>
 </div>
 <p>Vamos trabalhar apenas com os rockeiros da turma. Assim, podemos filtrar o banco com a função <code>select()</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Após selecionar, filtra banco para rockeiros</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>df_rockeiros <span class="ot">&lt;-</span> df_filtrada <span class="sc">|&gt;</span> </span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(musica <span class="sc">==</span> <span class="st">"Rock"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Após selecionar, filtra banco para rockeiros</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df_rockeiros <span class="ot">&lt;-</span> df_filtrada <span class="sc">|&gt;</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(musica <span class="sc">==</span> <span class="st">"Rock"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 8
 Columns: 11
@@ -430,21 +507,22 @@ $ decisoes         &lt;chr&gt; "Sempre", "Algumas vezes", "Frequentemente", "Sem
 <p>Ao checar os tipos das variáveis de cada coluna acima, vemos que há algumas incongruências. Altura, por exemplo, deveria ser uma variável do tipo <code>double</code>. <code>musica</code>, <code>atividade_fisica</code> e as variáveis de bem-estar deveriam ser do tipo fator, visto que são variáveis categóricas.</p>
 <p>Vamos então converter as variáveis para os tipos desejados.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cria vetor com as categorias de atividade fisica</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>levels_ativ_fisica <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Não pratico atividade física"</span>, <span class="st">"Menos do que três vezes na semana"</span>, <span class="st">"Entre três e cinco vezes na semana"</span>, <span class="st">"Mais do que cinco vezes na semana"</span>)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Cria vetor com as categorias para as respostas do questionário</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>levels_likert <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Nunca"</span>, <span class="st">"Raramente"</span>, <span class="st">"Algumas vezes"</span>, <span class="st">"Frequentemente"</span>, <span class="st">"Sempre"</span>)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Converte variáveis para os tipos desejados</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>df_rockeiros_corrigida <span class="ot">&lt;-</span> df_rockeiros <span class="sc">|&gt;</span>  </span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">altura =</span> <span class="fu">as.double</span>(altura),</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">musica =</span> <span class="fu">factor</span>(musica),</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">atividade_fisica =</span> <span class="fu">factor</span>(atividade_fisica, <span class="at">levels =</span> levels_ativ_fisica , <span class="at">ordered =</span> T),</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(otimismo<span class="sc">:</span>decisoes, <span class="sc">~</span> <span class="fu">factor</span>(.x, <span class="at">levels =</span> levels_likert, <span class="at">ordered =</span> T))</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cria vetor com as categorias de atividade fisica</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>levels_ativ_fisica <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Não pratico atividade física"</span>, <span class="st">"Menos do que três vezes na semana"</span>, <span class="st">"Entre três e cinco vezes na semana"</span>, <span class="st">"Mais do que cinco vezes na semana"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Cria vetor com as categorias para as respostas do questionário</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>levels_likert <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Nunca"</span>, <span class="st">"Raramente"</span>, <span class="st">"Algumas vezes"</span>, <span class="st">"Frequentemente"</span>, <span class="st">"Sempre"</span>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Converte variáveis para os tipos desejados e cria uma variável id para identificar cada indivíduo</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>df_rockeiros_corrigida <span class="ot">&lt;-</span> df_rockeiros <span class="sc">|&gt;</span>  </span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">altura =</span> <span class="fu">as.double</span>(altura),</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">musica =</span> <span class="fu">factor</span>(musica),</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">atividade_fisica =</span> <span class="fu">factor</span>(atividade_fisica, <span class="at">levels =</span> levels_ativ_fisica , <span class="at">ordered =</span> T),</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(otimismo<span class="sc">:</span>decisoes, <span class="sc">~</span> <span class="fu">factor</span>(.x, <span class="at">levels =</span> levels_likert, <span class="at">ordered =</span> T))</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 8
 Columns: 11
@@ -461,7 +539,7 @@ $ proximidade      &lt;ord&gt; Algumas vezes, Raramente, Raramente, Algumas veze
 $ decisoes         &lt;ord&gt; Sempre, Algumas vezes, Frequentemente, Sempre, Rarame…</code></pre>
 </div>
 </div>
-<p>Agora, vamos criar uma nova variável <code>bem_estar</code>, que representa a soma das 5 perguntas do questionário de Warwick-Edinburgh.</p>
+<p>Agora, vamos criar uma nova variável <code>bem_estar</code>, formada pela soma das 5 perguntas do questionário de Warwick-Edinburgh. Em nosso banco, o questionário está representado pelas variáveis <code>otimismo</code>, <code>utilidade</code>, <code>tranquilidade</code>, <code>lidar_problemas</code>, <code>clareza_mental</code>, <code>proximidade</code> e <code>decisoes</code>.</p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -502,19 +580,125 @@ $ decisoes         &lt;ord&gt; Sempre, Algumas vezes, Frequentemente, Sempre, Ra
 </table>
 <p>1 = Nunca; 2 = Raramente; 3 = Algumas vezes; 4 = Frequentemente; 5 = Sempre.</p>
 <p>Para somar as pontuações, precisamos primeiramente converter o valor das respostas do questionário para um valor numérico. No R, fatores podem ser facilmente convertidos em valores numéricos pela função <code>as.numeric()</code>, o que é útil em diversas operações.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Conversão de fator para valores numéricos">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Conversão de fator para valores numéricos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Internamente os fatores são representados por números inteiros no R. Ainda assim, é importante ter cuidado com essa conversão, pois nem sempre você terá os valores numéricos que deseja.</p>
+<p>Para saber mais, veja a seção “Warning” no link: <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/factor.html" class="uri">https://stat.ethz.ch/R-manual/R-devel/library/base/html/factor.html</a></p>
+</div>
+</div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Também com o verbo mutate, cria nova variável bem_estar</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>df_bem_estar <span class="ot">&lt;-</span> df_rockeiros_corrigida <span class="sc">|&gt;</span> </span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bem_estar =</span> <span class="fu">sum</span>(<span class="fu">as.numeric</span>(otimismo<span class="sc">:</span>proximidade)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertendo as variáveis de factor para um valor numérico</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>df_quest_numerico <span class="ot">&lt;-</span> df_rockeiros_corrigida <span class="sc">|&gt;</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(otimismo<span class="sc">:</span>decisoes, as.numeric))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 8
+Columns: 11
+$ idade            &lt;dbl&gt; 25, 25, 23, 20, 23, 20, 19, 20
+$ altura           &lt;dbl&gt; 1.76, 1.78, 1.77, 1.80, 1.58, 1.75, 1.65, 1.64
+$ musica           &lt;fct&gt; Rock, Rock, Rock, Rock, Rock, Rock, Rock, Rock
+$ atividade_fisica &lt;ord&gt; Entre três e cinco vezes na semana, Entre três e cinc…
+$ otimismo         &lt;dbl&gt; 3, 3, 3, 4, 3, 4, 3, 3
+$ utilidade        &lt;dbl&gt; 3, 3, 2, 4, 2, 3, 2, 3
+$ tranquilidade    &lt;dbl&gt; 2, 2, 3, 3, 3, 4, 2, 2
+$ lidar_problemas  &lt;dbl&gt; 3, 2, 1, 4, 2, 3, 4, 3
+$ clareza_mental   &lt;dbl&gt; 3, 3, 2, 4, 4, 5, 4, 4
+$ proximidade      &lt;dbl&gt; 3, 2, 2, 3, 3, 4, 3, 3
+$ decisoes         &lt;dbl&gt; 5, 3, 4, 5, 2, 5, 4, 4</code></pre>
+</div>
+</div>
+<p>Agora que as variáveis de bem-estar estão na forma numérica, podemos somar a pontuação no questionário para cada indivíduo. Perceba que essa operação é através das colunas</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Também com o verbo mutate, cria nova variável bem_estar</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>df_bem_estar <span class="ot">&lt;-</span> df_quest_numerico <span class="sc">|&gt;</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bem_estar =</span> <span class="fu">sum</span>(<span class="fu">c</span>(otimismo, utilidade, tranquilidade, lidar_problemas, clareza_mental, proximidade, decisoes)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 8
+Columns: 12
+Rowwise: 
+$ idade            &lt;dbl&gt; 25, 25, 23, 20, 23, 20, 19, 20
+$ altura           &lt;dbl&gt; 1.76, 1.78, 1.77, 1.80, 1.58, 1.75, 1.65, 1.64
+$ musica           &lt;fct&gt; Rock, Rock, Rock, Rock, Rock, Rock, Rock, Rock
+$ atividade_fisica &lt;ord&gt; Entre três e cinco vezes na semana, Entre três e cinc…
+$ otimismo         &lt;dbl&gt; 3, 3, 3, 4, 3, 4, 3, 3
+$ utilidade        &lt;dbl&gt; 3, 3, 2, 4, 2, 3, 2, 3
+$ tranquilidade    &lt;dbl&gt; 2, 2, 3, 3, 3, 4, 2, 2
+$ lidar_problemas  &lt;dbl&gt; 3, 2, 1, 4, 2, 3, 4, 3
+$ clareza_mental   &lt;dbl&gt; 3, 3, 2, 4, 4, 5, 4, 4
+$ proximidade      &lt;dbl&gt; 3, 2, 2, 3, 3, 4, 3, 3
+$ decisoes         &lt;dbl&gt; 5, 3, 4, 5, 2, 5, 4, 4
+$ bem_estar        &lt;dbl&gt; 22, 18, 17, 27, 19, 28, 22, 22</code></pre>
+</div>
+</div>
+<p>Todas as operações acima poderiam ser realizadas de forma encadeada. A decisão por separá-las foi para focarmos em somente um verbo por vez. Veja como ficaria:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Juntando todas as operações acima</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>df_bem_estar <span class="ot">&lt;-</span> df_renomeada <span class="sc">|&gt;</span> </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(idade<span class="sc">:</span>decisoes, <span class="sc">-</span>cinema) <span class="sc">|&gt;</span> </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(musica <span class="sc">==</span> <span class="st">"Rock"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="fu">row_number</span>(), <span class="at">.before =</span> idade,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">altura =</span> <span class="fu">as.double</span>(altura),</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">musica =</span> <span class="fu">factor</span>(musica),</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">atividade_fisica =</span> <span class="fu">factor</span>(atividade_fisica, <span class="at">levels =</span> levels_ativ_fisica , <span class="at">ordered =</span> T),</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(otimismo<span class="sc">:</span>decisoes, <span class="sc">~</span> <span class="fu">factor</span>(.x, <span class="at">levels =</span> levels_likert, <span class="at">ordered =</span> T)),</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(otimismo<span class="sc">:</span>decisoes, as.numeric)</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bem_estar =</span> <span class="fu">sum</span>(<span class="fu">c</span>(otimismo, utilidade, tranquilidade, lidar_problemas, clareza_mental, proximidade, decisoes))) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Por último, vamos visualizar a frequência das pontuações por meio de um histograma.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizando a frequência das pontuações</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>df_bem_estar <span class="sc">|&gt;</span> </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(bem_estar) <span class="sc">|&gt;</span> </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hist</span>(<span class="at">xlab =</span> <span class="st">"Escore na escala de Warwick-Edinburgh"</span>, <span class="at">ylab =</span> <span class="st">"Frequência"</span>, <span class="at">main =</span> <span class="st">"Bem estar na turma "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="aula_4_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+</div>
 </div>
 </section>
 </section>
-<section id="salvando-seu-banco-de-dados-alterado" class="level2">
-<h2 class="anchored" data-anchor-id="salvando-seu-banco-de-dados-alterado">Salvando seu banco de dados alterado</h2>
+<section id="salvando-seu-banco-de-dados-alterados" class="level2">
+<h2 class="anchored" data-anchor-id="salvando-seu-banco-de-dados-alterados">Salvando seu banco de dados alterados</h2>
+<p>Após manipular os dados de um banco, é importante salvá-los para não precisar rodar o script sempre que quiser ter acesso ao seu banco alterado.</p>
+<p>Há diversos formatos nos quais podemos salvar uma <code>tibble</code>. Os mais comuns são *.csv e *.rds. Dentro do tidyverse, podemos fazer isso com o pacote <code>readr</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cria novo arquivo .csv</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(df_bem_estar, <span class="at">file =</span> <span class="st">"nome_do_arquivo.csv"</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Cria novo arquivo .rds</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_rds</span>(df_bem_estar, <span class="at">file =</span> <span class="st">"nome_do_arquivo.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 
-</main>
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>É possível utilizar operadores lógicos (<code>&amp;</code> e <code>|</code>) dentro do verbo filter para filtrar o banco a partir duas ou mais condições.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Existem várias funções auxiliares que você pode usar dentro de <code>select()</code>:<br>
+<code>starts_with("abc")</code>: seleciona colunas que começam com “abc”.<br>
+<code>ends_with("xyz")</code>: seleciona colunas que terminam com “xyz”.<br>
+<code>contains("ijk")</code>: seleciona colunas que contêm “ijk”.<br>
+<code>num_range("x", 1:3)</code>: seleciona colunas com x1, x2 e x3.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Existem diversas formas de lidar com dados faltantes. Nesse caso, é somente uma linha do nosso banco e por isso utilizamos o <code>drop_na()</code>. Entretanto, em análises mais complexas, essa não é a melhor forma de lidar com esse tipo de dados. Para saber um pouco mais: <a href="https://psicometriaonline.com.br/o-que-sao-dados-faltantes/" class="uri">https://psicometriaonline.com.br/o-que-sao-dados-faltantes/</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>O output de todas as <code>tibbles</code> será conforme a função <code>glimpse()</code>. Vocês apenas não verão a função sendo executada por escolha do autor.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
