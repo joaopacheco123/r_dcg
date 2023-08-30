@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.361">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="João Amaral">
+
+<title>Aula 5 - Estatística descritiva</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="descritiva_files/libs/clipboard/clipboard.min.js"></script>
+<script src="descritiva_files/libs/quarto-html/quarto.js"></script>
+<script src="descritiva_files/libs/quarto-html/popper.min.js"></script>
+<script src="descritiva_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="descritiva_files/libs/quarto-html/anchor.min.js"></script>
+<link href="descritiva_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="descritiva_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="descritiva_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="descritiva_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="descritiva_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução">Introdução</a></li>
+  <li><a href="#tipos-de-variáveis" id="toc-tipos-de-variáveis" class="nav-link" data-scroll-target="#tipos-de-variáveis">Tipos de variáveis</a>
+  <ul class="collapse">
+  <li><a href="#exemplo-prático-atribuindo-os-tipos-corretos-de-variáveis-em-um-banco-de-dados" id="toc-exemplo-prático-atribuindo-os-tipos-corretos-de-variáveis-em-um-banco-de-dados" class="nav-link" data-scroll-target="#exemplo-prático-atribuindo-os-tipos-corretos-de-variáveis-em-um-banco-de-dados">Exemplo prático: Atribuindo os tipos corretos de variáveis em um banco de dados</a></li>
+  </ul></li>
+  <li><a href="#descrevendo-variáveis-numéricas" id="toc-descrevendo-variáveis-numéricas" class="nav-link" data-scroll-target="#descrevendo-variáveis-numéricas">Descrevendo variáveis numéricas</a>
+  <ul class="collapse">
+  <li><a href="#medidas-de-tendência-central" id="toc-medidas-de-tendência-central" class="nav-link" data-scroll-target="#medidas-de-tendência-central">Medidas de tendência central</a></li>
+  <li><a href="#outras-medidas-de-posição" id="toc-outras-medidas-de-posição" class="nav-link" data-scroll-target="#outras-medidas-de-posição">Outras medidas de posição</a></li>
+  <li><a href="#medidas-de-dispersão" id="toc-medidas-de-dispersão" class="nav-link" data-scroll-target="#medidas-de-dispersão">Medidas de dispersão</a></li>
+  </ul></li>
+  <li><a href="#descrevendo-variáveis-categóricas" id="toc-descrevendo-variáveis-categóricas" class="nav-link" data-scroll-target="#descrevendo-variáveis-categóricas">Descrevendo variáveis categóricas</a>
+  <ul class="collapse">
+  <li><a href="#tabela-de-contingência-e-gráfico-em-barras" id="toc-tabela-de-contingência-e-gráfico-em-barras" class="nav-link" data-scroll-target="#tabela-de-contingência-e-gráfico-em-barras">Tabela de contingência e gráfico em barras</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Aula 5 - Estatística descritiva</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>João Amaral </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introdução" class="level1">
+<h1>Introdução</h1>
+<p>A estatística descritiva é uma parte da estatística que se dedica a organizar, descrever, resumir e apresentar os dados coletados. Essa abordagem não busca fazer inferências ou previsões sobre um grupo maior, mas apenas descrever o grupo específico que foi observado. Para os exemplos dessa aula, utilizaremos o banco de dados disponibilizado por <a href="https://edge.sagepub.com/field5e/student-resources/datasets">Andy Field</a>, que contém respostas de 2.571 indivíduos sobre as perguntas do “R Anxiety Questionnaire (RAQ-23)”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p>
+<ol type="1">
+<li>A estatística me faz chorar</li>
+<li>Meus amigos vão pensar que sou estúpido por não conseguir lidar com o R</li>
+<li>Desvios padrão me animam</li>
+<li>Sonho que Pearson está me atacando com coeficientes de correlação</li>
+<li>Eu não entendo estatística</li>
+<li>Tenho pouca experiência com computadores</li>
+<li>Todos os computadores me odeiam</li>
+<li>Nunca fui bom em matemática</li>
+<li>Meus amigos são melhores em estatística do que eu</li>
+<li>Computadores são úteis apenas para jogar jogos</li>
+<li>Fui mal em matemática na escola</li>
+<li>As pessoas tentam dizer que o R torna a estatística mais fácil de entender, mas não torna</li>
+<li>Tenho medo de causar danos irreparáveis por causa da minha incompetência com computadores</li>
+<li>Computadores têm mente própria e deliberadamente dão errado sempre que os uso</li>
+<li>Computadores estão atrás de mim</li>
+<li>Choro abertamente ao ouvir falar de tendência central</li>
+<li>Entro em coma sempre que vejo uma equação</li>
+<li>O R sempre trava quando tento usá-lo</li>
+<li>Todo mundo olha para mim quando uso o R</li>
+<li>Não consigo dormir pensando em vetores próprios (eigen vectors)</li>
+<li>Acordo debaixo do meu edredom pensando que estou preso sob uma distribuição normal</li>
+<li>Meus amigos são melhores no R do que eu</li>
+<li>Se eu for bom em estatística, meus amigos vão pensar que sou um nerd</li>
+</ol>
+</section>
+<section id="tipos-de-variáveis" class="level1">
+<h1>Tipos de variáveis</h1>
+<p>Variáveis são como recipientes para representar categorias ou valores numéricos. Como vimos nas últimas aulas, em bancos de dados, elas representam as colunas. No paradigma <em>tidy</em>, em uma mesma coluna deve haver apenas um tipo de variável e cada linha representa o valor dessa variável para determinado indivíduo. As variáveis podem ser divididas em dois grandes grupos: qualitativas e quantitativas.</p>
+<table class="table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variáveis Qualitativas (Categóricas)</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Nominais</td>
+<td>Representam categorias sem ordem ou hierarquia (e.g., nome)</td>
+</tr>
+<tr class="even">
+<td>Ordinais</td>
+<td>Representam categorias com uma ordem ou hierarquia entre elas (e.g., respostas em uma escala likert)</td>
+</tr>
+</tbody>
+</table>
+<table class="table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variáveis Quantitativas (Numéricas)</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Discretas</td>
+<td>Possui valores contáveis, representada por números inteiros (e.g., idade)</td>
+</tr>
+<tr class="even">
+<td>Contínuas</td>
+<td>Possui valores em um intervalo específico. Pode apresentar valores decimais (e.g, altura em metros)</td>
+</tr>
+</tbody>
+</table>
+<p>No R, variáveis quantitativas discretas são representadas pelo tipo <code>integer</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, enquanto <code>double</code> representa as variáveis contínuas. Em relação às variáveis categóricas, podemos utilizar o tipo <code>character</code> ou <code>factor</code>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Fatores ordenados são variáveis numéricas?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Fatores ordenados são variáveis numéricas?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Internamente os fatores são representados por números inteiros no R. Além disso, fatores ordenados possuem uma hierarquia, como é o caso das respostas dos itens do questinário RAQ-23. Será que poderíamos interpretar esses valores ordenados da mesma forma que interpretamos a hierarquia entre números inteiros?</p>
+<p>Na teoria, devemos saber que isso não é bem assim, visto que a distância entre a resposta “Discordo totalmente” e “Discordo”, por exemplo, não é mensurável (pelo menos não da mesma forma que subtraímos valores inteiros para verificar a “distância” entre eles).</p>
+</div>
+</div>
+<section id="exemplo-prático-atribuindo-os-tipos-corretos-de-variáveis-em-um-banco-de-dados" class="level2">
+<h2 class="anchored" data-anchor-id="exemplo-prático-atribuindo-os-tipos-corretos-de-variáveis-em-um-banco-de-dados">Exemplo prático: Atribuindo os tipos corretos de variáveis em um banco de dados</h2>
+<p>A partir do que foi aprendido nas aulas anteriores, vamos importar o banco de dados que mencionei acima e inspecioná-lo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carrega pacotes necessários</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse); <span class="fu">library</span>(haven)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Importa o banco de dados do tipo .sav, utilizado pelo programa SPSS</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>saq_df <span class="ot">&lt;-</span> haven<span class="sc">::</span><span class="fu">read_sav</span>(<span class="at">file =</span> <span class="st">"aulas/aula_5_estatistica_descritiva/data/SAQ_mod.sav"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualiza o banco</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(saq_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 2,571
+Columns: 29
+$ id         &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, …
+$ nome       &lt;chr&gt; "Valdemir", "Jucilene", "Ana", "Tamires", "Fernanda", "Caio…
+$ idade      &lt;dbl&gt; 26, 16, 19, 17, 15, 19, 17, 22, 26, 23, 21, 19, 19, 18, 24,…
+$ sexo       &lt;dbl+lbl&gt; 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1…
+$ raca_etnia &lt;dbl+lbl&gt; 1, 3, 3, 3, 1, 3, 3, 1, 3, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3…
+$ altura     &lt;dbl&gt; 1.74, 1.51, 1.61, 1.61, 1.69, 1.72, 1.58, 1.59, 1.81, 1.66,…
+$ q01        &lt;dbl+lbl&gt; 2, 1, 2, 3, 2, 2, 2, 2, 3, 2, 2, 2, 3, 2, 2, 3, 1, 2, 2…
+$ q02        &lt;dbl+lbl&gt; 1, 1, 3, 1, 1, 1, 3, 2, 3, 4, 1, 1, 1, 2, 2, 1, 2, 2, 3…
+$ q03        &lt;dbl+lbl&gt; 4, 4, 2, 1, 3, 3, 3, 3, 1, 4, 5, 3, 3, 1, 3, 2, 5, 3, 4…
+$ q04        &lt;dbl+lbl&gt; 2, 3, 2, 4, 2, 2, 2, 2, 4, 3, 2, 3, 4, 2, 4, 2, 2, 3, 2…
+$ q05        &lt;dbl+lbl&gt; 2, 2, 4, 3, 2, 4, 2, 2, 5, 2, 2, 4, 3, 2, 2, 2, 1, 3, 3…
+$ q06        &lt;dbl+lbl&gt; 2, 2, 1, 3, 3, 4, 2, 2, 3, 1, 1, 3, 2, 2, 2, 2, 1, 4, 1…
+$ q07        &lt;dbl+lbl&gt; 3, 2, 2, 4, 3, 4, 2, 2, 5, 2, 2, 3, 3, 3, 3, 2, 1, 3, 1…
+$ q08        &lt;dbl+lbl&gt; 1, 2, 2, 2, 2, 2, 2, 2, 5, 2, 2, 1, 3, 2, 2, 2, 1, 2, 1…
+$ q09        &lt;dbl+lbl&gt; 1, 5, 2, 2, 4, 4, 3, 4, 3, 3, 5, 3, 2, 2, 2, 2, 4, 5, 5…
+$ q10        &lt;dbl+lbl&gt; 2, 2, 2, 4, 2, 3, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 1, 2, 2…
+$ q11        &lt;dbl+lbl&gt; 1, 2, 3, 2, 2, 2, 2, 2, 5, 2, 1, 2, 3, 2, 2, 2, 1, 3, 1…
+$ q12        &lt;dbl+lbl&gt; 2, 3, 3, 2, 3, 4, 2, 3, 5, 3, 3, 3, 4, 4, 3, 3, 2, 3, 3…
+$ q13        &lt;dbl+lbl&gt; 2, 1, 2, 2, 3, 3, 2, 2, 5, 2, 1, 2, 4, 2, 2, 2, 1, 3, 1…
+$ q14        &lt;dbl+lbl&gt; 2, 3, 4, 3, 2, 3, 2, 2, 5, 1, 2, 2, 4, 4, 3, 3, 1, 3, 2…
+$ q15        &lt;dbl+lbl&gt; 2, 4, 2, 3, 2, 5, 2, 3, 5, 2, 1, 3, 4, 4, 3, 2, 1, 4, 2…
+$ q16        &lt;dbl+lbl&gt; 3, 3, 3, 3, 2, 2, 2, 2, 5, 3, 2, 3, 4, 4, 4, 3, 2, 3, 3…
+$ q17        &lt;dbl+lbl&gt; 1, 2, 2, 2, 2, 3, 2, 2, 5, 2, 2, 2, 3, 2, 2, 2, 2, 2, 1…
+$ q18        &lt;dbl+lbl&gt; 2, 2, 3, 4, 3, 5, 2, 2, 5, 2, 2, 2, 3, 4, 3, 3, 1, 2, 1…
+$ q19        &lt;dbl+lbl&gt; 3, 3, 1, 2, 3, 1, 3, 4, 2, 3, 5, 3, 2, 1, 3, 2, 4, 2, 4…
+$ q20        &lt;dbl+lbl&gt; 2, 4, 4, 4, 4, 5, 2, 3, 5, 3, 3, 4, 4, 5, 4, 3, 2, 3, 2…
+$ q21        &lt;dbl+lbl&gt; 2, 4, 3, 4, 2, 3, 2, 2, 5, 2, 2, 3, 4, 5, 4, 2, 1, 3, 2…
+$ q22        &lt;dbl+lbl&gt; 2, 4, 2, 4, 4, 1, 4, 4, 3, 4, 5, 4, 3, 3, 4, 3, 4, 3, 4…
+$ q23        &lt;dbl+lbl&gt; 5, 2, 2, 3, 4, 4, 4, 4, 3, 4, 5, 4, 4, 1, 4, 4, 4, 4, 4…</code></pre>
+</div>
+</div>
+<p>O banco possui 2.571 observações (linhas) e 30 variáveis (colunas). Cada linha representa um indivíduo. Veja que existe um tipo diferente de variável em algumas colunas (<code>&lt;dbl + lbl&gt;</code>). Quando trabalhamos com dados de outros programas, ocasionalmente teremos dados com rótulos (<em>labels</em>). Esses rótulos são importantes para entendermos melhor as variáveis. Existem dois tipos de rótulos: (1) o rótulo do nome da variável, que descreve o que ela representa (<strong>descrição da variável</strong>) e (2) os rótulos dos possíveis valores que determinada variável pode assumir (<strong>tipos de resposta</strong>). Quando uma variável possui rótulo para os tipos de resposta, geralmente converteremos ela para o tipo <code>factor</code>, visto que é representada por categorias (as diferentes respostas possíveis). Outras variáveis, como “nome”, podem permanecer do tipo <code>character</code>. Para visualizazrmos os rótulos, utilizaremos o pacote <code>sjlabelled</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carrega o pacote</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjlabelled)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostra a descrição de cada variável do banco, se houver</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sjlabelled<span class="sc">::</span><span class="fu">get_label</span>(saq_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                                                                         id 
+                                                                            "Identificação" 
+                                                                                       nome 
+                                                                            "Primeiro nome" 
+                                                                                      idade 
+                                                                            "Idade em anos" 
+                                                                                       sexo 
+                                                                                     "Sexo" 
+                                                                                 raca_etnia 
+                                                                               "Raça/Etnia" 
+                                                                                     altura 
+                                                                         "Altura em metros" 
+                                                                                        q01 
+                                                              "A estatística me faz chorar" 
+                                                                                        q02 
+                  "Meus amigos vão pensar que sou estúpido por não conseguir lidar com o R" 
+                                                                                        q03 
+                                                                 "Desvios padrão me animam" 
+                                                                                        q04 
+                        "Sonho que Pearson está me atacando com coeficientes de correlação" 
+                                                                                        q05 
+                                                               "Eu não entendo estatística" 
+                                                                                        q06 
+                                                 "Tenho pouca experiência com computadores" 
+                                                                                        q07 
+                                                          "Todos os computadores me odeiam" 
+                                                                                        q08 
+                                                              "Nunca fui bom em matemática" 
+                                                                                        q09 
+                                        "Meus amigos são melhores em estatística do que eu" 
+                                                                                        q10 
+                                           "Computadores são úteis apenas para jogar jogos" 
+                                                                                        q11 
+                                                          "Fui mal em matemática na escola" 
+                                                                                        q12 
+"As pessoas tentam dizer que o R torna a estatística mais fácil de entender, mas não torna" 
+                                                                                        q13 
+"Tenho medo de causar danos irreparáveis por causa da minha incompetência com computadores" 
+                                                                                        q14 
+            "Computadores têm mente própria e deliberadamente dão errado sempre que os uso" 
+                                                                                        q15 
+                                                          "Computadores estão atrás de mim" 
+                                                                                        q16 
+                                    "Choro abertamente ao ouvir falar de tendência central" 
+                                                                                        q17 
+                                                "Entro em coma sempre que vejo uma equação" 
+                                                                                        q18 
+                                                     "O R sempre trava quando tento usá-lo" 
+                                                                                        q19 
+                                                  "Todo mundo olha para mim quando uso o R" 
+                                                                                        q20 
+                                          "Não consigo dormir pensando em vetores próprios" 
+                                                                                        q21 
+       "Acordo debaixo do meu edredom pensando que estou preso sob uma distribuição normal" 
+                                                                                        q22 
+                                                  "Meus amigos são melhores no R do que eu" 
+                                                                                        q23 
+                     "Se eu for bom em estatística, meus amigos vão pensar que sou um nerd" </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostra os tipos de respostas para cada variável, se houver (note que aqui a função é diferente, pois labels está no plural)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Selecionei apenas variáveis de interesse para reduzir o tamanho do output</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>saq_df <span class="sc">|&gt;</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(sexo, raca_etnia, q01) <span class="sc">|&gt;</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  sjlabelled<span class="sc">::</span><span class="fu">get_labels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$sexo
+[1] "Masculino" "Feminino" 
+
+$raca_etnia
+[1] "Branca" "Preta"  "Parda" 
+
+$q01
+[1] "Concordo totalmente"       "Concordo"                 
+[3] "Não concordo nem discordo" "Discordo"                 
+[5] "Discordo totalmente"       "Não respondida"           </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Podemos também visualizar os valores numéricos que estão representando os tipos de resposta para cada variável</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>saq_df <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(sexo, raca_etnia, q01) <span class="sc">|&gt;</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  sjlabelled<span class="sc">::</span><span class="fu">get_values</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$sexo
+[1] 0 1
+
+$raca_etnia
+[1] 1 2 3
+
+$q01
+[1] 1 2 3 4 5 9</code></pre>
+</div>
+</div>
+<p>Para saber o valor numérico que representa cada tipo de resposta, basta ver a ordem dos outputs acima.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Como exemplo, vamos utilizar as duas funções juntas para a variável sexo,</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>saq_df <span class="sc">|&gt;</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(sexo) <span class="sc">|&gt;</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  sjlabelled<span class="sc">::</span><span class="fu">get_labels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$sexo
+[1] "Masculino" "Feminino" </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>saq_df <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(sexo) <span class="sc">|&gt;</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  sjlabelled<span class="sc">::</span><span class="fu">get_values</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$sexo
+[1] 0 1</code></pre>
+</div>
+</div>
+<p>Ou seja, seguindo a ordem dos outputs, o sexo masculino é representado pelo número 0 e o sexo feminino pelo número 1.</p>
+<p>Podemos também utilizar uma técnica para conseguir visualizar isso de forma mais fácil, a partir de um vetor nomeado. Não se preocupe caso não entenda por completo o código abaixo, visto que ele utiliza conhecimentos mais específicos que não serão necessários para esse curso.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Acessando diretamente o atributo "labels" do objeto, conseguimos visualizar os valores numéricos e os tipos de resposta simultaneamente.</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>saq_df <span class="sc">|&gt;</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(sexo) <span class="sc">|&gt;</span> </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">attr</span>(<span class="at">which =</span> <span class="st">"labels"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Masculino  Feminino 
+        0         1 </code></pre>
+</div>
+</div>
+<p>Vamos agora converter os valores de nossas variáveis para fatores. Antes disso, observe os tipos de resposta das variáveis do questionário, tomando como exemplo o primeiro item.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>saq_df <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(q01) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">attr</span>(<span class="at">which =</span> <span class="st">"labels"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Concordo totalmente                  Concordo Não concordo nem discordo 
+                        1                         2                         3 
+                 Discordo       Discordo totalmente            Não respondida 
+                        4                         5                         9 </code></pre>
+</div>
+</div>
+<p>A ordem das respostas parece invertida, visto que o menor número representa a resposta de maior concordância com o item. Além disso, temos um valor para dados faltantes (Não respondida), que no nosso banco de dados deveria ser representada pelo valor <code>NA</code>.</p>
+<p>Para checar se há dados faltantes, vamos utilizar a função <code>summarise()</code> através (<code>across()</code>) das colunas do questionário. O <code>~</code>, nesse caso conhecido como <em>twiddle</em>, representa uma função anônima<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> que irá checar se 9 está contido (<code>%in</code>) algum valor de cada coluna.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Checa se há dados faltantes no banco de dados em cada coluna do questionário</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>saq_df <span class="sc">|&gt;</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(q01<span class="sc">:</span>q23, <span class="sc">~</span> <span class="dv">9</span> <span class="sc">%in%</span> .x)) <span class="sc">|&gt;</span> </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1
+Columns: 23
+$ q01 &lt;lgl&gt; FALSE
+$ q02 &lt;lgl&gt; FALSE
+$ q03 &lt;lgl&gt; FALSE
+$ q04 &lt;lgl&gt; FALSE
+$ q05 &lt;lgl&gt; FALSE
+$ q06 &lt;lgl&gt; FALSE
+$ q07 &lt;lgl&gt; FALSE
+$ q08 &lt;lgl&gt; FALSE
+$ q09 &lt;lgl&gt; FALSE
+$ q10 &lt;lgl&gt; FALSE
+$ q11 &lt;lgl&gt; FALSE
+$ q12 &lt;lgl&gt; FALSE
+$ q13 &lt;lgl&gt; FALSE
+$ q14 &lt;lgl&gt; FALSE
+$ q15 &lt;lgl&gt; FALSE
+$ q16 &lt;lgl&gt; FALSE
+$ q17 &lt;lgl&gt; FALSE
+$ q18 &lt;lgl&gt; FALSE
+$ q19 &lt;lgl&gt; FALSE
+$ q20 &lt;lgl&gt; FALSE
+$ q21 &lt;lgl&gt; FALSE
+$ q22 &lt;lgl&gt; FALSE
+$ q23 &lt;lgl&gt; FALSE</code></pre>
+</div>
+</div>
+<p>Como não temos dados faltantes, não precisaremos nos preocupar com isso nesse banco de dados. Em relação à inversão das categorias mencionada acima, utilizaremos a função <code>fct_rvt()</code>, do pacote <code>forcats</code>, para inverter essa ordem e, após, converter os fatores em um fator ordenado (função <code>ordered()</code>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>factor_saq <span class="ot">&lt;-</span> saq_df <span class="sc">|&gt;</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">c</span>(sexo, raca_etnia, q01<span class="sc">:</span>q23), haven<span class="sc">::</span>as_factor), </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">c</span>(q01<span class="sc">:</span>q23), forcats<span class="sc">::</span>fct_rev),</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">c</span>(q01<span class="sc">:</span>q23), ordered)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(factor_saq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 2,571
+Columns: 29
+$ id         &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, …
+$ nome       &lt;chr&gt; "Valdemir", "Jucilene", "Ana", "Tamires", "Fernanda", "Caio…
+$ idade      &lt;dbl&gt; 26, 16, 19, 17, 15, 19, 17, 22, 26, 23, 21, 19, 19, 18, 24,…
+$ sexo       &lt;fct&gt; Masculino, Feminino, Feminino, Feminino, Feminino, Masculin…
+$ raca_etnia &lt;fct&gt; Branca, Parda, Parda, Parda, Branca, Parda, Parda, Branca, …
+$ altura     &lt;dbl&gt; 1.74, 1.51, 1.61, 1.61, 1.69, 1.72, 1.58, 1.59, 1.81, 1.66,…
+$ q01        &lt;ord&gt; Concordo, Concordo totalmente, Concordo, Não concordo nem d…
+$ q02        &lt;ord&gt; Concordo totalmente, Concordo totalmente, Não concordo nem …
+$ q03        &lt;ord&gt; Discordo, Discordo, Concordo, Concordo totalmente, Não conc…
+$ q04        &lt;ord&gt; Concordo, Não concordo nem discordo, Concordo, Discordo, Co…
+$ q05        &lt;ord&gt; Concordo, Concordo, Discordo, Não concordo nem discordo, Co…
+$ q06        &lt;ord&gt; Concordo, Concordo, Concordo totalmente, Não concordo nem d…
+$ q07        &lt;ord&gt; Não concordo nem discordo, Concordo, Concordo, Discordo, Nã…
+$ q08        &lt;ord&gt; Concordo totalmente, Concordo, Concordo, Concordo, Concordo…
+$ q09        &lt;ord&gt; Concordo totalmente, Discordo totalmente, Concordo, Concord…
+$ q10        &lt;ord&gt; Concordo, Concordo, Concordo, Discordo, Concordo, Não conco…
+$ q11        &lt;ord&gt; Concordo totalmente, Concordo, Não concordo nem discordo, C…
+$ q12        &lt;ord&gt; Concordo, Não concordo nem discordo, Não concordo nem disco…
+$ q13        &lt;ord&gt; Concordo, Concordo totalmente, Concordo, Concordo, Não conc…
+$ q14        &lt;ord&gt; Concordo, Não concordo nem discordo, Discordo, Não concordo…
+$ q15        &lt;ord&gt; Concordo, Discordo, Concordo, Não concordo nem discordo, Co…
+$ q16        &lt;ord&gt; Não concordo nem discordo, Não concordo nem discordo, Não c…
+$ q17        &lt;ord&gt; Concordo totalmente, Concordo, Concordo, Concordo, Concordo…
+$ q18        &lt;ord&gt; Concordo, Concordo, Não concordo nem discordo, Discordo, Nã…
+$ q19        &lt;ord&gt; Não concordo nem discordo, Não concordo nem discordo, Conco…
+$ q20        &lt;ord&gt; Concordo, Discordo, Discordo, Discordo, Discordo, Discordo …
+$ q21        &lt;ord&gt; Concordo, Discordo, Não concordo nem discordo, Discordo, Co…
+$ q22        &lt;ord&gt; Concordo, Discordo, Concordo, Discordo, Discordo, Concordo …
+$ q23        &lt;ord&gt; Discordo totalmente, Concordo, Concordo, Não concordo nem d…</code></pre>
+</div>
+</div>
+<p>Veja agora como ficam os níveis dos itens do questionário<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>factor_saq <span class="sc">|&gt;</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(q01) <span class="sc">|&gt;</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_labels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Discordo totalmente"       "Discordo"                 
+[3] "Não concordo nem discordo" "Concordo"                 
+[5] "Concordo totalmente"      </code></pre>
+</div>
+</div>
+<p>Note que está na ordem como gostaríamos. Entretanto, não temos mais os equivalentes dos valores numéricos. Caso utilizemos a função <code>sjlabelled::get_values()</code>, o valor retornado será <code>NULL</code>(veja a nota abaixo para saber as implicações disso).</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Conversão de fator para valor numérico">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Conversão de fator para valor numérico
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Em algumas análises, é recomendado converter os fatores para valores numéricos. Como vimos na aula passada, sempre que realizarmos essa conversão, o R não irá necessariamente converter para os valores numéricos que desejamos. Dessa forma, devemos tomar cuidado ao utilizar a função <code>as.numeric()</code>. Ainda assim, na maioria das ocasiões, isso não acarretará em problemas. Observe o abaixo, onde a conversão altera os valores iniciais da variável sexo, que antes eram representados por 0 e 1:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertendo as variáveis do questionário em números e visualizando</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>factor_saq <span class="sc">|&gt;</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sexo =</span> <span class="fu">as.numeric</span>(sexo)) <span class="sc">|&gt;</span> </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(sexo) <span class="sc">|&gt;</span> </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2</code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>Agora que estamos com o nosso banco pronto, vamos para as análises descritivas!</p>
+</section>
+</section>
+<section id="descrevendo-variáveis-numéricas" class="level1">
+<h1>Descrevendo variáveis numéricas</h1>
+<section id="medidas-de-tendência-central" class="level2">
+<h2 class="anchored" data-anchor-id="medidas-de-tendência-central">Medidas de tendência central</h2>
+<p>São valores de uma variável (coluna) que capturam o “centro” de uma distribuição de dados.</p>
+<p><strong>Média</strong>: <span class="math inline">\(\mu = \frac{\Sigma x}{N}\)</span>, calculada pela função <code>mean()</code></p>
+<p><strong>Mediana</strong>, calculada pela função <code>median()</code>:</p>
+<ol type="1">
+<li><p>Para números de observações ímpares: <span class="math inline">\(\frac{N + 1}2\)</span></p></li>
+<li><p>Para número de observações pares: <span class="math inline">\(\frac{\frac{N}{2} + \frac{N + 1}{2}}{2}\)</span></p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculando a média de altura nos indivíduos do banco de dados</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>factor_saq <span class="sc">|&gt;</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(altura))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+   mean
+  &lt;dbl&gt;
+1  1.68</code></pre>
+</div>
+</div>
+<p>É possível também calcular a média por grupos, utilizando a função <code>dpyr::group_by()</code><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. Vamos aproveitar e calcular também a mediana.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculando média de altura por sexo</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>factor_saq <span class="sc">|&gt;</span> </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sexo) <span class="sc">|&gt;</span> </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(altura), <span class="at">mediana =</span> <span class="fu">median</span>(altura))  <span class="sc">|&gt;</span> </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Reporta os valores na forma de tabela para melhor visualização</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">sexo</th>
+<th style="text-align: right;">media</th>
+<th style="text-align: right;">mediana</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Masculino</td>
+<td style="text-align: right;">1.749419</td>
+<td style="text-align: right;">1.75</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Feminino</td>
+<td style="text-align: right;">1.620053</td>
+<td style="text-align: right;">1.62</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Observe que os valores da média e mediana são muito semelhantes, o que ocorre em distribuições normais.</p>
+<p>Para dados numéricos, o histograma é uma boa forma de visualizar a distribuição dos dados. As linhas verticais representam as médias das alturas para cada sexo.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="descritiva_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="outras-medidas-de-posição" class="level2">
+<h2 class="anchored" data-anchor-id="outras-medidas-de-posição">Outras medidas de posição</h2>
+<p>Também temos outras medidas que representam uma posição de uma distribuição de valores:</p>
+<p><strong>Decis</strong>: Divide a distribuição em 10 partes iguais. O 5º decil representa a mediana.</p>
+<p><strong>Quartil</strong>: Divide distribuição em quatro partes iguais. O Q2 representa a mediana.</p>
+<p><strong>Percentil</strong>: Divide a distribuição em 100 partes iguais. O percentil 50 representa a mediana.</p>
+<p>Como todas essas medidas dividem o banco de dados em uma determinada porcentagem, o termo genérico para elas é quantil e utilizaremos a função <code>quantile()</code> para calculá-las.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cálculo de exemplo do primeiro decil, primeiro quartil e percentil 99</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>factor_saq <span class="sc">|&gt;</span> </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sexo) <span class="sc">|&gt;</span> </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">primeiro_decil =</span> <span class="fu">quantile</span>(altura, <span class="at">prob =</span> .<span class="dv">1</span>), <span class="at">primeiro_quartil =</span><span class="fu">quantile</span>(altura, <span class="at">prob =</span> .<span class="dv">25</span>), <span class="at">percentil_99 =</span> <span class="fu">quantile</span>(altura, <span class="at">prob =</span> .<span class="dv">99</span>))  <span class="sc">|&gt;</span> </span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Reporta os valores na forma de tabela para melhor visualização</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">sexo</th>
+<th style="text-align: right;">primeiro_decil</th>
+<th style="text-align: right;">primeiro_quartil</th>
+<th style="text-align: right;">percentil_99</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Masculino</td>
+<td style="text-align: right;">1.66</td>
+<td style="text-align: right;">1.70</td>
+<td style="text-align: right;">1.92</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Feminino</td>
+<td style="text-align: right;">1.54</td>
+<td style="text-align: right;">1.58</td>
+<td style="text-align: right;">1.75</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="medidas-de-dispersão" class="level2">
+<h2 class="anchored" data-anchor-id="medidas-de-dispersão">Medidas de dispersão</h2>
+<p>Medidas de dispersão são valores que indicam o quanto os dados de uma distribuição estão espalhados ou variam em torno de uma medida central (como a média).</p>
+<p><strong>Amplitude</strong>: É a diferença entre o maior e o menor valor de um conjunto de dados.</p>
+<p><strong>Variância</strong>: <span class="math inline">\(\sigma^2 = \frac{\Sigma(xi-\mu)^2}{N}\)</span></p>
+<p><strong>Desvio padrão</strong>: <span class="math inline">\(\sigma = \sqrt{\sigma^2}\)</span></p>
+<p><strong>Distância interquartil</strong>: <span class="math inline">\(DIQ = Q3 - Q1\)</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos calcular as métricas acima para o nosso a altura dos indivíduos em nosso banco de dados</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>factor_saq <span class="sc">|&gt;</span> </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sexo) <span class="sc">|&gt;</span> </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">variancia =</span> <span class="fu">var</span>(altura), <span class="at">desvio_padrao =</span> <span class="fu">sd</span>(altura), <span class="at">amplitude =</span> <span class="fu">max</span>(altura) <span class="sc">-</span> <span class="fu">min</span>(altura), <span class="at">distancia_interquartil =</span> <span class="fu">IQR</span>(altura))  <span class="sc">|&gt;</span> </span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Reporta os valores na forma de tabela para melhor visualização</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 20%">
+<col style="width: 14%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">sexo</th>
+<th style="text-align: right;">variancia</th>
+<th style="text-align: right;">desvio_padrao</th>
+<th style="text-align: right;">amplitude</th>
+<th style="text-align: right;">distancia_interquartil</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Masculino</td>
+<td style="text-align: right;">0.0053669</td>
+<td style="text-align: right;">0.0732594</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">0.10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Feminino</td>
+<td style="text-align: right;">0.0037084</td>
+<td style="text-align: right;">0.0608964</td>
+<td style="text-align: right;">0.37</td>
+<td style="text-align: right;">0.08</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>O gráfico de densidade permite uma boa visualização da dispersão dos dados.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="descritiva_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="descrevendo-variáveis-categóricas" class="level1">
+<h1>Descrevendo variáveis categóricas</h1>
+<section id="tabela-de-contingência-e-gráfico-em-barras" class="level2">
+<h2 class="anchored" data-anchor-id="tabela-de-contingência-e-gráfico-em-barras">Tabela de contingência e gráfico em barras</h2>
+<p>Para variáveis categóricas, costuma-se trabalhar com a frequência de cada categoria. Uma boa forma de descrevê-las é pela tabela de contingência:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cria tabela de contingência para a variável raca_etnia</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>factor_saq <span class="sc">|&gt;</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sexo) <span class="sc">|&gt;</span> </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(raca_etnia) <span class="sc">|&gt;</span> </span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  base<span class="sc">::</span><span class="fu">table</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Raça/Etnia"</span>, <span class="st">"Frequência"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Raça/Etnia</th>
+<th style="text-align: right;">Frequência</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Branca</td>
+<td style="text-align: right;">1096</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Preta</td>
+<td style="text-align: right;">258</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Parda</td>
+<td style="text-align: right;">1217</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Também podemos utilizar um gráfico de barras<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> para representar a frequência de cada categoria. Veja o exemplo abaixo, que mostra a quantidade de pessoas em cada categoria de Raça/Etnia, por sexo.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="descritiva_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Quando pensamos nas respostas do questinário RAQ-23, poderíamos analisá-lo em forma de gráfico de barras, como fizemos com a variável Raça/Etnia:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="descritiva_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="1920"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descritiva_files/figure-html/unnamed-chunk-26-2.png" class="img-fluid" width="1920"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descritiva_files/figure-html/unnamed-chunk-26-3.png" class="img-fluid" width="1920"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descritiva_files/figure-html/unnamed-chunk-26-4.png" class="img-fluid" width="1920"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descritiva_files/figure-html/unnamed-chunk-26-5.png" class="img-fluid" width="1920"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descritiva_files/figure-html/unnamed-chunk-26-6.png" class="img-fluid" width="1920"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descritiva_files/figure-html/unnamed-chunk-26-7.png" class="img-fluid" width="1920"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descritiva_files/figure-html/unnamed-chunk-26-8.png" class="img-fluid" width="1920"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descritiva_files/figure-html/unnamed-chunk-26-9.png" class="img-fluid" width="1920"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descritiva_files/figure-html/unnamed-chunk-26-10.png" class="img-fluid" width="1920"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descritiva_files/figure-html/unnamed-chunk-26-11.png" class="img-fluid" width="1920"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="descritiva_files/figure-html/unnamed-chunk-26-12.png" class="img-fluid" width="1920"></p>
+</div>
+</div>
+<p>Essa é uma boa forma de olhar os itens, pois temos uma noção geral da quantidade de cada resposta para cada um deles. Entretanto, caso quiséssemos medir a ansiedade em relação ao R para cada indivíduo, seria interessante arranjar uma pontuação para o questionário, representativa desse construto ansiedade. Para isso, podemos fazer o somatório da pontuação de cada item, como fizemos na última aula (devemos antes converter as variáveis para valores numéricos).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cria nova coluna representando pontuação para o questionário</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>factor_saq <span class="ot">&lt;-</span> factor_saq <span class="sc">|&gt;</span> </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(q01<span class="sc">:</span>q23, as.numeric)) <span class="sc">|&gt;</span> </span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ansiedade_r =</span> <span class="fu">sum</span>(<span class="fu">c</span>(q01,q02,q03,q04,q05,q07,q07,q08,q09,q10,q11,q12,q13,q14,q15,q16,q17,q18,q19,q20,q21,q22,q23)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Com a nova coluna, podemos agora ver as estatísticas descritivas e fazer um gráfico de densidade, o nosso somatório representa uma variável numérica.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estatísticas descritivas para a pontuação do questionário</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>factor_saq <span class="sc">|&gt;</span> </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(ansiedade_r), <span class="at">desvio_padrao =</span> <span class="fu">sd</span>(ansiedade_r), maior_pontuação <span class="ot">=</span> <span class="fu">max</span>(ansiedade_r), menor_pontuação <span class="ot">=</span> <span class="fu">min</span>(ansiedade_r), <span class="at">distancia_interquartil =</span> <span class="fu">IQR</span>(ansiedade_r)) <span class="sc">|&gt;</span> </span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 18%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">media</th>
+<th style="text-align: right;">desvio_padrao</th>
+<th style="text-align: right;">maior_pontuação</th>
+<th style="text-align: right;">menor_pontuação</th>
+<th style="text-align: right;">distancia_interquartil</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">75.8662</td>
+<td style="text-align: right;">9.151513</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">12</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="descritiva_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>A linnha pontilhada representa uma distribuição normal com mesma média e desvio padrão. A sobreposição mostra que a distribuição dos somatórios da pontuação dos itens assemelha-se a uma distribuição normal.</p>
+<p>Nesse capítulo vimos um pouco sobre estatística descritiva. Alguns tópicos não foram abordados, mas espero que tenham conseguido ter uma noção geral sobre o tema. Na próxima aula, veremos sobre visualização de dados e estatística inferencial.</p>
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>O questionário foi modificado para conter outras variáveis e para o contexto do R, visto que foi originalmente desenvolvido para o SPSS. Os dados adicionados não representam informações reais.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Pode ser utilizado o tipo <code>double</code>, desde que os valores da variável permaneçam como inteiros.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Funções anônimas são funções que não possuem um nome definido. Geralmente as utilizamos em operações curtas, quando não pretendemos reutilizá-las em outro momento do código.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Quando manipulamos dados com rótulos, os rótulos são perdidos. Entretanto, a função <code>sjlabelled::get_labels()</code> retorna o valor dos níveis dos fatores, por isso continua funcionando nessa ocasião. Deixe sempre uma cópia do banco original, pois nela poderá se referir aos rótulos.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>A função <code>summarise()</code> realizar automaticamente o <code>ungroup()</code>. Caso não a utilize, é necessário desagrupar o banco de dados com essa função após utilizar o <code>group_by()</code>, para que as operações não continuem sendo realizadas por grupo.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Apesar de parecidos, o gráfico de barras é um tipo de representação distinta do histograma. Enquanto o último é utilizado para representar dados numéricos, o gráfico de barras representa a frequência de dados categóricos.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

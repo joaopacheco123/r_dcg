@@ -1,0 +1,523 @@
+---
+title: "Aula 5 - Estatística descritiva"
+author: "João Amaral"
+format: 
+  html:
+    toc: true
+editor: source
+editor_options:
+  chunk_output_type: console
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+knitr::opts_knit$set(root.dir = 'C:/Users/User/Documents/r_dcg')
+```
+
+
+# Introdução
+
+A estatística descritiva é uma parte da estatística que se dedica a organizar, descrever, resumir e apresentar os dados coletados. Essa abordagem não busca fazer inferências ou previsões sobre um grupo maior, mas apenas descrever o grupo específico que foi observado. Para os exemplos dessa aula, utilizaremos o banco de dados disponibilizado por [Andy Field](https://edge.sagepub.com/field5e/student-resources/datasets), que contém respostas de 2.571 indivíduos sobre as perguntas do "R Anxiety Questionnaire (RAQ-23)"[^1]:
+
+[^1]: O questionário foi modificado para conter outras variáveis e para o contexto do R, visto que foi originalmente desenvolvido para o SPSS. Os dados adicionados não representam informações reais.
+
+1. A estatística me faz chorar
+2. Meus amigos vão pensar que sou estúpido por não conseguir lidar com o R
+3. Desvios padrão me animam
+4. Sonho que Pearson está me atacando com coeficientes de correlação
+5. Eu não entendo estatística
+6. Tenho pouca experiência com computadores
+7. Todos os computadores me odeiam
+8. Nunca fui bom em matemática
+9. Meus amigos são melhores em estatística do que eu
+10. Computadores são úteis apenas para jogar jogos
+11. Fui mal em matemática na escola
+12. As pessoas tentam dizer que o R torna a estatística mais fácil de entender, mas não torna
+13. Tenho medo de causar danos irreparáveis por causa da minha incompetência com computadores
+14. Computadores têm mente própria e deliberadamente dão errado sempre que os uso
+15. Computadores estão atrás de mim
+16. Choro abertamente ao ouvir falar de tendência central
+17. Entro em coma sempre que vejo uma equação
+18. O R sempre trava quando tento usá-lo
+19. Todo mundo olha para mim quando uso o R
+20. Não consigo dormir pensando em vetores próprios (eigen vectors)
+21. Acordo debaixo do meu edredom pensando que estou preso sob uma distribuição normal
+22. Meus amigos são melhores no R do que eu
+23. Se eu for bom em estatística, meus amigos vão pensar que sou um nerd
+
+# Tipos de variáveis
+
+Variáveis são como recipientes para representar categorias ou valores numéricos. Como vimos nas últimas aulas, em bancos de dados, elas representam as colunas. No paradigma *tidy*, em uma mesma coluna deve haver apenas um tipo de variável e cada linha representa o valor dessa variável para determinado indivíduo. As variáveis podem ser divididas em dois grandes grupos: qualitativas e quantitativas.
+
+| Variáveis Qualitativas (Categóricas) | Descrição
+| -------------------------------------|-------------------------------------|
+| Nominais                             | Representam categorias sem ordem ou hierarquia (e.g., nome)
+| Ordinais                             | Representam categorias com uma ordem ou hierarquia entre elas (e.g., respostas em                                           uma escala likert)
+
+| Variáveis Quantitativas (Numéricas) | Descrição                            |
+| ------------------------------------| ------------------------------------ |
+| Discretas                           | Possui valores contáveis, representada por números inteiros (e.g., idade) |
+| Contínuas                           | Possui valores em um intervalo específico. Pode apresentar valores decimais (e.g,                                           altura em metros)                    |
+
+No R, variáveis quantitativas discretas são representadas pelo tipo `integer`[^2], enquanto `double` representa as variáveis contínuas. Em relação às variáveis categóricas, podemos utilizar o tipo `character` ou `factor`. 
+
+[^2]: Pode ser utilizado o tipo `double`, desde que os valores da variável permaneçam como inteiros.
+
+:::{.callout-note title="Fatores ordenados são variáveis numéricas?"}
+Internamente os fatores são representados por números inteiros no R. Além disso, fatores ordenados possuem uma hierarquia, como é o caso das respostas dos itens do questinário RAQ-23. Será que poderíamos interpretar esses valores ordenados da mesma forma que interpretamos a hierarquia entre números inteiros?
+
+Na teoria, devemos saber que isso não é bem assim, visto que a distância entre a resposta "Discordo totalmente" e "Discordo", por exemplo, não é mensurável (pelo menos não da mesma forma que subtraímos valores inteiros para verificar a "distância" entre eles).
+:::
+
+## Exemplo prático: Atribuindo os tipos corretos de  variáveis em um banco de dados
+
+A partir do que foi aprendido nas aulas anteriores, vamos importar o banco de dados que mencionei acima e inspecioná-lo:
+
+```{r}
+#| output: false
+
+# Carrega pacotes necessários
+library(tidyverse); library(haven)
+
+# Importa o banco de dados do tipo .sav, utilizado pelo programa SPSS
+saq_df <- haven::read_sav(file = "aulas/aula_5_estatistica_descritiva/data/SAQ_mod.sav")
+```
+
+
+```{r}
+# Visualiza o banco
+glimpse(saq_df)
+```
+
+O banco possui 2.571 observações (linhas) e 30 variáveis (colunas). Cada linha representa um indivíduo. Veja que existe um tipo diferente de variável em algumas colunas (`<dbl + lbl>`). Quando trabalhamos com dados de outros programas, ocasionalmente teremos dados com rótulos (*labels*). Esses rótulos são importantes para entendermos melhor as variáveis. Existem dois tipos de rótulos: (1) o rótulo do nome da variável, que descreve o que ela representa (**descrição da variável**) e (2) os rótulos dos possíveis valores que determinada variável pode assumir (**tipos de resposta**). Quando uma variável possui rótulo para os tipos de resposta, geralmente converteremos ela para o tipo `factor`, visto que é representada por categorias (as diferentes respostas possíveis). Outras variáveis, como "nome", podem permanecer do tipo `character`. Para visualizazrmos os rótulos, utilizaremos o pacote `sjlabelled`.
+
+```{r}
+#| output: false
+
+# Carrega o pacote
+library(sjlabelled)
+```
+
+```{r}
+# Mostra a descrição de cada variável do banco, se houver
+sjlabelled::get_label(saq_df)
+```
+
+```{r}
+# Mostra os tipos de respostas para cada variável, se houver (note que aqui a função é diferente, pois labels está no plural)
+# Selecionei apenas variáveis de interesse para reduzir o tamanho do output
+saq_df |> 
+  dplyr::select(sexo, raca_etnia, q01) |> 
+  sjlabelled::get_labels()
+```
+
+```{r}
+# Podemos também visualizar os valores numéricos que estão representando os tipos de resposta para cada variável
+saq_df |> 
+  dplyr::select(sexo, raca_etnia, q01) |> 
+  sjlabelled::get_values()
+```
+
+Para saber o valor numérico que representa cada tipo de resposta, basta ver a ordem dos outputs acima. 
+
+```{r}
+# Como exemplo, vamos utilizar as duas funções juntas para a variável sexo,
+saq_df |> 
+  dplyr::select(sexo) |> 
+  sjlabelled::get_labels()
+
+saq_df |> 
+  dplyr::select(sexo) |> 
+  sjlabelled::get_values() 
+  
+```
+
+Ou seja, seguindo a ordem dos outputs, o sexo masculino é representado pelo número 0 e o sexo feminino pelo número 1. 
+
+Podemos também utilizar uma técnica para conseguir visualizar isso de forma mais fácil, a partir de um vetor nomeado. Não se preocupe caso não entenda por completo o código abaixo, visto que ele utiliza conhecimentos mais específicos que não serão necessários para esse curso.
+
+```{r}
+# Acessando diretamente o atributo "labels" do objeto, conseguimos visualizar os valores numéricos e os tipos de resposta simultaneamente.
+saq_df |> 
+  pull(sexo) |> 
+  attr(which = "labels")
+```
+
+Vamos agora converter os valores de nossas variáveis para fatores. Antes disso, observe os tipos de resposta das variáveis do questionário, tomando como exemplo o primeiro item.
+
+```{r}
+saq_df |> 
+  dplyr::select(q01) |>
+  pull() |> 
+  attr(which = "labels")
+```
+
+A ordem das respostas parece invertida, visto que o menor número representa a resposta de maior concordância com o item. Além disso, temos um valor para dados faltantes (Não respondida), que no nosso banco de dados deveria ser representada pelo valor `NA`.
+
+```{r}
+#| include: false
+
+# Checa se há dados faltantes no banco de dados em cada coluna do questionário
+saq_df |> 
+  dplyr::select(q01:q23) |> 
+  filter(if_any(everything(), ~ .x == 9)) |> 
+  dim()
+```
+
+Para checar se há dados faltantes, vamos utilizar a função `summarise()` através (`across()`) das colunas do questionário. O `~`, nesse caso conhecido como *twiddle*, representa uma função anônima[^3] que irá checar se 9 está contido (`%in`) algum valor de cada coluna.
+
+[^3]: Funções anônimas são funções que não possuem um nome definido. Geralmente as utilizamos em operações curtas, quando não pretendemos reutilizá-las em outro momento do código.
+
+```{r}
+# Checa se há dados faltantes no banco de dados em cada coluna do questionário
+
+saq_df |> 
+  summarise(across(q01:q23, ~ 9 %in% .x)) |> 
+  glimpse()
+```
+
+Como não temos dados faltantes, não precisaremos nos preocupar com isso nesse banco de dados. Em relação à inversão das categorias mencionada acima, utilizaremos a função `fct_rvt()`, do pacote `forcats`, para inverter essa ordem e, após, converter os fatores em um fator ordenado (função `ordered()`).
+
+```{r}
+factor_saq <- saq_df |> 
+  mutate(
+    across(c(sexo, raca_etnia, q01:q23), haven::as_factor), 
+    across(c(q01:q23), forcats::fct_rev),
+    across(c(q01:q23), ordered)
+  ) 
+
+glimpse(factor_saq)
+```
+
+Veja agora como ficam os níveis dos itens do questionário[^4]:
+
+[^4]: Quando manipulamos dados com rótulos, os rótulos são perdidos. Entretanto, a função `sjlabelled::get_labels()` retorna o valor dos níveis dos fatores, por isso continua funcionando nessa ocasião. Deixe sempre uma cópia do banco original, pois nela poderá se referir aos rótulos.
+
+```{r}
+factor_saq |> 
+  pull(q01) |> 
+  get_labels()
+```
+
+Note que está na ordem como gostaríamos. Entretanto, não temos mais os equivalentes dos valores numéricos. Caso utilizemos a função `sjlabelled::get_values()`, o valor retornado será `NULL`(veja a nota abaixo para saber as implicações disso).
+
+:::{.callout-warning title="Conversão de fator para valor numérico"}
+Em algumas análises, é recomendado converter os fatores para valores numéricos. Como vimos na aula passada, sempre que realizarmos essa conversão, o R não irá necessariamente converter para os valores numéricos que desejamos. Dessa forma, devemos tomar cuidado ao utilizar a função `as.numeric()`. Ainda assim, na maioria das ocasiões, isso não acarretará em problemas. Observe o abaixo, onde a conversão altera os valores iniciais da variável sexo, que antes eram representados por 0 e 1:
+
+```{r}
+# Convertendo as variáveis do questionário em números e visualizando
+
+factor_saq |> 
+  mutate(sexo = as.numeric(sexo)) |> 
+  pull(sexo) |> 
+  unique()
+```
+:::
+
+Agora que estamos com o nosso banco pronto, vamos para as análises descritivas!
+
+# Descrevendo variáveis numéricas
+
+## Medidas de tendência central
+
+São valores de uma variável (coluna) que capturam o "centro" de uma distribuição de dados.
+
+**Média**: $\mu = \frac{\Sigma x}{N}$, calculada pela função `mean()`
+
+**Mediana**, calculada pela função `median()`:
+
+1. Para números de observações ímpares: $\frac{N + 1}2$
+  
+2. Para número de observações pares: $\frac{\frac{N}{2} + \frac{N + 1}{2}}{2}$
+
+```{r}
+# Calculando a média de altura nos indivíduos do banco de dados
+factor_saq |> 
+  dplyr::summarise(mean = mean(altura))
+```
+
+É possível também calcular a média por grupos, utilizando a função `dpyr::group_by()`[^5]. Vamos aproveitar e calcular também a mediana.
+
+[^5]: A função `summarise()` realizar automaticamente o `ungroup()`. Caso não a utilize, é necessário desagrupar o banco de dados com essa função após utilizar o `group_by()`, para que as operações não continuem sendo realizadas por grupo.
+
+```{r}
+# Calculando média de altura por sexo
+factor_saq |> 
+  dplyr::group_by(sexo) |> 
+  dplyr::summarise(media = mean(altura), mediana = median(altura))  |> 
+  # Reporta os valores na forma de tabela para melhor visualização
+  knitr::kable()
+```
+
+Observe que os valores da média e mediana são muito semelhantes, o que ocorre em distribuições normais.
+
+Para dados numéricos, o histograma é uma boa forma de visualizar a distribuição dos dados. As linhas verticais representam as médias das alturas para cada sexo.
+
+```{r}
+#| include: false
+
+average_heights <- factor_saq |> 
+  group_by(sexo) |> 
+  summarise(mean = mean(altura)) |> 
+  pull()
+```
+
+
+```{r}
+#| echo: false
+#| message: false
+
+factor_saq |> 
+  ggplot(aes(x = altura, fill = sexo)) +
+  geom_histogram() +
+  geom_vline(xintercept = average_heights, linetype = "dashed") +
+  labs(fill = "Sexo") +
+  xlab("Altura") +
+  ylab("Frequência") +
+  theme_bw() +
+  theme(panel.border = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black"),
+        axis.text.y = element_text(size = 10, colour = "black"),
+        axis.text.x.bottom = element_text(size = 10, colour = "black"),
+        axis.title.x = element_text(size = 10, colour = "black"))
+  
+```
+
+## Outras medidas de posição
+
+Também temos outras medidas que representam uma posição de uma distribuição de valores:
+
+**Decis**: Divide a distribuição em 10 partes iguais. O 5º decil representa a mediana.
+
+**Quartil**: Divide distribuição em quatro partes iguais. O Q2 representa a mediana. 
+
+**Percentil**: Divide a distribuição em 100 partes iguais. O percentil 50 representa a mediana.
+
+Como todas essas medidas dividem o banco de dados em uma determinada porcentagem, o termo genérico para elas é quantil e utilizaremos a função `quantile()` para calculá-las.
+```{r}
+# Cálculo de exemplo do primeiro decil, primeiro quartil e percentil 99
+factor_saq |> 
+  dplyr::group_by(sexo) |> 
+  dplyr::summarise(primeiro_decil = quantile(altura, prob = .1), primeiro_quartil =quantile(altura, prob = .25), percentil_99 = quantile(altura, prob = .99))  |> 
+  # Reporta os valores na forma de tabela para melhor visualização
+  knitr::kable()
+
+```
+
+
+## Medidas de dispersão
+
+Medidas de dispersão são valores que indicam o quanto os dados de uma distribuição estão espalhados ou variam em torno de uma medida central (como a média).
+
+**Amplitude**: É a diferença entre o maior e o menor valor de um conjunto de dados.
+
+**Variância**: $\sigma^2 = \frac{\Sigma(xi-\mu)^2}{N}$
+
+**Desvio padrão**: $\sigma = \sqrt{\sigma^2}$
+
+**Distância interquartil**: $DIQ = Q3 - Q1$ 
+
+
+```{r}
+# Vamos calcular as métricas acima para o nosso a altura dos indivíduos em nosso banco de dados
+
+factor_saq |> 
+  dplyr::group_by(sexo) |> 
+  dplyr::summarise(variancia = var(altura), desvio_padrao = sd(altura), amplitude = max(altura) - min(altura), distancia_interquartil = IQR(altura))  |> 
+  # Reporta os valores na forma de tabela para melhor visualização
+  knitr::kable()
+
+
+```
+
+O gráfico de densidade permite uma boa visualização da dispersão dos dados.
+
+
+```{r}
+#| include: false
+
+sd_h <- factor_saq |> 
+  group_by(sexo) |> 
+  summarise(sd = sd(altura)) |> 
+  pull()
+
+
+```
+
+
+```{r}
+#| echo: false
+#| message: false
+
+factor_saq |> 
+  ggplot(aes(x = altura, fill = sexo)) +
+  geom_density() +
+  geom_vline(xintercept = average_heights) +
+  geom_vline(xintercept = c(average_heights-sd_h, average_heights+sd_h), linetype = "dashed") +
+  labs(fill = "Sexo") +
+  xlab("Altura") +
+  ylab("Densidade") +
+  theme_bw() +
+  theme(panel.border = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black"),
+        axis.text.y = element_text(size = 10, colour = "black"),
+        axis.text.x.bottom = element_text(size = 10, colour = "black"),
+        axis.title.x = element_text(size = 10, colour = "black"))
+```
+
+
+# Descrevendo variáveis categóricas
+
+## Tabela de contingência e gráfico em barras
+
+Para variáveis categóricas, costuma-se trabalhar com a frequência de cada categoria. Uma boa forma de descrevê-las é pela tabela de contingência:
+
+```{r}
+# Cria tabela de contingência para a variável raca_etnia
+factor_saq |> 
+  dplyr::group_by(sexo) |> 
+  dplyr::pull(raca_etnia) |> 
+  base::table() |> 
+  knitr::kable(col.names = c("Raça/Etnia", "Frequência"))
+
+```
+
+Também podemos utilizar um gráfico de barras[^6] para representar a frequência de cada categoria. Veja o exemplo abaixo, que mostra a quantidade de pessoas em cada categoria de Raça/Etnia, por sexo.
+
+[^6]: Apesar de parecidos, o gráfico de barras é um tipo de representação distinta do histograma. Enquanto o último é utilizado para representar dados numéricos, o gráfico de barras representa a frequência de dados categóricos. 
+
+```{r}
+#| echo: false
+#| message: false
+
+# Cria gráfico de barras por sexo
+factor_saq |> 
+  mutate(raca_etnia = forcats::fct_relevel(raca_etnia, "Parda", "Branca", "Preta")) |> 
+  ggplot(aes(x = raca_etnia, fill = sexo)) +
+  geom_bar() +
+  labs(fill = "Sexo") +
+  ylab("Frequência") +
+  xlab("Raça/Etnia") +
+  theme_bw() +
+  theme(panel.border = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black"),
+        axis.text.y = element_text(size = 10, colour = "black"),
+        axis.text.x.bottom = element_text(size = 10, colour = "black"),
+        axis.title.x = element_text(size = 10, colour = "black"))
+```
+
+Quando pensamos nas respostas do questinário RAQ-23, poderíamos analisá-lo em forma de gráfico de barras, como fizemos com a variável Raça/Etnia:
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 20
+#| fig-height: 6
+
+library(gridExtra)
+
+# Gera gráfico de barras para todas as variáveis do questionário
+
+quest_items <- names(factor_saq)[7:29]
+
+plots <- list()
+
+for(var in quest_items) {
+  plot <- factor_saq |> 
+    ggplot(aes(x = .data[[var]], fill = .data[[var]])) +
+    geom_bar() +
+    xlab(get_label(saq_df[[var]])) +
+    ylab("Frequência") +
+    theme_bw() +
+    theme(panel.border = element_blank(),
+          panel.background = element_blank(),
+          panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(), 
+          axis.line = element_line(colour = "black"),
+          axis.text.y = element_text(size = 10, colour = "black"),
+          axis.text.x.bottom = element_blank(),
+          axis.ticks.x=element_blank(),
+          axis.title.x = element_text(size = 10, colour = "black"))
+  
+  plots[[var]] <- plot
+}
+  
+for(i in 1:23) {
+  if(i %% 2 == 0) {
+    grid.arrange(
+      plots[[quest_items[i-1]]], 
+      plots[[quest_items[i]]], 
+      ncol = 2, 
+      nrow = 1)
+  }
+  
+  
+  if(i == 23) {
+    grid.arrange(
+      plots[[quest_items[i]]], 
+      ncol = 2, 
+      nrow = 1)
+  }
+}
+```
+
+Essa é uma boa forma de olhar os itens, pois temos uma noção geral da quantidade de cada resposta para cada um deles. Entretanto, caso quiséssemos medir a ansiedade em relação ao R para cada indivíduo, seria interessante arranjar uma pontuação para o questionário, representativa desse construto ansiedade. Para isso, podemos fazer o somatório da pontuação de cada item, como fizemos na última aula (devemos antes converter as variáveis para valores numéricos). 
+
+```{r}
+# Cria nova coluna representando pontuação para o questionário
+factor_saq <- factor_saq |> 
+  mutate(across(q01:q23, as.numeric)) |> 
+  rowwise() |> 
+  mutate(ansiedade_r = sum(c(q01,q02,q03,q04,q05,q07,q07,q08,q09,q10,q11,q12,q13,q14,q15,q16,q17,q18,q19,q20,q21,q22,q23)))
+  
+```
+
+Com a nova coluna, podemos agora ver as estatísticas descritivas e fazer um gráfico de densidade, o nosso somatório representa uma variável numérica.
+
+```{r}
+# Estatísticas descritivas para a pontuação do questionário
+factor_saq |> 
+  group_by() |> 
+  dplyr::summarise(media = mean(ansiedade_r), desvio_padrao = sd(ansiedade_r), maior_pontuação = max(ansiedade_r), menor_pontuação = min(ansiedade_r), distancia_interquartil = IQR(ansiedade_r)) |> 
+  knitr::kable()
+
+```
+
+```{r}
+#| echo: false
+#| message: false
+
+factor_saq |> 
+  ggplot(aes(x = ansiedade_r)) +
+  geom_density(fill = "pink") +
+    geom_density(aes(x=rnorm(2571, mean = 75.9, sd = 9.15)), linetype = "dashed") +
+  geom_vline(xintercept = mean(factor_saq$ansiedade_r), linetype = "dashed") +
+  xlab("Pontuação no questionário de ansiedade em relação ao R") +
+  ylab("Densidade") +
+  theme_bw() +
+  theme(panel.border = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black"),
+        axis.text.y = element_text(size = 10, colour = "black"),
+        axis.text.x.bottom = element_text(size = 10, colour = "black"),
+        axis.title.x = element_text(size = 10, colour = "black"))
+  
+```
+
+A linnha pontilhada representa uma distribuição normal com mesma média e desvio padrão. A sobreposição mostra que a distribuição dos somatórios da pontuação dos itens assemelha-se a uma distribuição normal. 
+
+Nesse capítulo vimos um pouco sobre estatística descritiva. Alguns tópicos não foram abordados, mas espero que tenham conseguido ter uma noção geral sobre o tema. Na próxima aula, veremos sobre visualização de dados e estatística inferencial.
