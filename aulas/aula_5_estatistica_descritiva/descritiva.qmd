@@ -2,7 +2,7 @@
 title: "Aula 5 - Estatística descritiva"
 author: "João Amaral"
 format: 
-  html:
+  pdf:
     toc: true
 editor: source
 editor_options:
