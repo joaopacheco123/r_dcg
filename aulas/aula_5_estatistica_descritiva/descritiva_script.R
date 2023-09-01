@@ -90,7 +90,24 @@ average_heights <- factor_saq |>
   summarise(mean = mean(altura)) |> 
   pull()
 
+# Histograma sem grupo
+factor_saq |> 
+  ggplot(aes(x = altura)) +
+  geom_histogram() +
+  geom_vline(xintercept = average_heights, linetype = "dashed") +
+  xlab("Altura") +
+  ylab("Frequência") +
+  theme_bw() +
+  theme(panel.border = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        axis.line = element_line(colour = "black"),
+        axis.text.y = element_text(size = 10, colour = "black"),
+        axis.text.x.bottom = element_text(size = 10, colour = "black"),
+        axis.title.x = element_text(size = 10, colour = "black"))
 
+# Histograma por sexo
 factor_saq |> 
   ggplot(aes(x = altura, fill = sexo)) +
   geom_histogram() +
