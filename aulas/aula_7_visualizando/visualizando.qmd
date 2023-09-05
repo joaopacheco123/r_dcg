@@ -1,88 +1,688 @@
 ---
 title: "Visualizando dados e modelando em R"
-format:
-  html: default
-  pdf: default
-editor: visual
+author: "João Pedro"
+format: 
+  html:
+    toc: true
+editor: source
+editor_options:
+  chunk_output_type: console
 ---
 
-# Objetivo da aula
+# Introdução
 
-Introduzi-los à visualização de dados usando a linguagem R, apresentando a função plot() para criar diferentes tipos de gráficos. Além disso, abordaremos conceitos básicos de estatística inferencial e como modelar a relação entre duas variáveis.
+Vamos iniciar visualizando as variáveis que queremos no nosso banco de dados:
 
-# Tópicos da aula
+| Variável                 | Tipo                             |
+|--------------------------|----------------------------------|
+| Idade em anos            | Numérica quantitativa (discreta) |
+| Altura em metros         | Numérica quantitativa (contínua) |
+| Cinema (gênero favorito) | Qualitativa (nominal)            |
+| Músicas favoritas        | Qualitativa (nominal)            |
+| Atividade física         | Qualitativa (ordinal)            |
+| Bem-estar                | Numérica quantitativa (contínua) |
+| Extroversão              | Numérica quantitativa (contínua) |
+| Neuroticismo             | Numérica quantitativa (contínua) |
 
-1.  Introdução à visualização de dados
+> "Quero ver a associação entre essas variáveis" - Todo estudante com um banco de dados.
 
-    1.  Importância da visualização na análise de dados
+Isso é muito comum, mas não é o mais correto.
 
-2.  Tipos de gráficos disponíveis em R
+O mais recomendado é iniciar com uma hipótese, baseado no conhecimento existente (literatura), realizar o projeto do experimento/pesquisa, saber de antemão quais testes irá realizar, para então iniciar a pesquisa.
 
-    1.  A função plot() em R
+## Nossas perguntas de pesquisa
 
-    2.  Sintaxe básica do plot()
+Hoje vamos realizar algumas análises, e vamos partir de algumas hipóteses pré-estabelecidas:
 
-    3.  Gráfico de dispersão (scatter plot)
+1.  A proporção de roqueiros é maior entre fãs de ficção científica vs não-fãs;
+    -   Aqui, nós vamos testar a diferença entre duas proporções. Para isso, usandos o teste qui-quadrado.
+2.  Roqueiros são mais introvertidos:
+    -   Aqui, nós vamos testar a diferença entre duas médias (dos escores de depressão entre os dois grupos - roqueiros e não-roqueiros). Vamos usar aqui o teste t.
+3.  Quanto mais extrovertido, maior o nível de bem-estar;
+    -   Aqui, nós vamos explorar a associação entre duas variáveis quantitativas contínuas. Para isso, usaremos a regressão, já que temos uma variável contínua dependente (bem-estar) e uma independente (extroversão)
+4.  O efeito do neuroticismo no bem-estar desaparece se ajustarmos para extroversão.
+    -   Aqui, vamos usar a regressão múltipla.
 
-    4.  Gráfico de linha (line plot)
+No final do livro de Andy Field, temos a seguinte figura, que ajuda a mapear o tipo de teste que queremos utilizar conforme as variáveis que temos.
 
-    5.  Gráfico de barras (bar plot)
+![](Capturar.PNG)
 
-    6.  Gráfico de pizza (pie plot)
+Juntamente com essas questões nós também vamos explorar algumas maneiras de visualizar os dados, como o *box plot*, o *bar plot*, o *scatter plot*, etc.
 
-    7.  Gráfico de boxplot (box plot)
+## Suposições de normalidade
 
-3.  Estatística inferencial básica
+Veja que temos uma última coluna denominada "*Assumptions of parametric tests*", sempre para quando o desfecho é uma variável contínua.
 
-    1.  Conceitos fundamentais da estatística inferencial
+A suposição de normalidade dos dados é uma característica importante para podermos utilizar os testes denominados paramétricos.
 
-    2.  População e amostra
+O quê isso significa?
 
-    3.  Média, mediana e moda
+-   A distribuição normal é caracterizada por uma curva de sino simétrica.
 
-    4.  Desvio padrão e variância
+-   A distribuição normal é importante na estatística porque muitos fenômenos naturais e artificiais seguem essa distribuição.
 
-    5.  Intervalo de confiança
+-   Essa distribuição é definida pela seguinte fórmula
 
-    6.  Teste de hipóteses (introdução)
+$$
+f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}
+$$
 
-4.  Modelando a relação entre duas variáveis
+Nesta fórmula, $x$ representa um valor específico, $\mu$ é a média e $\sigma$ é o desvio padrão. A constante $\pi$ é aproximadamente igual a 3.14159.
 
-    1.  Regressão linear simples
+Assim é uma distribuição normal:
 
-    2.  Coeficiente de correlação
+```{r}
+#| echo: false
+#| message: false
+ 
+# Definir os parâmetros da distribuição normal
+media <- 10     # Média da distribuição
+desvio <- 2    # Desvio padrão da distribuição
+tamanho_amostra <- 2000  # Tamanho da amostra desejada
 
-    3.  Interpretação dos resultados da regressão
+# Gerar a amostra da distribuição normal
+amostra <- rnorm(tamanho_amostra, mean = media, sd = desvio)
 
-    4.  Exemplos práticos de modelagem
+# Visualizar um histograma da amostra
+hist(amostra, main = "Histograma da Distribuição Normal", 
+     xlab = "Valores", ylab = "Frequência")
+```
 
-5.  Lista de exercícios
+Veja a figura de curvas que não seguem a distribuição normal:
 
-    1.  Resolução de problemas práticos utilizando
+```{r}
+#| echo: false
+#| message: false
 
-    2.  Aplicação dos conhecimentos adquiridos em visualização e modelagem
+# Instale e carregue as bibliotecas necessárias
+if (!require(ggplot2)) {
+  install.packages("ggplot2")
+}
+library(ggplot2)
 
-Essa estrutura deve fornecer uma introdução sólida sobre a visualização de dados no R, a função plot() e como modelar a relação entre duas variáveis usando técnicas de estatística inferencial. A lista de exercícios é importante para consolidar o conhecimento adquirido e permitir que vocês pratiquem suas habilidades em R.
+# Criar dados para as quatro distribuições
+set.seed(123)  # Para tornar os resultados reproduzíveis
 
-# Introdução à visualização de dados
+# Distribuição com Assimetria Positiva (positively skewed)
+dados_assimetria_positiva <- data.frame(Valor = rexp(1000, rate = 2))
+dados_assimetria_positiva$Tipo <- "Assimetria Positiva"
 
-A visualização de dados é uma etapa crucial na análise de informações em qualquer projeto de ciência de dados ou pesquisa. Por meio de gráficos e plots, podemos transformar dados brutos em representações visuais compreensíveis, o que facilita a identificação de padrões, tendências e insights importantes. A visualização não apenas torna os dados mais acessíveis, mas também auxilia na comunicação efetiva dos resultados para uma audiência diversa.
+# Distribuição com Assimetria Negativa (negatively skewed)
+dados_assimetria_negativa <- data.frame(Valor = -rexp(1000, rate = 2))
+dados_assimetria_negativa$Tipo <- "Assimetria Negativa"
 
-## Importância da visualização na análise de dados
+# Distribuição Leptocúrtica (kurtosis alto)
+dados_leptocurtica <- data.frame(Valor = rt(1000, df = 3))
+dados_leptocurtica$Tipo <- "Leptocúrtica"
 
-A visualização de dados desempenha um papel fundamental nos seguintes aspectos:
+# Distribuição Platicúrtica (kurtosis baixo)
+dados_platicurtica <- data.frame(Valor = runif(1000, min = -2, max = 2))  # Distribuição Uniforme
+dados_platicurtica$Tipo <- "Platicúrtica"
 
-### a) Identificação de padrões e tendências
+# Combinar os dados
+dados_combinados <- rbind(dados_assimetria_positiva, dados_assimetria_negativa, dados_leptocurtica, dados_platicurtica)
 
-Visualizar dados permite que você identifique rapidamente padrões e tendências que podem não ser aparentes ao examinar apenas as tabelas de números. Através de gráficos, podemos detectar relações entre variáveis, sazonalidades e outros comportamentos relevantes.
+# Criar o gráfico de quatro quadrantes
+ggplot(dados_combinados, aes(x = Valor, fill = Tipo)) +
+  geom_density(alpha = 0.5) +
+  facet_wrap(~Tipo, scales = "free") +
+  theme_minimal() +
+  labs(title = "Distribuições Não Normais",
+       x = "Valores", y = "Densidade")
+```
 
-### b) Comunicação eficaz
+Para avaliar a normalidade dos dados acima, vamos usar o teste de Shapiro-Wilk
 
-Gráficos e plots facilitam a comunicação dos resultados e insights para um público não técnico. As representações visuais são mais fáceis de serem compreendidas e podem tornar a análise de dados mais acessível a pessoas com diferentes níveis de conhecimento em estatística e ciência de dados.
+```{r}
+# Teste de Shapiro-Wilk
+shapiro_test_result <- shapiro.test(amostra)
 
-### c) Tomada de decisão embasada
+# Exibir o resultado do teste
+print(shapiro_test_result)
 
-Com dados visualizados de forma adequada, tomadores de decisão podem basear suas escolhas em evidências concretas. Gráficos bem elaborados fornecem informações claras e confiáveis, auxiliando na formulação de estratégias e soluções.
+```
+
+-   Como o valor-p (0.2246) é maior que o nível de significância comum de 0.05 (ou seja, $\alpha$ = 0.05), não temos evidências estatisticamente significativas para rejeitar a hipótese (nula, H0) de que os dados não seguem uma distribuição normal.
+
+## Hipótese nula e hipótese alternativa
+
+É importante o conceito de hipótese nula e hipótese alternativa. Para cada pergunta, existe uma hipótese nula e uma alternativa.
+
+Considere a questão abaixo:
+
+-   Roqueiros são mais introvertidos?
+
+A hipótese nula de a questão é: "A média dos escores de introversão é igual entre roqueiros e não roqueiros". A hipótese alternativa, por sua vez, contrapõe essa ideia.
+
+Vamos considerar que um teste positivo é aquele com p-valor \< 0.05, no qual *afastamos a hipótese nula*.
+
+## Iniciando os trabalhos
+
+```{r}
+# Definindo a pasta de trabalho
+# setwd("D:/Documentos/GitHub/r_dcg/aulas/aula_7_visualizando")
+
+# Carregando o pacote necessário
+library(tidyverse)
+
+# Carregando os dados
+library(readxl)
+df <- read_excel("dados_turma_1.xlsx")
+
+# Vamos salvar como df2 o nosso banco de dados sem dados faltantes
+df2 <- df |> tidyr::drop_na()
+
+# Modificando os nomes das colunas e salvando o banco
+df2 <- df2 |> 
+  rename(
+    data_preenchimento = `Carimbo de data/hora`,
+    idade = `Idade (em anos, somente número)`,
+    altura = `Altura (em metros, casa decimal separada por ponto)`,
+    cinema = `Gênero cinematográfico preferido`,
+    musica = `Gênero musical preferido`,
+    atividade_fisica = `Quantos vezes por semana, em média, você pratica atividade física?`,
+    otimismo = `Tenho me sentido otimista em relação ao futuro`,
+    utilidade = `Tenho me sentido útil`,
+    tranquilidade = `Tenho me sentido tranquilo`,
+    lidar_problemas = `Tenho lidado bem com os problemas`,
+    clareza_mental = `Tenho pensado com clareza`,
+    proximidade = `Tenho me sentido próximo (a) às outras pessoas`,
+    decisoes = `Tenho sido capaz de tomar as minhas próprias decisões`,
+    comunicativo = `É conversador, comunicativo`,
+    depressivo = `É depressivo, triste`,
+    reservado = `É reservado`,
+    controle_estresse = `É relaxado, controla bem o stress`,
+    energia = `É cheio de energia`,
+    tensao = `Fica tenso com frequência`,
+    entusiasmo = `Gera muito entusiasmo`,
+    preocupacao = `Preocupa-se muito com tudo`,
+    quietude = `Tende a ser quieto, calado`,
+    estabilidade_emocional = `É emocionalmente estável, não se altera facilmente`,
+    assertividade = `É assertivo, não teme expressar o que sente`,
+    temperamento = `É temperamental, muda de humor facilmente`,
+    timidez = `É, às vezes, tímido e inibido`,
+    calma = `Mantém-se calmo nas situações de tensão`,
+    sociabilidade = `É sociável, extrovertido`,
+    nervosismo = `Fica nervoso facilmente`
+  )
+
+# Criando variável de identificação e alterando sua posição para o início
+df2 <- df2 |> 
+  mutate(id = row_number(), .before = data_preenchimento) 
+
+# Identificando os níveis de atividade física e bem-estar
+levels_bem_estar <- c("Nunca", "Raramente", "Algumas vezes", "Frequentemente", "Sempre")
+levels_ativ_fisica <- c("Não pratico atividade física", "Menos do que três vezes na semana", "Entre três e cinco vezes na semana", "Mais do que cinco vezes na semana")
+
+# Juntando todas as operações de transformação usando o pipe
+df2 <- df2 |> 
+  mutate(
+    altura = as.double(altura),
+    musica = factor(musica),
+    cinema = factor(cinema),
+    atividade_fisica = factor(atividade_fisica, levels = levels_ativ_fisica , ordered = T),
+    across(otimismo:decisoes, ~ factor(.x, levels = levels_bem_estar, ordered = T)),
+    across(otimismo:decisoes, as.numeric)
+  ) |> 
+  rowwise() |> 
+  mutate(bem_estar = sum(c(otimismo, utilidade, tranquilidade, lidar_problemas, clareza_mental, proximidade, decisoes))) 
+
+
+# Você consegue manipular os dados de neuroticismo e extroversão?
+
+# Vamos criar um vetor com os níveis da escala
+likert_values <- c(
+  "Discordo totalmente",
+  "Discordo",
+  "Não concorco nem discordo",
+  "Concordo",
+  "Concordo totalmente"
+)
+
+df2 <- df2 |> mutate(across
+                     (comunicativo:nervosismo, ~ factor
+                       (.x, levels = likert_values, ordered = T)),
+                     across(comunicativo:nervosismo, as.numeric))
+
+
+# Defina colunas para colocar os escores ao contrário
+colunas_reverter <- c(
+  "reservado",
+  "controle_estresse",
+  "quietude",
+  "estabilidade_emocional",
+  "timidez",
+  "calma"
+)
+
+# Reverter os escores para as colunas especificadas
+df2[, colunas_reverter] <- 6 - df2[, colunas_reverter]
+
+# Agora vamos criar as colunas de soma
+df2 <- df2 |> 
+  mutate(extroversao = sum(c(comunicativo, reservado, energia, entusiasmo, quietude, assertividade, timidez, sociabilidade))) 
+df2 <- df2 |> 
+  mutate(neuroticismo = sum(c(depressivo, controle_estresse, tensao, preocupacao, estabilidade_emocional, temperamento, calma, nervosismo))) 
+
+# Ótimo. 
+# Vamos salvar o banco de dados processado?
+write.csv(df2, "dados_processados.csv", row.names=FALSE)
+
+# Vamos limpar o ambiente de trabalho para passar para a próxima etapa.
+rm(list = ls())
+```
+
+Agora, vamos começar com o banco de dados processado, carregar os pacotes exigidos e iniciar a nossa análise.
+
+O objetivo nesta aula é descrever os dados, criar algumas visualizações interessantes e testar algumas hipóteses.
+
+```{r}
+# Carregando pacotes necessários
+library(readr); library(DescTools); library(tidyverse)
+
+# Carregar o banco de dados processado
+df <- read_csv("dados_processados.csv")
+
+# Vamos primeiro transformar em fator "cinema", "musica", e "atividade_fisica"
+levels_ativ_fisica <- c("Não pratico atividade física", "Menos do que três vezes na semana", "Entre três e cinco vezes na semana", "Mais do que cinco vezes na semana")
+
+df <- df |> 
+  mutate(
+    musica = factor(musica),
+    cinema = factor(cinema),
+    atividade_fisica = factor(atividade_fisica, levels = levels_ativ_fisica , ordered = T)) 
+
+# Veja a estrutura dos dados
+str(df)
+
+# Vamos tirar algumas colunas que não nos interessam mais:
+df <- df %>% select(-otimismo:-nervosismo)
+
+
+# Vamos gerar algumas estatísticas descritivas com o pacote DescTools
+numeric_vars <- df[, sapply(df, is.numeric)]
+summary_stats_numeric <- Desc(numeric_vars)
+
+# Agora para as variáveis categóricas
+categorical_vars <- df[, sapply(df, is.factor)]
+summary_stats_categorical <- Desc(categorical_vars)
+
+dev.off()
+
+# Vamos transformar algumas variáveis categóricas para gerar algumas análises
+df$musica_preferencia <- ifelse(df$musica == "Rock", 
+                                "Rock", 
+                                "Não-Rock")
+df$cinema_preferencia <- ifelse(df$cinema == "Ficção científica", 
+                                "Ficção científica", 
+                                "Não-Ficção científica")
+df$sedentarismo <- ifelse(df$atividade_fisica == "Não pratico atividade física" | 
+                          df$atividade_fisica == "Menos do que três vezes na semana", 
+                          "Sedentário", 
+                          "Ativo")
+
+df$musica_preferencia <- as.factor(df$musica_preferencia)
+df$cinema_preferencia <- as.factor(df$cinema_preferencia)
+df$sedentarismo <- as.factor(df$sedentarismo)
+
+plot(df$musica_preferencia)
+plot(df$cinema_preferencia)
+plot(df$sedentarismo)
+
+# Agora, vamos usar o pacote DescTools, função Desc() para ver se os roqueiros têm algum traço de personalidade específico ou se têm maiores níveis de bem-estar
+
+Desc(musica_preferencia ~ extroversao, data = df)
+Desc(musica_preferencia ~ neuroticismo, data = df)
+Desc(musica_preferencia ~ bem_estar, data = df)
+
+
+
+Desc(cinema_preferencia ~ extroversao, data = df)
+Desc(cinema_preferencia ~ neuroticismo, data = df)
+Desc(cinema_preferencia ~ bem_estar, data = df)
+
+
+
+
+```
+
+Para n
+
+![](quetistreza.jpg){width="173"}
+
+Vocês repararam
+
+```{r}
+
+
+##
+df2$music_preference_category <- ifelse(df2$musica == "Rock", "Rock Preference", "Non-Rock Preference")
+
+# View the updated dataset
+head(df2)
+
+# Assuming you have loaded your dataset as df2 and created the "music_preference_category" column
+
+# Assuming you have loaded your dataset as df2 and created the "music_preference_category" column
+
+# Perform independent t-tests for each variable without subsets
+t_test_bem_estar <- t.test(
+  df2$bem_estar[df2$music_preference_category == "Rock Preference"],
+  df2$bem_estar[df2$music_preference_category == "Non-Rock Preference"]
+)
+
+t_test_neuroticismo <- t.test(
+  df2$neuroticismo[df2$music_preference_category == "Rock Preference"],
+  df2$neuroticismo[df2$music_preference_category == "Non-Rock Preference"]
+)
+
+t_test_extroversao <- t.test(
+  df2$extroversao[df2$music_preference_category == "Rock Preference"],
+  df2$extroversao[df2$music_preference_category == "Non-Rock Preference"]
+)
+
+# Print the results
+t_test_bem_estar
+t_test_neuroticismo
+t_test_extroversao
+
+# Assuming you have loaded your dataset as df2 and created the "music_preference_category" column
+
+# Assuming you have loaded your dataset as df2 and created the "music_preference_category" column
+
+# Create a boxplot with labels and a title
+boxplot(df2$extroversao ~ df2$music_preference_category,
+        xlab = "Music Preference Category",
+        ylab = "Extroversao Value",
+        main = "Boxplot of Extroversao by Music Preference")
+
+# Add the p-value from the t-test as a text annotation
+text(1.5, max(df2$extroversao) - 2, sprintf("p = %.4f", t_test_extroversao$p.value))
+
+# Roqueiros são mais introvertidos ? p = 0.06 
+
+
+
+
+
+{r}
+# Vamos ver se quem pratica atividade física tem maiores níveis de bem estar?
+
+##
+df2$sedentarismo <- ifelse(df2$atividade_fisica == "Não pratico atividade física" | df2$atividade_fisica == "Menos do que três vezes na semana", "Sedentário", "Ativo")
+
+df2$sedentarismo <- as.factor(df2$sedentarismo)
+plot(df2$sedentarismo)
+
+# View the updated dataset
+head(df2)
+
+# Perform independent t-tests for each variable without subsets
+t_test_bem_estar <- t.test(
+  df2$bem_estar[df2$sedentarismo == "Sedentário"],
+  df2$bem_estar[df2$sedentarismo == "Ativo"]
+)
+
+t_test_neuroticismo <- t.test(
+  df2$neuroticismo[df2$sedentarismo == "Sedentário"],
+  df2$neuroticismo[df2$sedentarismo == "Ativo"]
+)
+
+t_test_extroversao <- t.test(
+  df2$extroversao[df2$sedentarismo == "Sedentário"],
+  df2$extroversao[df2$sedentarismo == "Ativo"]
+)
+
+
+# Create a boxplot with labels and a title
+boxplot(df2$bem_estar ~ df2$sedentarismo,
+        xlab = "Categoria de atividade física",
+        ylab = "Nível de bem-estar",
+        main = "Boxplot of AF vs bem-estar")
+
+
+```
+
+# Testando as nossas hipóteses
+
+## Primeira questão
+
+A proporção de roqueiros é maior entre fãs de ficção científica vs não-fãs;
+
+-   Aqui, nós vamos testar a diferença entre duas proporções. Para isso, usandos o teste qui-quadrado.
+
+A medida mais comum e possivelmente mais útil do tamanho do efeito para dados categóricos é a razão de chances (*odds ratio*). As razões de chances são mais interpretáveis em tabelas de contingência 2 × 2 e provavelmente não são úteis para tabelas de contingência maiores.
+
+## Segunda questão
+
+Roqueiros são mais introvertidos:
+
+-   Aqui, nós vamos testar a diferença entre duas médias (dos escores de depressão entre os dois grupos - roqueiros e não-roqueiros). Vamos usar aqui o teste t.
+
+## Terceira e quarta questões
+
+Quanto mais extrovertido, maior o nível de bem-estar;
+
+-   Aqui, nós vamos explorar a associação entre duas variáveis quantitativas contínuas. Para isso, usaremos a regressão, já que temos uma variável contínua dependente (bem-estar) e uma independente (extroversão)
+
+O efeito do neuroticismo no bem-estar desaparece se ajustarmos para extroversão.
+
+-   Aqui, vamos usar a regressão múltipla.
+
+```{r}
+# Temos que testar a normalidade dos dados que vamos usar
+
+# Teste de Shapiro-Wilk
+shapiro_test_result <- shapiro.test(df$extroversao)
+
+# Exibir o resultado do teste
+print(shapiro_test_result)
+
+# Teste de Shapiro-Wilk para neuroticismo
+shapiro_test_result <- shapiro.test(df$neuroticismo); print(shapiro_test_result)
+
+# Teste de Shapiro-Wilk para bem-estar
+shapiro_test_result <- shapiro.test(df$bem_estar); print(shapiro_test_result)
+
+# Ou seja, nossos dados são normais. Sinal verde para usar a regressão linear. 
+```
+
+Veja a distribuição dos nossos dados quantitativos:
+
+```{r}
+#| echo: false
+#| message: false
+
+# Dividir a área de plotagem em três painéis
+par(mfrow = c(1, 3))
+
+# Calcular a densidade e plotar o gráfico de densidade para extroversao
+densidade_extroversao <- density(df$extroversao)
+plot(densidade_extroversao, main = "Extroversão", xlab = "Valores", ylab = "Densidade")
+
+# Calcular a densidade e plotar o gráfico de densidade para neuroticismo
+densidade_neuroticismo <- density(df$neuroticismo)
+plot(densidade_neuroticismo, main = "Neuroticismo", xlab = "Valores", ylab = "Densidade")
+
+# Calcular a densidade e plotar o gráfico de densidade para bem_estar
+densidade_bem_estar <- density(df$bem_estar)
+plot(densidade_bem_estar, main = "Bem-Estar", xlab = "Valores", ylab = "Densidade")
+
+# Restaurar a configuração padrão para a área de plotagem
+par(mfrow = c(1, 1))
+```
+
+Agora vamos testar a nossa primeira hipótese:
+
+```{r}
+# Vamos usar a função lm()
+modelo <- lm(data = df, bem_estar ~ extroversao)
+
+# Vamos ver os resutados usando a função summary()
+summary(modelo)
+```
+
+Interpretação dos Resultados:
+
+-   O coeficiente de interceptação (Intercept) é de aproximadamente 16.586. Isso representa o valor estimado de "bem_estar" quando "extroversao" é igual a zero.
+
+-   O coeficiente de "extroversao" é de aproximadamente 0.3021. Isso indica que, para cada unidade de aumento em "extroversao", espera-se um aumento médio de 0.3021 na variável "bem_estar".
+
+-   O valor-p (Pr(\>\|t\|)) associado ao coeficiente de "extroversao" é 0.0438, o que indica que a relação entre "extroversao" e "bem_estar" é estatisticamente significativa a um nível de significância de 0.05. Portanto, podemos concluir que "extroversao" tem um efeito significativo em "bem_estar".
+
+-   O coeficiente de determinação (R-quadrado) é 0.2771. Isso significa que cerca de 27.71% da variabilidade em "bem_estar" pode ser explicada pela variável "extroversao". O R-quadrado ajustado é 0.2215, levando em consideração o número de preditores no modelo.
+
+-   O F-statistic é 4.984, com um valor-p de 0.0438. Isso sugere que o modelo como um todo é estatisticamente significativo, indicando que a regressão linear é adequada para explicar a relação entre as variáveis.
+
+Agora, vamos criar uma visualização para ilustrar essa relação. Vamos traçar um gráfico de dispersão com a linha de regressão:
+
+```{r}
+# Criar o gráfico de dispersão com a linha de regressão e a sombra de intervalo de confiança
+grafico <- ggplot(df, aes(x = extroversao, y = bem_estar)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = TRUE, color = "red", fill = "lightblue") +  # Adicionar sombra
+  labs(title = "Regressão Linear com Intervalo de Confiança",
+       x = "Extroversão",
+       y = "Bem-Estar") +
+  theme_minimal()
+
+# Adicionar informações sobre o modelo ao gráfico
+texto <- sprintf("Fórmula: y = %.4f + %.4fx\nValor-p: %.4f", coef(modelo)[1], coef(modelo)[2], summary(modelo)$coefficients[2, 4])
+
+grafico_com_texto <- grafico +
+  annotate("text", x = max(df$extroversao), y = min(df$bem_estar), label = texto, hjust = 1, vjust = 0)
+
+# Visualizar o gráfico com o texto e a sombra de intervalo de confiança
+print(grafico_com_texto)
+```
+
+Agora vamos testar a questão em sequência.
+
+```{r}
+# Vamos usar a função lm()
+modelo <- lm(data = df, bem_estar ~ extroversao + neuroticismo)
+
+# Vamos ver os resutados usando a função summary()
+summary(modelo)
+```
+
+Nesse caso usamos uma regressão múltipla.
+
+Uma regressão simples envolve apenas duas variáveis: uma variável independente (preditora) e uma variável dependente.
+
+Uma regressão múltipla envolve mais de duas variáveis, incluindo uma variável dependente e duas ou mais variáveis independentes.
+
+Y = β0 + β1X1 + β2X2 + \... + βkXk + ε
+
+-   **`Y`** é a variável dependente.
+
+-   **`X₁, X₂, ..., Xₖ`** são as variáveis independentes.
+
+-   **`β₀`** é o coeficiente de interceptação.
+
+-   **`β₁, β₂, ..., βₖ`** são os coeficientes das variáveis independentes.
+
+-   **`ε`** é o erro residual.
+
+Você consegue interpretar os resultados da nossa regressão múltipla?
+
+# Exercícios
+
+Você consegue testar essas perguntas de pesquisa? Defina a hipótese nula e alternativa, o teste estatístico mais adequado, verifique a normalidade dos dados quando necessário e faça o teste.
+
+1.  Quem gosta de ficção científica é mais neurótico;
+2.  Quem pratica atividade física tem maiores níveis de bem-estar;
+3.  Quanto mais neurótico, menor o nível de bem-estar.
+
+```{r}
+# USING THE PSYCH PACKAGE
+
+# Load the psych package if not already installed
+
+install.packages("psych")
+
+library(psych)
+
+# Load your dataset (assuming it's already loaded as df2)
+
+# Descriptive statistics for numeric variables
+
+numeric_vars <- df2[, sapply(df2, is.numeric)] summary_stats_numeric <- describe(numeric_vars)
+
+# Descriptive statistics for categorical variables
+
+categorical_vars <- df2[, sapply(df2, is.factor)] summary_stats_categorical <- describe(categorical_vars)
+
+# Print the results
+
+# summary_stats_numeric summary_stats_categorical
+
+# Box plots for psychological variables
+
+par(mfrow=c(1, 3)) # Create a 1x3 grid of plots boxplot(df2$bem_estar, main="Box Plot - Bem Estar", ylab="Score") boxplot(df2$extroversao, main="Box Plot - Extroversao", ylab="Score") boxplot(df2$neuroticismo, main="Box Plot - Neuroticismo", ylab="Score")
+
+# Bar plots for psychological variables
+
+par(mfrow=c(1, 1)) # Reset plot layout to 1x1 barplot(colMeans(df2[, c("bem_estar", "extroversao", "neuroticismo")]), names.arg=c("Bem Estar", "Extroversao", "Neuroticismo"), main="Bar Plot - Mean Psychological Variables", ylab="Mean Score")
+
+# Scatter plot with regression line
+
+plot(df2$bem_estar, df2$extroversao, main="Scatter Plot - Bem Estar vs. Extroversao", xlab="Bem Estar", ylab="Extroversao", pch=19, col="blue") abline(lm(df2$extroversao ~ df2$bem_estar), col="red")
+
+# Scatter plot with regression line
+
+plot(df2$bem_estar, df2$neuroticismo, main="Scatter Plot - Bem Estar vs. Neuroticismo", xlab="Bem Estar", ylab="Neuroticismo", pch=19, col="blue") abline(lm(df2$bem_estar ~ df2$neuroticismo), col="red")
+
+# Scatter plot with regression line
+
+plot(df2$idade, df2$bem_estar, main="Scatter Plot - Extroversao vs. Neuroticismo", xlab="Extroversao", ylab="Neuroticismo", pch=19, col="blue") abline(lm(df2$idade ~ df2$bem_estar), col="red")
+
+# Create a box plot
+
+boxplot(bem_estar ~ musica, data = df2, main = "Box Plot of Extraversion by Music Genre", xlab = "Music Genre", ylab = "Extraversion", col = "lightblue")
+
+# Create a box plot
+
+boxplot(bem_estar ~ cinema, data = df2, main = "Box Plot of Extraversion by Music Genre", xlab = "Music Genre", ylab = "Extraversion", col = "lightblue")
+
+# Create a box plot
+
+boxplot(extroversao ~ atividade_fisica, data = df2, main = "Box Plot of Extraversion by Music Genre", xlab = "Music Genre", ylab = "Extraversion", col = "lightblue")
+
+# Create a density estimate for the extroversao column
+
+density_est <- density(df2$altura)
+
+# Create a density plot
+
+plot(density_est, main = "Density Plot of Extraversion (extroversao)", xlab = "Extraversion", ylab = "Density", col = "blue")
+
+# CHI-SQUARE
+
+# Assuming you have loaded your dataset as df2
+
+ # Create a contingency table between cinema and music preferences
+
+contingency_table <- table(df2$cinema, df2$musica)
+
+# Perform the chi-square test
+
+chi_square_result <- chisq.test(contingency_table)
+
+# Print the chi-square test result
+
+# chi_square_result
+
+# AOV
+
+# Perform one-way ANOVA
+
+anova_result <- aov(bem_estar ~ cinema, data = df2)
+
+# Summarize the ANOVA results
+
+summary(anova_result)
+```
 
 # Tipos de gráficos disponíveis em R
 
@@ -120,19 +720,13 @@ Agora, vamos criar diferentes tipos de gráficos usando a função `plot()`:
 
 O gráfico de dispersão é usado para exibir a relação entre duas variáveis numéricas. Cada ponto no gráfico representa uma observação com os valores correspondentes das duas variáveis. É útil para identificar a correlação entre as variáveis.
 
-```         
-RCopy code
-```
-
 `# Exemplo de gráfico de dispersão x <- c(1, 2, 3, 4, 5) y <- c(3, 5, 4, 6, 8) plot(x, y, main = "Gráfico de Dispersão", xlab = "Variável X", ylab = "Variável Y", pch = 16, col = "blue")`
 
 ## Gráfico de linha (line plot)
 
 O gráfico de linha é utilizado para mostrar a evolução de uma variável ao longo do tempo ou de outro eixo contínuo. É útil para destacar tendências e mudanças ao longo de uma série temporal.
 
-```         
-RCopy code
-```
+Aqui, vamos ver o número de preenchimentos conforme a passagem dos dias.
 
 `# Exemplo de gráfico de linha x <- c(1, 2, 3, 4, 5) y <- c(3, 5, 4, 6, 8) plot(x, y, type = "l", main = "Gráfico de Linha", xlab = "Tempo", ylab = "Valores", col = "red")`
 
@@ -140,224 +734,8 @@ RCopy code
 
 O gráfico de barras é uma representação visual de dados categóricos. Cada barra representa uma categoria e a altura da barra representa a quantidade ou frequência dessa categoria.
 
-```         
-RCopy code
-```
-
 `# Exemplo de gráfico de barras categorias <- c("A", "B", "C", "D") valores <- c(10, 15, 8, 12) barplot(valores, names.arg = categorias, main = "Gráfico de Barras", xlab = "Categorias", ylab = "Valores", col = "green")`
-
-## Gráfico de pizza (pie plot)
-
-O gráfico de pizza é outra forma de representar dados categóricos. As fatias da pizza representam as categorias e suas proporções em relação ao todo.
-
-```         
-RCopy code
-```
-
-`# Exemplo de gráfico de pizza categorias <- c("A", "B", "C", "D") valores <- c(25, 15, 30, 20) pie(valores, labels = categorias, main = "Gráfico de Pizza", col = c("red", "blue", "green", "orange"))`
 
 ## Gráfico de boxplot (box plot)
 
 O gráfico de boxplot é utilizado para representar a distribuição de dados numéricos e identificar valores atípicos. É útil para comparar diferentes grupos ou variáveis.
-
-```         
-RCopy code
-```
-
-`# Exemplo de gráfico de boxplot grupo1 <- c(10, 15, 20, 25, 30) grupo2 <- c(5, 8, 12, 18, 24) boxplot(grupo1, grupo2, names = c("Grupo 1", "Grupo 2"), main = "Gráfico de Boxplot", col = c("blue", "green"))`
-
-# Estatística inferencial básica
-
-A estatística inferencial é uma área da estatística que visa fazer inferências e tirar conclusões sobre uma população com base em uma amostra de dados coletados. Nesta parte da aula, iremos abordar os conceitos fundamentais da estatística inferencial e algumas das principais técnicas utilizadas.
-
-## Conceitos fundamentais da estatística inferencial
-
-Na estatística inferencial, trabalhamos com incerteza, pois estamos usando uma amostra para tentar entender uma população maior. Para isso, utilizamos técnicas estatísticas para fazer inferências sobre os parâmetros populacionais com base nos dados da amostra.
-
-## População e amostra
-
--   População: É o conjunto completo de todos os elementos que estamos interessados em estudar e obter conclusões. Representa o grupo total que desejamos analisar, mas nem sempre é possível examinar toda a população devido a restrições de tempo, recursos ou praticidade.
-
--   Amostra: É uma parte representativa da população, selecionada para estudo e análise. A amostra deve ser escolhida de forma aleatória e representar, de maneira precisa, as características da população.
-
-## Média, mediana e moda
-
--   Média: É a soma de todos os valores dividida pelo número total de observações. É a medida de tendência central mais comumente utilizada e pode ser influenciada por valores extremos (outliers).
-
-```         
-RCopy code
-```
-
-`# Exemplo de cálculo da média dados <- c(10, 15, 12, 8, 20) media <- mean(dados) media`
-
--   Mediana: É o valor que separa a metade inferior e a metade superior de um conjunto de dados ordenados. É menos sensível a valores extremos do que a média.
-
-```         
-RCopy code
-```
-
-`# Exemplo de cálculo da mediana dados <- c(10, 15, 12, 8, 20) mediana <- median(dados) mediana`
-
--   Moda: É o valor que ocorre com maior frequência em um conjunto de dados.
-
-```         
-RCopy code
-```
-
-`# Exemplo de cálculo da moda dados <- c(10, 15, 12, 8, 20, 15, 12) moda <- table(dados) moda <- as.numeric(names(moda)[moda == max(moda)]) moda`
-
-## Desvio padrão e variância
-
--   Desvio padrão: É uma medida de dispersão que indica o quanto os valores do conjunto de dados se afastam da média. Quanto maior o desvio padrão, mais dispersos estão os dados.
-
-```         
-RCopy code
-```
-
-`# Exemplo de cálculo do desvio padrão dados <- c(10, 15, 12, 8, 20) desvio_padrao <- sd(dados) desvio_padrao`
-
--   Variância: É outra medida de dispersão que indica a média dos quadrados dos desvios em relação à média. É o quadrado do desvio padrão.
-
-```         
-RCopy code
-```
-
-`# Exemplo de cálculo da variância dados <- c(10, 15, 12, 8, 20) variancia <- var(dados) variancia`
-
-## Intervalo de confiança
-
-O intervalo de confiança é uma estimativa estatística que fornece um intervalo de valores plausíveis para um parâmetro populacional com base nos dados da amostra. É uma forma de expressar a incerteza associada à estimativa do parâmetro.
-
-```         
-RCopy code
-```
-
-`# Exemplo de cálculo do intervalo de confiança para a média dados <- c(10, 15, 12, 8, 20) intervalo_confianca <- t.test(dados)$conf.int intervalo_confianca`
-
-## Teste de hipóteses
-
-O teste de hipóteses é uma técnica estatística usada para tomar decisões sobre uma afirmação ou hipótese relacionada a um parâmetro populacional. Consiste em formular duas hipóteses, uma hipótese nula (H0) e uma hipótese alternativa (Ha), e utilizar dados da amostra para determinar se há evidências suficientes para rejeitar a hipótese nula em favor da hipótese alternativa.
-
-```         
-RCopy code
-```
-
-`# Exemplo de teste de hipóteses para a média dados <- c(10, 15, 12, 8, 20) teste_hipotese <- t.test(dados, mu = 13) teste_hipotese`
-
-Nesta parte da aula, aprendemos conceitos fundamentais da estatística inferencial, como população e amostra, medidas de tendência central (média, mediana e moda), medidas de dispersão (desvio padrão e variância), intervalo de confiança e introdução ao teste de hipóteses. Esses conceitos são essenciais para a interpretação e análise de dados, bem como para as próximas etapas de modelagem.
-
-# Modelando a relação entre duas variáveis
-
-Nesta parte da aula, abordaremos técnicas de modelagem que nos permitirão entender e quantificar a relação entre duas variáveis. A modelagem é uma ferramenta poderosa na análise de dados, pois nos permite fazer previsões e inferências com base nos padrões identificados.
-
-## Regressão linear simples
-
-A regressão linear simples é uma técnica estatística que busca modelar a relação entre duas variáveis quantitativas: uma variável independente (X) e uma variável dependente (Y). A regressão linear procura encontrar a melhor reta que se ajusta aos pontos no gráfico de dispersão, minimizando a soma dos erros quadráticos. A equação da regressão linear é dada por:
-
-$$
-Y=β0​+β1​⋅X+ε
-$$
-
-Onde:
-
--   𝑌 é a variável dependente;
-
--   𝑋 é a variável independente;
-
--   β0​ é o intercepto (ponto em que a reta cruza o eixo Y);
-
--   β1​ é o coeficiente de inclinação (representa a variação em 𝑌 associada a uma unidade de variação em 𝑋);
-
--   ε é o erro aleatório.
-
-```{r}
-# Exemplo de regressão linear simples 
-x <- c(1, 2, 3, 4, 5) 
-y <- c(3, 5, 4, 6, 8) 
-modelo <- lm(y ~ x) 
-summary(modelo)
-```
-
-Interpretação do resultado do modelo:
-
-O modelo de regressão linear obtido foi:
-
-�=1.900+1.100⋅�+�Y=1.900+1.100⋅X+ε
-
-Aqui estão os principais aspectos a serem observados na saída do modelo:
-
-1.  Coeficientes:
-
-    -   Intercepto (�0β0​): O valor do intercepto é 1.900. Isso significa que quando a variável independente (�X) é igual a zero, o valor estimado da variável dependente (�Y) é 1.900.
-
-    -   Coeficiente de inclinação (�1β1​): O valor do coeficiente de inclinação é 1.100. Isso indica que, para cada unidade de aumento em �X, espera-se um aumento de 1.100 em �Y.
-
-2.  Teste de hipóteses:
-
-    -   Para o intercepto (�0β0​): O valor p (Pr(\>\|t\|)) associado ao intercepto é 0.1522. Como esse valor é maior que 0.05, não temos evidências suficientes para rejeitar a hipótese nula de que o intercepto é igual a zero.
-
-    -   Para o coeficiente de inclinação (�1β1​): O valor p (Pr(\>\|t\|)) associado ao coeficiente de inclinação é 0.0351. Como esse valor é menor que 0.05, temos evidências estatisticamente significativas para rejeitar a hipótese nula de que o coeficiente de inclinação é igual a zero. Isso indica que o coeficiente de inclinação é significativamente diferente de zero, ou seja, a variável independente (�X) tem um efeito significativo na variável dependente (�Y).
-
-3.  Coeficiente de determinação (R-quadrado):
-
-    -   O coeficiente de determinação (�2R2) é igual a 0.8176, o que significa que aproximadamente 81.76% da variação em �Y é explicada pela variação em �X. Isso indica que o modelo de regressão linear explica bem os dados e a relação entre as duas variáveis.
-
-4.  Residual standard error:
-
-    -   O residual standard error é igual a 0.9487, que representa o desvio padrão dos resíduos (diferença entre os valores observados e os valores estimados pelo modelo). Quanto menor esse valor, melhor o ajuste do modelo aos dados.
-
-Em resumo, o modelo de regressão linear indica que existe uma relação significativa entre as variáveis �X e �Y, onde �Y aumenta em média 1.100 unidades para cada unidade de aumento em �X. O modelo explica cerca de 81.76% da variação observada em �Y. O intercepto não é estatisticamente significativo, o que significa que não há evidências suficientes para afirmar que o valor de �Y é diferente de zero quando �X é igual a zero. No entanto, o coeficiente de inclinação é estatisticamente significativo, indicando que �X tem um efeito significativo em �Y.
-
-## Coeficiente de correlação
-
-O coeficiente de correlação (r) é uma medida que quantifica a força e a direção da relação linear entre duas variáveis quantitativas. O coeficiente de correlação varia entre -1 e 1. Um valor próximo de 1 indica uma forte correlação positiva, um valor próximo de -1 indica uma forte correlação negativa e um valor próximo de 0 indica uma correlação fraca ou inexistente.
-
-```         
-RCopy code
-```
-
-`# Exemplo de cálculo do coeficiente de correlação x <- c(1, 2, 3, 4, 5) y <- c(3, 5, 4, 6, 8) correlacao <- cor(x, y) correlacao`
-
-## Interpretação dos resultados da regressão
-
-Ao realizar uma análise de regressão, é importante interpretar os resultados obtidos. O resumo do modelo nos fornece informações sobre os coeficientes estimados, o coeficiente de determinação (�2R2) e outras estatísticas relevantes. A interpretação dos resultados nos ajuda a compreender a relação entre as variáveis e a avaliar a qualidade do modelo.
-
-## Exemplos práticos de modelagem
-
-Agora, vamos aplicar a regressão linear a um conjunto de dados real e fazer a análise de um modelo resultante. Escolha um conjunto de dados adequado para a análise de regressão e explore os resultados do modelo para obter insights relevantes.
-
-```         
-RCopy code
-```
-
-`# Exemplo prático de modelagem com regressão linear # (Insira aqui o código e a descrição do conjunto de dados utilizado)`
-
-Nesta parte da aula, aprendemos sobre a regressão linear simples, uma técnica para modelar a relação entre duas variáveis quantitativas, e o coeficiente de correlação, que quantifica a intensidade dessa relação. Além disso, discutimos a interpretação dos resultados da regressão e a importância de aplicar a modelagem em conjuntos de dados reais para obter insights valiosos. A modelagem é uma ferramenta poderosa que pode ser usada para previsões e tomada de decisões informadas.
-
-# Lista de exercícios
-
-## Resolução de problemas práticos utilizando R
-
-1.  Baixe um conjunto de dados de sua escolha (pode ser de um repositório público ou uma planilha própria) e importe-o para o R.
-
-2.  Realize a limpeza e pré-processamento dos dados, tratando valores ausentes e realizando transformações necessárias.
-
-3.  Crie diferentes tipos de gráficos (scatter plot, line plot, bar plot, pie plot, box plot) para explorar visualmente as relações e tendências dos dados.
-
-4.  Calcule a média, mediana, moda, desvio padrão e variância das variáveis quantitativas do conjunto de dados.
-
-5.  Calcule o coeficiente de correlação entre pares de variáveis quantitativas para identificar possíveis relações lineares.
-
-## Aplicação dos conhecimentos adquiridos em visualização e modelagem
-
-1.  Escolha duas variáveis quantitativas do conjunto de dados utilizado anteriormente e crie um scatter plot para visualizar sua relação.
-
-2.  Realize uma regressão linear simples entre essas duas variáveis e interprete os resultados obtidos, considerando o valor do coeficiente de correlação.
-
-3.  Explore diferentes técnicas de visualização para representar os resultados da regressão (pode utilizar bibliotecas como ggplot2).
-
-4.  Identifique possíveis outliers no conjunto de dados e analise como eles afetam a regressão e a relação entre as variáveis.
-
-5.  Utilize o intervalo de confiança para a média de uma variável quantitativa do conjunto de dados e interprete-o em termos do contexto do problema.
-
-6.  Formule uma hipótese relacionada a uma das variáveis do conjunto de dados e realize um teste de hipóteses para verificar sua validade.
