@@ -37,7 +37,7 @@ Hoje vamos realizar algumas análises, e vamos partir de algumas hipóteses pré
 1.  A proporção de roqueiros é maior entre fãs de ficção científica vs não-fãs;
     -   Aqui, nós vamos testar a diferença entre duas proporções. Para isso, usandos o teste qui-quadrado.
 2.  Roqueiros são mais introvertidos:
-    -   Aqui, nós vamos testar a diferença entre duas médias (dos escores de depressão entre os dois grupos - roqueiros e não-roqueiros). Vamos usar aqui o teste t.
+    -   Aqui, nós vamos testar a diferença entre duas médias (dos escores de introversão entre os dois grupos - roqueiros e não-roqueiros). Vamos usar aqui o teste t.
 3.  Quanto mais extrovertido, maior o nível de bem-estar;
     -   Aqui, nós vamos explorar a associação entre duas variáveis quantitativas contínuas. Para isso, usaremos a regressão, já que temos uma variável contínua dependente (bem-estar) e uma independente (extroversão)
 4.  O efeito do neuroticismo no bem-estar desaparece se ajustarmos para extroversão.
@@ -139,10 +139,9 @@ shapiro_test_result <- shapiro.test(amostra)
 
 # Exibir o resultado do teste
 print(shapiro_test_result)
-
 ```
 
--   Como o valor-p (0.2246) é maior que o nível de significância comum de 0.05 (ou seja, $\alpha$ = 0.05), não temos evidências estatisticamente significativas para rejeitar a hipótese (nula, H0) de que os dados não seguem uma distribuição normal.
+-   Como o valor-p (0.92) é maior que o nível de significância comum de 0.05 (ou seja, $\alpha$ = 0.05), não temos evidências estatisticamente significativas para rejeitar a hipótese (nula, H0) de que os dados não seguem uma distribuição normal.
 
 ## Hipótese nula e hipótese alternativa
 
@@ -278,7 +277,7 @@ O objetivo nesta aula é descrever os dados, criar algumas visualizações inter
 
 ```{r}
 # Carregando pacotes necessários
-library(readr); library(DescTools); library(tidyverse)
+library(readr); library(DescTools); library(tidyverse); library(psych); library(questionr)
 
 # Carregar o banco de dados processado
 df <- read_csv("dados_processados.csv")
@@ -309,7 +308,20 @@ summary_stats_categorical <- Desc(categorical_vars)
 
 dev.off()
 
-# Vamos transformar algumas variáveis categóricas para gerar algumas análises
+
+# Você pode também usar o pacote psych, função describe; e para variáveis categóricas a função freq do pacote questionr
+
+psych::describe(df$idade)
+psych::describe(df$altura)
+psych::describe(df$bem_estar)
+psych::describe(df$extroversao)
+psych::describe(df$neuroticismo)
+questionr::freq(df$cinema)
+questionr::freq(df$musica)
+questionr::freq(df$atividade_fisica)
+
+
+# Vamos transformar algumas variáveis categóricas para fazer algumas análises
 df$musica_preferencia <- ifelse(df$musica == "Rock", 
                                 "Rock", 
                                 "Não-Rock")
@@ -325,122 +337,93 @@ df$musica_preferencia <- as.factor(df$musica_preferencia)
 df$cinema_preferencia <- as.factor(df$cinema_preferencia)
 df$sedentarismo <- as.factor(df$sedentarismo)
 
+
+
 plot(df$musica_preferencia)
 plot(df$cinema_preferencia)
 plot(df$sedentarismo)
 
-# Agora, vamos usar o pacote DescTools, função Desc() para ver se os roqueiros têm algum traço de personalidade específico ou se têm maiores níveis de bem-estar
-
-Desc(musica_preferencia ~ extroversao, data = df)
-Desc(musica_preferencia ~ neuroticismo, data = df)
-Desc(musica_preferencia ~ bem_estar, data = df)
-
-
-
-Desc(cinema_preferencia ~ extroversao, data = df)
-Desc(cinema_preferencia ~ neuroticismo, data = df)
-Desc(cinema_preferencia ~ bem_estar, data = df)
-
-
-
 
 ```
 
-Para n
+Vamos, agora, fazer algumas visualizações com os dados que temos.
 
-![](quetistreza.jpg){width="173"}
+### Dados categóricos
 
-Vocês repararam
+Para visualizar dados categóricos, podemos usar o gráfico de colunas:
 
 ```{r}
+# Para visualizar o gráfico de colunas, primeiro é necessário gerar uma tabela dos dados em df$cinema
+cinema_table <- table(df$cinema)
+
+# Gráfico de colunas
+barplot(cinema_table, 
+        main = "Gráfico de barras de preferência de filmes", 
+        xlab = "Cinema", 
+        ylab = "Frequência", 
+        col = "skyblue")
+
+# Vamos ver a preferência por ficção científica ou não.
+cinema_table <- table(df$cinema_preferencia)
+barplot(cinema_table, 
+        main = "Gráfico de barras de preferência de filmes", 
+        xlab = "Cinema", 
+        ylab = "Frequência", 
+        col = "skyblue")
 
 
-##
-df2$music_preference_category <- ifelse(df2$musica == "Rock", "Rock Preference", "Non-Rock Preference")
+# Para criar um gráfico de colunas  que mostre a relação entre os grupos, você pode usar a função barplot em combinação com a função table para criar uma tabela de contingência
 
-# View the updated dataset
-head(df2)
+# Crie uma tabela de contingência entre as colunas 'cinema' e 'ficção científica'
+cont_table <- table(df$cinema_preferencia, df$musica_preferencia)
 
-# Assuming you have loaded your dataset as df2 and created the "music_preference_category" column
+# Defina cores para os grupos de 'ficção científica'
+cores <- c("lightgreen", "lightcoral")
 
-# Assuming you have loaded your dataset as df2 and created the "music_preference_category" column
+# Crie um gráfico de colunas justapostas
+barplot(cont_table, 
+        beside = TRUE, 
+        col = cores, 
+        main = "Gráfico de Barras por Grupo de Ficção Científica e Cinema",
+        xlab = "Preferência musical",
+        ylab = "Contagem")
 
-# Perform independent t-tests for each variable without subsets
-t_test_bem_estar <- t.test(
-  df2$bem_estar[df2$music_preference_category == "Rock Preference"],
-  df2$bem_estar[df2$music_preference_category == "Non-Rock Preference"]
-)
+# Adicione uma legenda
+par(xpd = TRUE)
+legend("top", legend = levels(df$cinema_preferencia), fill = cores, bty = "n")
+```
 
-t_test_neuroticismo <- t.test(
-  df2$neuroticismo[df2$music_preference_category == "Rock Preference"],
-  df2$neuroticismo[df2$music_preference_category == "Non-Rock Preference"]
-)
+### Dados numéricos contínuos
 
-t_test_extroversao <- t.test(
-  df2$extroversao[df2$music_preference_category == "Rock Preference"],
-  df2$extroversao[df2$music_preference_category == "Non-Rock Preference"]
-)
+Aqui, podemos usar o histograma, um gráfico de colunas justapostas que representam as classes na distribuição.
 
-# Print the results
-t_test_bem_estar
-t_test_neuroticismo
-t_test_extroversao
+```{r}
+# nclass me permite ajustar o número de classes desejada
+hist(df$idade, 
+     main = "Histograma da Idade", 
+     xlab = "Idade", 
+     ylab = "Frequência",
+     col = "lightblue",
+     nclass = 3)
+```
 
-# Assuming you have loaded your dataset as df2 and created the "music_preference_category" column
+Outra maneira é o gráfico de densidade.
 
-# Assuming you have loaded your dataset as df2 and created the "music_preference_category" column
+```{r}
+# Crie um gráfico de densidade da coluna 'idade'
+den <- density(df$idade)
+plot(den, main = "Gráfico de Densidade da Idade", xlab = "Idade", ylab = "Densidade", col = "blue")
+```
 
-# Create a boxplot with labels and a title
-boxplot(df2$extroversao ~ df2$music_preference_category,
-        xlab = "Music Preference Category",
-        ylab = "Extroversao Value",
-        main = "Boxplot of Extroversao by Music Preference")
+Exercício.
 
-# Add the p-value from the t-test as a text annotation
-text(1.5, max(df2$extroversao) - 2, sprintf("p = %.4f", t_test_extroversao$p.value))
+Crie visualizações das outras variáveis.
 
-# Roqueiros são mais introvertidos ? p = 0.06 
+Exemplo:
 
-
-
-
-
-{r}
-# Vamos ver se quem pratica atividade física tem maiores níveis de bem estar?
-
-##
-df2$sedentarismo <- ifelse(df2$atividade_fisica == "Não pratico atividade física" | df2$atividade_fisica == "Menos do que três vezes na semana", "Sedentário", "Ativo")
-
-df2$sedentarismo <- as.factor(df2$sedentarismo)
-plot(df2$sedentarismo)
-
-# View the updated dataset
-head(df2)
-
-# Perform independent t-tests for each variable without subsets
-t_test_bem_estar <- t.test(
-  df2$bem_estar[df2$sedentarismo == "Sedentário"],
-  df2$bem_estar[df2$sedentarismo == "Ativo"]
-)
-
-t_test_neuroticismo <- t.test(
-  df2$neuroticismo[df2$sedentarismo == "Sedentário"],
-  df2$neuroticismo[df2$sedentarismo == "Ativo"]
-)
-
-t_test_extroversao <- t.test(
-  df2$extroversao[df2$sedentarismo == "Sedentário"],
-  df2$extroversao[df2$sedentarismo == "Ativo"]
-)
-
-
-# Create a boxplot with labels and a title
-boxplot(df2$bem_estar ~ df2$sedentarismo,
-        xlab = "Categoria de atividade física",
-        ylab = "Nível de bem-estar",
-        main = "Boxplot of AF vs bem-estar")
-
-
+```{r}
+den <- density(df$bem_estar)
+plot(den, main = "Gráfico de Densidade de Bem-Estar", xlab = "Escore", ylab = "Densidade", col = "blue")
 ```
 
 # Testando as nossas hipóteses
@@ -453,11 +436,120 @@ A proporção de roqueiros é maior entre fãs de ficção científica vs não-f
 
 A medida mais comum e possivelmente mais útil do tamanho do efeito para dados categóricos é a razão de chances (*odds ratio*). As razões de chances são mais interpretáveis em tabelas de contingência 2 × 2 e provavelmente não são úteis para tabelas de contingência maiores.
 
+```{r}
+# Vamos criar uma tabela de contingência
+contingency_table <- table(df$cinema_preferencia, df$musica_preferencia)
+
+contingency_table
+
+# Realizar o teste do qui-quadrado
+chi_squared_test <- chisq.test(contingency_table)
+
+# Mostrar os resultados
+chi_squared_test
+
+# Calcular o odds ratio
+odds_ratio <- contingency_table[1,1] * contingency_table[2,2] / (contingency_table[1,2] * contingency_table[2,1])
+
+# Mostrar
+odds_ratio
+```
+
+A mensagem de aviso que você recebeu, que se traduz como "A aproximação do qui-quadrado pode estar incorreta", sugere que o teste do qui-quadrado pode não ser apropriado para seus dados. Este aviso normalmente ocorre quando o tamanho da amostra é pequeno ou quando as frequências esperadas das células na tabela de contingência são muito baixas.
+
+Nesses casos, é aconselhável considerar um teste estatístico alternativo, como o teste exato de Fisher, que é mais adequado para amostras pequenas ou quando as frequências celulares esperadas são baixas. Veja como você pode realizar o teste exato de Fisher em R:
+
+O teste qui-quadrado é mais seguro quando você tem um grande tamanho de amostra (geralmente acima de 100) e as expectativas de frequência nas células da tabela de contingência são razoavelmente altas, geralmente não menores que 5.
+
+```{r}
+# Realizar teste exato de Fisher
+fisher_test <- fisher.test(contingency_table)
+fisher_test
+```
+
+O p-valor \>0.05 sugere não haver diferença entre os dois grupos.
+
+O intervalo de confiança indica uma faixa de valores em que o odds ratio verdadeiro provavelmente está. Aqui, o intervalo vai de 0.1893 a 27.6094. Isso significa que, com 95% de confiança, o odds ratio verdadeiro está dentro dessa faixa. Um intervalo que inclui o valor 1 sugere que não há uma diferença significativa nas preferências entre os grupos. O odds ratio estimado é de 2.10384.
+
+Ou seja, as pessoas que preferem ficção científica têm aproximadamente duas vezes mais chances de preferir rock do que as pessoas que não preferem ficção científica. **No entanto, como o p-valor é alto e o intervalo de confiança inclui 1, essa diferença não é estatisticamente significativa.**
+
 ## Segunda questão
 
 Roqueiros são mais introvertidos:
 
--   Aqui, nós vamos testar a diferença entre duas médias (dos escores de depressão entre os dois grupos - roqueiros e não-roqueiros). Vamos usar aqui o teste t.
+-   Aqui, nós vamos testar a diferença entre duas médias (dos escores de introversão entre os dois grupos - roqueiros e não-roqueiros). Vamos usar aqui o teste t.
+
+```{r}
+# Separar o conjunto de dados em dois grupos: roqueiros e não-roqueiros
+roqueiros <- df[df$musica_preferencia == "Rock", "extroversao"]
+nao_roqueiros <- df[df$musica_preferencia != "Rock", "extroversao"]
+
+# Realizar um teste t para comparar as médias dos escores de extroversão entre os grupos
+t_test_result <- t.test(roqueiros, nao_roqueiros, alternative = "two.sided")
+
+# Exibir os resultados do teste t
+t_test_result
+
+```
+
+Aqui está a interpretação dos resultados do teste t de duas amostras (Welch Two Sample t-test) para comparar as médias dos escores de extroversão entre roqueiros e não-roqueiros:
+
+1.  **t = -2.1867:** A estatística t é -2.1867. Esse valor representa a magnitude da diferença entre as médias dos grupos (roqueiros e não-roqueiros) em relação à variabilidade dos dados. O sinal negativo indica que a média dos roqueiros é menor do que a média dos não-roqueiros.
+
+2.  **p-value = 0.05535:** O valor-p é 0.05535, apoiando a hipótese nula.
+
+3.  **Hipótese alternativa: true difference in means is not equal to 0:** A hipótese alternativa afirma que a diferença real entre as médias não é igual a zero, o que significa que você está interessado em verificar se existe uma diferença significativa entre os grupos.
+
+4.  **Intervalo de confiança de 95 por cento (95 percent confidence interval):** O intervalo de confiança vai de -13.9427 a 0.1927. O intervalo inclui o valor zero, indicando que não há diferença significativa.
+
+5.  **Estimativas da amostra (sample estimates):** As médias dos dois grupos são apresentadas como "mean of x" (roqueiros) e "mean of y" (não-roqueiros). A média dos roqueiros é de aproximadamente 19.125, enquanto a média dos não-roqueiros é de 26.000.
+
+Com base nos resultados, o valor-p é ligeiramente maior que o nível de significância comum de 0,05 (é 0,05535). Portanto, não há evidência estatisticamente significativa para afirmar que os roqueiros são mais introvertidos do que os não-roqueiros com base nos escores de extroversão. No entanto, é importante notar que o valor-p está próximo do limite, então, dependendo do contexto e da importância prática, pode ser útil considerar uma análise mais aprofundada ou uma **maior amostragem** para obter conclusões mais robustas.
+
+Uma maneira de visualizar os resultados é através do box plot:
+
+```{r}
+# Create a boxplot with labels and a title
+boxplot(df$extroversao ~ df$musica_preferencia,
+        xlab = "Preferência musical",
+        ylab = "Nível de extroversão",
+        main = "Boxplot of preferência musical vs extroversão")
+```
+
+Uma outra maneira de visualizar é através do gráfico de colunas:
+
+```{r}
+# Carregar a biblioteca ggplot2
+library(ggplot2)
+
+# Calcular as médias e as barras de erro (vamos usar o desvio padrão como exemplo)
+mean_roqueiros <- mean(roqueiros$extroversao)
+mean_nao_roqueiros <- mean(nao_roqueiros$extroversao)
+sd_roqueiros <- sd(roqueiros$extroversao)
+sd_nao_roqueiros <- sd(nao_roqueiros$extroversao)
+
+# Criar um data frame com os dados
+data <- data.frame(
+  Grupo = c("Roqueiros", "Não Roqueiros"),
+  Media = c(mean_roqueiros, mean_nao_roqueiros),
+  Erro_Padrao = c(sd_roqueiros, sd_nao_roqueiros) # A diferença não tem erro padrão
+)
+
+# Criar o gráfico de colunas
+ggplot(data, aes(x = Grupo, y = Media, fill = Grupo)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9), width = 0.5) +
+  geom_errorbar(aes(ymin = Media - Erro_Padrao, ymax = Media + Erro_Padrao), width = 0.2, position = position_dodge(width = 0.9)) +
+  labs(title = "Gráfico de Barras com Médias e Erro Padrão",
+       x = "Grupo",
+       y = "Média no escore de extroversão") +
+  theme_minimal()
+```
+
+**Exercício:**
+
+-   Testar outras hipóteses de diferença de média entre grupos de preferência de filme, atividade física, etc.
+
+-   Faça box plots para mostrar essas diferenças.
 
 ## Terceira e quarta questões
 
@@ -484,7 +576,7 @@ shapiro_test_result <- shapiro.test(df$neuroticismo); print(shapiro_test_result)
 # Teste de Shapiro-Wilk para bem-estar
 shapiro_test_result <- shapiro.test(df$bem_estar); print(shapiro_test_result)
 
-# Ou seja, nossos dados são normais. Sinal verde para usar a regressão linear. 
+# Ou seja, nossos dados têm distribuição normal. Sinal verde para usar a regressão linear.
 ```
 
 Veja a distribuição dos nossos dados quantitativos:
@@ -534,7 +626,7 @@ Interpretação dos Resultados:
 
 -   O F-statistic é 4.984, com um valor-p de 0.0438. Isso sugere que o modelo como um todo é estatisticamente significativo, indicando que a regressão linear é adequada para explicar a relação entre as variáveis.
 
-Agora, vamos criar uma visualização para ilustrar essa relação. Vamos traçar um gráfico de dispersão com a linha de regressão:
+Agora, vamos criar uma visualização para ilustrar essa relação. Vamos traçar um **gráfico de dispersão** com a linha de regressão:
 
 ```{r}
 # Criar o gráfico de dispersão com a linha de regressão e a sombra de intervalo de confiança
@@ -594,148 +686,10 @@ Você consegue testar essas perguntas de pesquisa? Defina a hipótese nula e alt
 2.  Quem pratica atividade física tem maiores níveis de bem-estar;
 3.  Quanto mais neurótico, menor o nível de bem-estar.
 
-```{r}
-# USING THE PSYCH PACKAGE
+# Outros gráficos disponíveis em R
 
-# Load the psych package if not already installed
+Para um panorama geral de vários tipos de gráficos disponíveis, visite a [R Graph Gallery](https://r-graph-gallery.com/).
 
-install.packages("psych")
+Por exemplo, o gráfico de linhas é interessante para mostrar a evolução temporal de alguma variável, heatmaps são bons para mostrar correlações, e mapas são ótimos para gerar visualizações geoespaciais.
 
-library(psych)
-
-# Load your dataset (assuming it's already loaded as df2)
-
-# Descriptive statistics for numeric variables
-
-numeric_vars <- df2[, sapply(df2, is.numeric)] summary_stats_numeric <- describe(numeric_vars)
-
-# Descriptive statistics for categorical variables
-
-categorical_vars <- df2[, sapply(df2, is.factor)] summary_stats_categorical <- describe(categorical_vars)
-
-# Print the results
-
-# summary_stats_numeric summary_stats_categorical
-
-# Box plots for psychological variables
-
-par(mfrow=c(1, 3)) # Create a 1x3 grid of plots boxplot(df2$bem_estar, main="Box Plot - Bem Estar", ylab="Score") boxplot(df2$extroversao, main="Box Plot - Extroversao", ylab="Score") boxplot(df2$neuroticismo, main="Box Plot - Neuroticismo", ylab="Score")
-
-# Bar plots for psychological variables
-
-par(mfrow=c(1, 1)) # Reset plot layout to 1x1 barplot(colMeans(df2[, c("bem_estar", "extroversao", "neuroticismo")]), names.arg=c("Bem Estar", "Extroversao", "Neuroticismo"), main="Bar Plot - Mean Psychological Variables", ylab="Mean Score")
-
-# Scatter plot with regression line
-
-plot(df2$bem_estar, df2$extroversao, main="Scatter Plot - Bem Estar vs. Extroversao", xlab="Bem Estar", ylab="Extroversao", pch=19, col="blue") abline(lm(df2$extroversao ~ df2$bem_estar), col="red")
-
-# Scatter plot with regression line
-
-plot(df2$bem_estar, df2$neuroticismo, main="Scatter Plot - Bem Estar vs. Neuroticismo", xlab="Bem Estar", ylab="Neuroticismo", pch=19, col="blue") abline(lm(df2$bem_estar ~ df2$neuroticismo), col="red")
-
-# Scatter plot with regression line
-
-plot(df2$idade, df2$bem_estar, main="Scatter Plot - Extroversao vs. Neuroticismo", xlab="Extroversao", ylab="Neuroticismo", pch=19, col="blue") abline(lm(df2$idade ~ df2$bem_estar), col="red")
-
-# Create a box plot
-
-boxplot(bem_estar ~ musica, data = df2, main = "Box Plot of Extraversion by Music Genre", xlab = "Music Genre", ylab = "Extraversion", col = "lightblue")
-
-# Create a box plot
-
-boxplot(bem_estar ~ cinema, data = df2, main = "Box Plot of Extraversion by Music Genre", xlab = "Music Genre", ylab = "Extraversion", col = "lightblue")
-
-# Create a box plot
-
-boxplot(extroversao ~ atividade_fisica, data = df2, main = "Box Plot of Extraversion by Music Genre", xlab = "Music Genre", ylab = "Extraversion", col = "lightblue")
-
-# Create a density estimate for the extroversao column
-
-density_est <- density(df2$altura)
-
-# Create a density plot
-
-plot(density_est, main = "Density Plot of Extraversion (extroversao)", xlab = "Extraversion", ylab = "Density", col = "blue")
-
-# CHI-SQUARE
-
-# Assuming you have loaded your dataset as df2
-
- # Create a contingency table between cinema and music preferences
-
-contingency_table <- table(df2$cinema, df2$musica)
-
-# Perform the chi-square test
-
-chi_square_result <- chisq.test(contingency_table)
-
-# Print the chi-square test result
-
-# chi_square_result
-
-# AOV
-
-# Perform one-way ANOVA
-
-anova_result <- aov(bem_estar ~ cinema, data = df2)
-
-# Summarize the ANOVA results
-
-summary(anova_result)
-```
-
-# Tipos de gráficos disponíveis em R
-
-O R oferece uma ampla variedade de pacotes e funções para a criação de gráficos e plots. Nesta aula, exploraremos alguns dos principais tipos de gráficos disponíveis usando a função `plot()`.
-
-## Sintaxe básica do plot()
-
-Antes de criarmos os diferentes tipos de gráficos, é importante entender a sintaxe básica da função `plot()` em R. A função `plot()` é utilizada para produzir gráficos simples e geralmente aceita argumentos como os valores das variáveis que queremos plotar, além de parâmetros adicionais para personalizar a aparência do gráfico.
-
-Aqui está a sintaxe básica da função `plot()`:
-
-```         
-RCopy code
-```
-
-`plot(x, y, type = "p", col = "blue", main = "Título do Gráfico", xlab = "Rótulo do Eixo X", ylab = "Rótulo do Eixo Y")`
-
--   `x`: Vetor de valores para o eixo x.
-
--   `y`: Vetor de valores para o eixo y.
-
--   `type`: Tipo de gráfico. Pode ser "p" (pontos), "l" (linha), "b" (pontos e linha), "h" (histograma) e outros.
-
--   `col`: Cor do gráfico.
-
--   `main`: Título do gráfico.
-
--   `xlab`: Rótulo do eixo x.
-
--   `ylab`: Rótulo do eixo y.
-
-Agora, vamos criar diferentes tipos de gráficos usando a função `plot()`:
-
-## Gráfico de dispersão (scatter plot)
-
-O gráfico de dispersão é usado para exibir a relação entre duas variáveis numéricas. Cada ponto no gráfico representa uma observação com os valores correspondentes das duas variáveis. É útil para identificar a correlação entre as variáveis.
-
-`# Exemplo de gráfico de dispersão x <- c(1, 2, 3, 4, 5) y <- c(3, 5, 4, 6, 8) plot(x, y, main = "Gráfico de Dispersão", xlab = "Variável X", ylab = "Variável Y", pch = 16, col = "blue")`
-
-## Gráfico de linha (line plot)
-
-O gráfico de linha é utilizado para mostrar a evolução de uma variável ao longo do tempo ou de outro eixo contínuo. É útil para destacar tendências e mudanças ao longo de uma série temporal.
-
-Aqui, vamos ver o número de preenchimentos conforme a passagem dos dias.
-
-`# Exemplo de gráfico de linha x <- c(1, 2, 3, 4, 5) y <- c(3, 5, 4, 6, 8) plot(x, y, type = "l", main = "Gráfico de Linha", xlab = "Tempo", ylab = "Valores", col = "red")`
-
-## Gráfico de barras (bar plot)
-
-O gráfico de barras é uma representação visual de dados categóricos. Cada barra representa uma categoria e a altura da barra representa a quantidade ou frequência dessa categoria.
-
-`# Exemplo de gráfico de barras categorias <- c("A", "B", "C", "D") valores <- c(10, 15, 8, 12) barplot(valores, names.arg = categorias, main = "Gráfico de Barras", xlab = "Categorias", ylab = "Valores", col = "green")`
-
-## Gráfico de boxplot (box plot)
-
-O gráfico de boxplot é utilizado para representar a distribuição de dados numéricos e identificar valores atípicos. É útil para comparar diferentes grupos ou variáveis.
+É possível também gerar gráficos interativos com R usando shiny apps. Por exemplo, veja a [ferramenta](https://pacheco-jpg.shinyapps.io/dsm_xc_shiny_app/) que desenvolvemos para visualizar as probabilidades pré- e pós-teste para a Escala de Sintomas Transversais do DSM-5.
