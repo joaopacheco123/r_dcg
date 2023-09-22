@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="João Pedro Gonçalves Pacheco">
 
-<title>Visualizando dados e modelando em R</title>
+<title>Introdução à visualização de dados</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -75,18 +76,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ggplot2.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução">Introdução</a>
+  <ul class="collapse">
+  <li><a href="#configurações" id="toc-configurações" class="nav-link" data-scroll-target="#configurações">Configurações</a></li>
+  </ul></li>
+  <li><a href="#anatomia-de-um-gráfico" id="toc-anatomia-de-um-gráfico" class="nav-link" data-scroll-target="#anatomia-de-um-gráfico">Anatomia de um gráfico</a>
+  <ul class="collapse">
+  <li><a href="#geoms-e-propriedades-estéticas" id="toc-geoms-e-propriedades-estéticas" class="nav-link" data-scroll-target="#geoms-e-propriedades-estéticas">Geoms e propriedades estéticas</a></li>
+  <li><a href="#tipos-de-geom" id="toc-tipos-de-geom" class="nav-link" data-scroll-target="#tipos-de-geom">Tipos de geom</a></li>
+  <li><a href="#aes" id="toc-aes" class="nav-link" data-scroll-target="#aes">Aes</a></li>
+  <li><a href="#um-gráfico-mais-complexo" id="toc-um-gráfico-mais-complexo" class="nav-link" data-scroll-target="#um-gráfico-mais-complexo">Um gráfico mais complexo</a></li>
+  <li><a href="#temas" id="toc-temas" class="nav-link" data-scroll-target="#temas">Temas</a></li>
+  <li><a href="#inserindo-títulos-subtítulos-e-rótulos-aos-eixos" id="toc-inserindo-títulos-subtítulos-e-rótulos-aos-eixos" class="nav-link" data-scroll-target="#inserindo-títulos-subtítulos-e-rótulos-aos-eixos">Inserindo títulos, subtítulos e rótulos aos eixos</a></li>
+  </ul></li>
+  <li><a href="#salvando-o-gráfico" id="toc-salvando-o-gráfico" class="nav-link" data-scroll-target="#salvando-o-gráfico">Salvando o gráfico</a></li>
+  <li><a href="#conclusão" id="toc-conclusão" class="nav-link" data-scroll-target="#conclusão">Conclusão</a>
+  <ul class="collapse">
+  <li><a href="#nessa-aula-vimos" id="toc-nessa-aula-vimos" class="nav-link" data-scroll-target="#nessa-aula-vimos">Nessa aula, vimos:</a></li>
+  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios">Exercícios</a></li>
+  <li><a href="#recursos-adicionais" id="toc-recursos-adicionais" class="nav-link" data-scroll-target="#recursos-adicionais">Recursos adicionais</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Visualizando dados e modelando em R</h1>
+<h1 class="title">Introdução à visualização de dados</h1>
+<p class="subtitle lead">ggplot2</p>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>João Pedro Gonçalves Pacheco </p>
+          </div>
+  </div>
     
   
     
@@ -95,185 +129,305 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="tópico-1-introdução-à-visualização-de-dados-e-ggplot2" class="level1">
-<h1>Tópico 1: Introdução à Visualização de Dados e ggplot2</h1>
-<p>Nesta aula, iremos abordar:</p>
-<ol type="1">
-<li><p>Introdução ao pacote ggplot2 e suas funcionalidades</p></li>
-<li><p>Instalação e carregamento do pacote ggplot2</p></li>
-<li><p>Sintaxe básica do ggplot2 e exemplos de gráficos</p></li>
-<li><p>Principais formatos para construção de gráficos no pacote ggplot2</p></li>
-<li><p>Personalização de gráficos no ggplot2</p></li>
-<li><p>Recursos avançados do ggplot2</p></li>
-</ol>
-<section id="introdução-ao-pacote-ggplot2-e-suas-funcionalidades" class="level2">
-<h2 class="anchored" data-anchor-id="introdução-ao-pacote-ggplot2-e-suas-funcionalidades">1.2 Introdução ao pacote ggplot2 e suas funcionalidades</h2>
-<p>O ggplot2 é uma biblioteca do R desenvolvida por Hadley Wickham, projetada para criar visualizações de dados de alta qualidade e de maneira intuitiva. Baseado na “Grammar of Graphics”, o ggplot2 oferece uma abordagem sistemática para criar gráficos, permitindo que os usuários expressem suas intenções de forma clara e concisa.</p>
-</section>
-<section id="instalação-e-carregamento-do-pacote-ggplot2" class="level2">
-<h2 class="anchored" data-anchor-id="instalação-e-carregamento-do-pacote-ggplot2">1.3 Instalação e carregamento do pacote ggplot2</h2>
-<p>Para começar a utilizar o ggplot2, é necessário instalá-lo e carregá-lo no ambiente de trabalho do R. Para isso, podemos executar os seguintes comandos:</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Instalação do pacote ggplot2 (caso ainda não esteja instalado) install.packages("ggplot2")  # Carregamento do pacote ggplot2 library(ggplot2)</code></p>
-</section>
-<section id="estrutura-básica-do-ggplot2" class="level2">
-<h2 class="anchored" data-anchor-id="estrutura-básica-do-ggplot2">1.4 Estrutura básica do ggplot2</h2>
-<p>O ggplot2 segue uma estrutura lógica para a criação de gráficos, composta por camadas (layers) que permitem a adição de informações aos gráficos. A estrutura básica é construída com a função <code>ggplot()</code>, seguida pela definição dos dados a serem utilizados e a especificação dos elementos gráficos através das camadas.</p>
+<section id="introdução" class="level1">
+<h1>Introdução</h1>
+<p>O que é o ggplot2?</p>
+<ul>
+<li><p>Biblioteca do R que faz parte do <em>tidyverse</em></p></li>
+<li><p>Desenvolvida por Hadley Wickham</p></li>
+<li><p>Projetada para criar visualizações de dados de alta qualidade e de maneira intuitiva</p></li>
+<li><p>Baseado em uma “gramática dos gráficos”, uma abordagem sistemática para criar gráficos desenvolvida por Leland Wilkinson</p></li>
+<li><p>Permite expressão das intenções de forma clara e concisa</p></li>
+</ul>
+<section id="configurações" class="level2">
+<h2 class="anchored" data-anchor-id="configurações">Configurações</h2>
+<p>Vamos apenas rodar esse código abaixo para poder iniciar nossa aula:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo de estrutura básica do ggplot2 </span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#ggplot(data = dataset, aes(x = variavel_x, y = variavel_y)) +   </span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Geometria do gráfico (pontos, barras, linhas, etc.)   </span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a> <span class="co"># geom_pont() +   </span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Outros elementos gráficos (eixos, cores, temas, etc.)   </span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#labs(title = "Título do Gráfico", x = "Rótulo do Eixo X", y = "Rótulo do Eixo Y")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregando pacotes necessários</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar o banco de dados processado</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"dados_processados.csv"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos primeiro transformar em fator "cinema", "musica", e "atividade_fisica"</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>levels_ativ_fisica <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Não pratico atividade física"</span>, <span class="st">"Menos do que três vezes na semana"</span>, <span class="st">"Entre três e cinco vezes na semana"</span>, <span class="st">"Mais do que cinco vezes na semana"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">musica =</span> <span class="fu">factor</span>(musica),</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">cinema =</span> <span class="fu">factor</span>(cinema),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">atividade_fisica =</span> <span class="fu">factor</span>(atividade_fisica, <span class="at">levels =</span> levels_ativ_fisica , <span class="at">ordered =</span> T)) </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(levels_ativ_fisica)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Tirar colunas que não nos interessam mais</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>otimismo<span class="sc">:-</span>nervosismo)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformar algumas variáveis categóricas</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>musica_preferencia <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(df<span class="sc">$</span>musica <span class="sc">==</span> <span class="st">"Rock"</span>, </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Rock"</span>, </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Não-Rock"</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>cinema_preferencia <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(df<span class="sc">$</span>cinema <span class="sc">==</span> <span class="st">"Ficção científica"</span>, </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Ficção científica"</span>, </span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Não-Ficção científica"</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>sedentarismo <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(df<span class="sc">$</span>atividade_fisica <span class="sc">==</span> <span class="st">"Não pratico atividade física"</span> <span class="sc">|</span> </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>                          df<span class="sc">$</span>atividade_fisica <span class="sc">==</span> <span class="st">"Menos do que três vezes na semana"</span>, </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Sedentário"</span>, </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Ativo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-<p>No exemplo acima, <code>dataset</code> representa o conjunto de dados a ser utilizado, e <code>variavel_x</code> e <code>variavel_y</code> são as variáveis que serão mapeadas para os eixos X e Y, respectivamente.</p>
-<p>Nas próximas seções, iremos explorar diferentes funcionalidades do ggplot2, como a criação de gráficos de barras, boxplots, pontos e linhas, além de aprender a personalizar a aparência dos gráficos e adicionar informações relevantes para a sua interpretação.</p>
+<p>Na aula passada, nós já tínhamos gerado alguns gráficos. Hoje nós vamos entender o código por trás deles.</p>
+<p>É possível gerar gráficos diretamente com o R base, mas o <em>ggplot2</em> tem muito mais recursos.</p>
 </section>
 </section>
-<section id="tópico-2-sintaxe-básica-do-ggplot2-e-exemplos-de-gráficos" class="level1">
-<h1>Tópico 2: Sintaxe básica do ggplot2 e exemplos de gráficos</h1>
-<section id="construindo-gráficos-de-barras-barplot-com-ggplot2" class="level2">
-<h2 class="anchored" data-anchor-id="construindo-gráficos-de-barras-barplot-com-ggplot2">2.1 Construindo gráficos de barras (barplot) com ggplot2</h2>
-<p>Os gráficos de barras são usados para representar dados categóricos em diferentes categorias e comparar suas frequências ou valores. No ggplot2, podemos criar gráficos de barras utilizando a função <code>geom_bar()</code>.</p>
-<p>Exemplo de gráfico de barras:</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Exemplo de gráfico de barras ggplot(data = dataset, aes(x = variavel_categorica)) +   geom_bar() +   labs(title = "Gráfico de Barras", x = "Categoria", y = "Frequência")</code></p>
+<section id="anatomia-de-um-gráfico" class="level1">
+<h1>Anatomia de um gráfico</h1>
+<p>Um gráfico é composto de camadas.</p>
+<p>Uma camada pode incluir texto, pontos, linhas, barras, ou qualquer coisa que você quiser.</p>
+<p><img src="gglayers.png" class="img-fluid"></p>
+<p>Percebemos que a primeira camada dessa estrutura são os dados, porém ainda não vinculados a uma formatação visual.</p>
+<p>Cada camada gráfica é colocada no topo da outra, como uma transparência.</p>
+<p><img src="Capturar.PNG" class="img-fluid"></p>
+<section id="geoms-e-propriedades-estéticas" class="level2">
+<h2 class="anchored" data-anchor-id="geoms-e-propriedades-estéticas">Geoms e propriedades estéticas</h2>
+<p>Pense que tudo que você vê no gráfico é um <strong><em>geom</em></strong> (elemento geométrico), que pode ser uma coluna, pontos, linhas, texto, etc.</p>
+<p>Cada <em>geom</em> aparece no gráfico conforme suas <strong>propriedades estéticas</strong>, que incluem a sua localização (coordenadas x e y), as suas cores e seu tamanho.</p>
+<p>As propriedades estéticas (<em>aes</em>) podem ser determinadas como a mesma para o gráfico inteiro ou distintas para cada camada do gráfico.</p>
+<p>Vamos exemplificar, criando um gráfico que mostre a relação entre neuroticismo e bem-estar.</p>
+<p>Para isso, vamos utilizar a função ggplot, e incluir os dados no argumento data, e as propriedades estéticas de todo o gráfico em aes().</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df, </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> neuroticismo, <span class="at">y =</span> bem_estar))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar o gráfico</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ggplot2_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Opa, parece que não temos nenhuma forma geométrica que represente os dados. Faltou dizer qual é o geom que queremos. No caso, como nós queremos pontos, temos que inserir o argumento geom_point().</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df, </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> neuroticismo, <span class="at">y =</span> bem_estar)) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar o gráfico</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ggplot2_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Ou seja, geom_point é mais uma <strong>camada gráfica</strong>, que vai seguir a estética daquilo que está na camada acima.</p>
+<p>Nesse caso, as coordenadas x e y são do gráfico todo.</p>
+<p>Mas digamos que eu quero dar propriedades específicas para geom_point. Devo, então, inserir as propriedades daquele geom em aes(). No caso abaixo, vou dizer que quero as cores conforme a preferência musical.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df, </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> neuroticismo, <span class="at">y =</span> bem_estar)) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> musica_preferencia))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar o gráfico</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ggplot2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
-<section id="criando-gráficos-de-caixa-boxplot-com-ggplot2" class="level2">
-<h2 class="anchored" data-anchor-id="criando-gráficos-de-caixa-boxplot-com-ggplot2">2.2 Criando gráficos de caixa (boxplot) com ggplot2</h2>
-<p>Os gráficos de caixa, também conhecidos como boxplots, são úteis para visualizar a distribuição de dados numéricos e identificar outliers. No ggplot2, podemos criar gráficos de caixa utilizando a função <code>geom_boxplot()</code>.</p>
-<p>Exemplo de gráfico de caixa:</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Exemplo de gráfico de caixa ggplot(data = dataset, aes(x = variavel_categorica, y = variavel_numerica)) +   geom_boxplot() +   labs(title = "Gráfico de Caixa", x = "Categoria", y = "Valor")</code></p>
-</section>
-<section id="plotagem-de-pontos-scatter-plot-e-linhas-line-plot-com-ggplot2" class="level2">
-<h2 class="anchored" data-anchor-id="plotagem-de-pontos-scatter-plot-e-linhas-line-plot-com-ggplot2">2.3 Plotagem de pontos (scatter plot) e linhas (line plot) com ggplot2</h2>
-<p>Os gráficos de pontos e linhas são utilizados para visualizar a relação entre duas variáveis numéricas. No ggplot2, podemos criar gráficos de pontos e linhas utilizando as funções <code>geom_point()</code> e <code>geom_line()</code>, respectivamente.</p>
-<p>Exemplo de gráfico de pontos:</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Exemplo de gráfico de pontos ggplot(data = dataset, aes(x = variavel_x, y = variavel_y)) +   geom_point() +   labs(title = "Gráfico de Pontos", x = "Eixo X", y = "Eixo Y")</code></p>
-<p>Exemplo de gráfico de linhas:</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Exemplo de gráfico de linhas ggplot(data = dataset, aes(x = variavel_x, y = variavel_y)) +   geom_line() +   labs(title = "Gráfico de Linhas", x = "Eixo X", y = "Eixo Y")</code></p>
-</section>
-<section id="utilizando-diferentes-geometrias-geoms-para-personalização-de-gráficos" class="level2">
-<h2 class="anchored" data-anchor-id="utilizando-diferentes-geometrias-geoms-para-personalização-de-gráficos">2.4 Utilizando diferentes geometrias (geoms) para personalização de gráficos</h2>
-<p>O ggplot2 oferece diversas geometrias (<code>geoms</code>) que permitem personalizar a aparência dos gráficos. Algumas das principais geoms incluem <code>geom_point()</code>, <code>geom_bar()</code>, <code>geom_line()</code>, <code>geom_boxplot()</code>, <code>geom_area()</code>, entre outras. Cada <code>geom</code> oferece diferentes parâmetros para ajustar cores, tamanhos, formas e outros atributos visuais dos elementos do gráfico.</p>
-<p>Neste tópico, aprendemos a criar gráficos de barras, boxplots, pontos e linhas utilizando a sintaxe básica do ggplot2. Nas próximas seções, vamos explorar como personalizar a aparência dos gráficos, adicionar títulos, rótulos e definir temas para torná-los mais informativos e esteticamente agradáveis.</p>
-</section>
-</section>
-<section id="tópico-3-principais-formatos-para-construção-de-gráficos-no-pacote-ggplot2" class="level1">
-<h1>Tópico 3: Principais formatos para construção de gráficos no pacote ggplot2</h1>
-<section id="uso-de-geoms-para-personalização-de-gráficos" class="level2">
-<h2 class="anchored" data-anchor-id="uso-de-geoms-para-personalização-de-gráficos">3.1 Uso de geoms para personalização de gráficos</h2>
-<p>O pacote ggplot2 oferece uma variedade de geometrias (geoms) que podem ser utilizadas para personalizar a aparência dos gráficos. As geoms são responsáveis por representar os dados graficamente, como pontos, linhas, barras, áreas, entre outros elementos. Cada tipo de gráfico requer uma geom específica.</p>
-</section>
-<section id="utilizando-diferentes-geometrias-geoms-no-ggplot2" class="level2">
-<h2 class="anchored" data-anchor-id="utilizando-diferentes-geometrias-geoms-no-ggplot2">3.2 Utilizando diferentes geometrias (geoms) no ggplot2</h2>
-<p>Aqui estão alguns exemplos de como utilizar diferentes geometrias no ggplot2:</p>
+<section id="tipos-de-geom" class="level2">
+<h2 class="anchored" data-anchor-id="tipos-de-geom">Tipos de geom</h2>
+<p>Vamos falar dos principais tipos:</p>
 <ul>
-<li><p><code>geom_point()</code>: Utilizado para criar gráficos de dispersão (scatter plots) com pontos individuais representando cada observação.</p></li>
-<li><p><code>geom_bar()</code>: Usado para construir gráficos de barras verticais ou horizontais que mostram a frequência de categorias em um conjunto de dados.</p></li>
-<li><p><code>geom_line()</code>: Ideal para plotar gráficos de linhas conectando pontos sequencialmente, geralmente aplicado em séries temporais ou dados contínuos.</p></li>
-<li><p><code>geom_boxplot()</code>: Usado para exibir gráficos de caixa (boxplots) que mostram a distribuição de dados numéricos, incluindo quartis, mediana e outliers.</p></li>
-<li><p><code>geom_area()</code>: Utilizado para criar gráficos de áreas preenchidas, destacando a variação entre duas variáveis ao longo de um eixo.</p></li>
-<li><p><code>geom_histogram()</code>: Usado para criar histogramas, que mostram a distribuição de frequências de dados contínuos em intervalos.</p></li>
+<li><p>geom_bar(): cria uma barra</p></li>
+<li><p>geom_point(): cria pontos</p></li>
+<li><p>geom_line(): cria uma linha</p></li>
+<li><p>geom_boxplot(): cria um boxplot</p></li>
+<li><p>geom_text(): criar um texto</p></li>
 </ul>
+<p>Perceba que cada geom é seguido por (), o que significa que ele aceita argumentos estéticos. Por exemplo, a cor.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df, <span class="fu">aes</span>(<span class="at">x =</span>data_preenchimento, <span class="at">y =</span> idade)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"red"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ggplot2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
-<section id="aplicação-de-temas-para-padronização-visual" class="level2">
-<h2 class="anchored" data-anchor-id="aplicação-de-temas-para-padronização-visual">3.3 Aplicação de temas para padronização visual</h2>
-<p>O ggplot2 permite aplicar temas para padronizar visualmente os gráficos, tornando-os mais consistentes e esteticamente agradáveis. Temas são conjuntos predefinidos de configurações visuais que alteram a aparência geral do gráfico.</p>
-<p>Exemplo de aplicação de um tema:</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Criando um gráfico de barras com tema "dark" ggplot(data = dataset, aes(x = variavel_categorica)) +   geom_bar() +   theme_dark() +   labs(title = "Gráfico de Barras", x = "Categoria", y = "Frequência")</code></p>
-<p>O ggplot2 possui vários temas embutidos, como <code>theme_gray()</code>, <code>theme_light()</code>, <code>theme_bw()</code>, <code>theme_minimal()</code>, <code>theme_classic()</code>, entre outros. Cada tema tem um estilo visual diferente, permitindo que você escolha o mais adequado para a sua apresentação.</p>
-<p>Neste tópico, aprendemos sobre a importância das geometrias (geoms) no ggplot2 e como utilizá-las para criar diferentes tipos de gráficos. Também exploramos a aplicação de temas para melhorar a estética e a consistência visual dos gráficos. Nas próximas seções, vamos aprender a adicionar títulos, rótulos e outras informações relevantes aos gráficos para torná-los mais informativos.</p>
+<section id="aes" class="level2">
+<h2 class="anchored" data-anchor-id="aes">Aes</h2>
+<p>Diferentes propriedades estéticas são necessárias conforme o tipo de geom.</p>
+<table class="table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 19%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Obrigatório</th>
+<th>Opcional</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>geom_bar</td>
+<td>x</td>
+<td><p>color</p>
+<p>size</p>
+<p>fill</p>
+<p>linetype</p>
+<p>weight</p>
+<p>alpha</p></td>
+</tr>
+<tr class="even">
+<td>geom_point</td>
+<td><p>x</p>
+<p>y</p></td>
+<td><p>shape</p>
+<p>color</p>
+<p>size</p>
+<p>fill</p>
+<p>alpha</p></td>
+</tr>
+<tr class="odd">
+<td>geom_line</td>
+<td><p>x</p>
+<p>y</p></td>
+<td><p>color</p>
+<p>size</p>
+<p>linetype</p>
+<p>alpha</p></td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Veja um gráfico de barras, por exemplo:</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df, <span class="fu">aes</span>(<span class="at">x =</span> musica)) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ggplot2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Repare também que aes pode ser configurada como um valor específico (p.ex. cor vermelha) ou em função de uma variável (exemplo, conforme o grupo).</p>
 </section>
+<section id="um-gráfico-mais-complexo" class="level2">
+<h2 class="anchored" data-anchor-id="um-gráfico-mais-complexo">Um gráfico mais complexo</h2>
+<p>Agora, vamos fazer um gráfico que seja dividido em dois painéis: um para os indivíduos ativos e outro para os sedentários. Para isso, vamos usar facet_wrap()</p>
+<p>Eu quero mostrar no eixo x o neuroticismo e no eixo y o bem estar.</p>
+<p>Quero também mostrar os pontos e uma linha de regressão (para isso, nós vamos usar o geom_smooth).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df, <span class="fu">aes</span>(<span class="at">x =</span> neuroticismo, <span class="at">y =</span> bem_estar)) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sedentarismo)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="ggplot2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Vamos dizer, porém, que eu quero as informações de sedentarismo no mesmo painel, porém com cores diferentes para cada grupo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df, <span class="fu">aes</span>(<span class="at">x =</span> neuroticismo, <span class="at">y =</span> bem_estar, <span class="at">color =</span> sedentarismo)) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="ggplot2_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
-<section id="tópico-4-personalização-de-gráficos-no-ggplot2" class="level1">
-<h1>Tópico 4: Personalização de gráficos no ggplot2</h1>
+<section id="temas" class="level2">
+<h2 class="anchored" data-anchor-id="temas">Temas</h2>
+<p>Com apenas uma linha do código, é possível atribuir temas diferentes.</p>
+<ul>
+<li><p><strong><code>theme_bw()</code></strong>: Fundo branco com linhas de grade.</p></li>
+<li><p><strong><code>theme_gray()</code></strong>: Fundo cinza com linhas de grade brancas (tema padrão).</p></li>
+<li><p><strong><code>theme_dark()</code></strong>: Fundo cinza escuro e linhas de grade para maior contraste.</p></li>
+<li><p><strong><code>theme_classic()</code></strong>: Sem linhas de grade.</p></li>
+<li><p><strong><code>theme_light()</code></strong>: Eixos e linhas de grade em cinza claro.</p></li>
+<li><p><strong><code>theme_linedraw()</code></strong>: Usa apenas linhas pretas.</p></li>
+<li><p><strong><code>theme_minimal()</code></strong>: Tema minimalista.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df, <span class="fu">aes</span>(<span class="at">x =</span> neuroticismo, <span class="at">y =</span> bem_estar, <span class="at">color =</span> idade)) <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ggplot2_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
 <section id="inserindo-títulos-subtítulos-e-rótulos-aos-eixos" class="level2">
-<h2 class="anchored" data-anchor-id="inserindo-títulos-subtítulos-e-rótulos-aos-eixos">4.1 Inserindo títulos, subtítulos e rótulos aos eixos</h2>
+<h2 class="anchored" data-anchor-id="inserindo-títulos-subtítulos-e-rótulos-aos-eixos">Inserindo títulos, subtítulos e rótulos aos eixos</h2>
 <p>A personalização de gráficos inclui a adição de títulos, subtítulos e rótulos aos eixos X e Y para tornar os gráficos mais informativos e compreensíveis.</p>
-<p>Exemplo de gráfico com títulos e rótulos:</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Criando um gráfico de dispersão (scatter plot) com títulos e rótulos ggplot(data = dataset, aes(x = variavel_x, y = variavel_y)) +   geom_point() +   labs(title = "Gráfico de Dispersão", x = "Variável X", y = "Variável Y") +   subtitle("Exemplo de gráfico com títulos e rótulos") +   caption("Fonte: Seu Nome")</code></p>
-</section>
-<section id="definindo-cores-e-temas-para-melhorar-a-estética-do-gráfico" class="level2">
-<h2 class="anchored" data-anchor-id="definindo-cores-e-temas-para-melhorar-a-estética-do-gráfico">4.2 Definindo cores e temas para melhorar a estética do gráfico</h2>
-<p>No ggplot2, podemos personalizar cores dos elementos do gráfico, incluindo pontos, linhas e barras, para melhorar a apresentação visual. Além disso, também podemos aplicar temas para alterar a aparência geral do gráfico.</p>
-<p>Exemplo de gráfico com cores e tema personalizado:</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Criando um gráfico de barras com cores personalizadas e tema "minimal" ggplot(data = dataset, aes(x = variavel_categorica, fill = variavel_categorica)) +   geom_bar() +   scale_fill_manual(values = c("#FFA500", "#008080", "#FFD700", "#800080")) +   theme_minimal() +   labs(title = "Gráfico de Barras com Cores Personalizadas", x = "Categoria", y = "Frequência")</code></p>
-</section>
-<section id="ajustando-escalas-de-eixos-discretas-e-contínuas" class="level2">
-<h2 class="anchored" data-anchor-id="ajustando-escalas-de-eixos-discretas-e-contínuas">4.3 Ajustando escalas de eixos (discretas e contínuas)</h2>
-<p>É possível ajustar as escalas dos eixos X e Y para exibir apenas valores específicos ou limitar o intervalo de visualização. No ggplot2, as funções <code>scale_x_discrete()</code> e <code>scale_y_continuous()</code> podem ser usadas para esse fim.</p>
-<p>Exemplo de gráfico com escalas de eixos ajustadas:</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Criando um gráfico de linhas com escala de eixo Y ajustada entre 0 e 100 ggplot(data = dataset, aes(x = variavel_x, y = variavel_y)) +   geom_line() +   scale_y_continuous(limits = c(0, 100)) +   labs(title = "Gráfico de Linhas com Escala de Eixo Y Ajustada", x = "Eixo X", y = "Eixo Y")</code></p>
-</section>
-<section id="definindo-limites-limits-nos-eixos" class="level2">
-<h2 class="anchored" data-anchor-id="definindo-limites-limits-nos-eixos">4.4 Definindo limites (limits) nos eixos</h2>
-<p>Além de ajustar as escalas dos eixos, também é possível definir limites específicos para os eixos X e Y usando as funções <code>xlim()</code> e <code>ylim()</code>.</p>
-<p>Exemplo de gráfico com limites definidos nos eixos:</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Criando um gráfico de dispersão com limites definidos nos eixos X e Y ggplot(data = dataset, aes(x = variavel_x, y = variavel_y)) +   geom_point() +   xlim(c(0, 10)) +   ylim(c(20, 100)) +   labs(title = "Gráfico de Dispersão com Limites nos Eixos", x = "Eixo X", y = "Eixo Y")</code></p>
-<p>Neste tópico, aprendemos como personalizar gráficos no ggplot2, adicionando títulos, rótulos, definindo cores e temas, ajustando escalas de eixos e definindo limites. Essas técnicas tornam os gráficos mais informativos, esteticamente agradáveis e adequados para a apresentação dos dados. Nas próximas seções, vamos explorar recursos mais avançados, como adicionar efeitos especiais, dividir o gráfico em painéis (facets) e reduzir sobreposições de pontos usando o recurso “jitter”.</p>
-<p>Tópico 5: Recursos avançados do ggplot2</p>
-<p>5.1 Adicionando efeitos especiais aos gráficos</p>
-<p>O ggplot2 permite adicionar efeitos especiais aos gráficos para destacar informações importantes ou tornar a visualização mais atraente. Alguns dos efeitos especiais incluem sombreamento, destaque de pontos, linhas de tendência, entre outros.</p>
-<p>Exemplo de gráfico com linhas de tendência:</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Criando um gráfico de dispersão com linha de tendência ggplot(data = dataset, aes(x = variavel_x, y = variavel_y)) +   geom_point() +   geom_smooth(method = "lm", se = FALSE, color = "red") +   labs(title = "Gráfico de Dispersão com Linha de Tendência", x = "Eixo X", y = "Eixo Y")</code></p>
-</section>
-<section id="utilizando-o-recurso-grid-para-dividir-o-gráfico-em-painéis" class="level2">
-<h2 class="anchored" data-anchor-id="utilizando-o-recurso-grid-para-dividir-o-gráfico-em-painéis">5.2 Utilizando o recurso “grid” para dividir o gráfico em painéis</h2>
-<p>O ggplot2 oferece o recurso “grid” para dividir o gráfico em painéis, permitindo a visualização de diferentes subconjuntos de dados em uma única figura. Isso é especialmente útil para comparar padrões ou tendências em grupos distintos.</p>
-<p>Exemplo de gráfico com divisão em painéis:</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Criando um gráfico de dispersão com divisão em painéis por uma variável categórica ggplot(data = dataset, aes(x = variavel_x, y = variavel_y)) +   geom_point() +   facet_grid(. ~ variavel_categorica) +   labs(title = "Gráfico de Dispersão com Divisão em Painéis", x = "Eixo X", y = "Eixo Y")</code></p>
-</section>
-<section id="usando-o-jitter-para-reduzir-sobreposições-de-pontos" class="level2">
-<h2 class="anchored" data-anchor-id="usando-o-jitter-para-reduzir-sobreposições-de-pontos">5.3 Usando o “jitter” para reduzir sobreposições de pontos</h2>
-<p>O recurso “jitter” é utilizado para reduzir a sobreposição de pontos em gráficos de dispersão, adicionando um pequeno deslocamento aleatório nas posições dos pontos. Isso melhora a visualização de dados com alta densidade de pontos.</p>
-<p>Exemplo de gráfico de dispersão com jitter:</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Criando um gráfico de dispersão com jitter aplicado aos pontos ggplot(data = dataset, aes(x = variavel_x, y = variavel_y)) +   geom_point(position = position_jitter(width = 0.2, height = 0.2)) +   labs(title = "Gráfico de Dispersão com Jitter", x = "Eixo X", y = "Eixo Y")</code></p>
-</section>
-<section id="criando-gráficos-facetados-para-visualizar-subgrupos" class="level2">
-<h2 class="anchored" data-anchor-id="criando-gráficos-facetados-para-visualizar-subgrupos">5.4 Criando gráficos facetados para visualizar subgrupos</h2>
-<p>O ggplot2 permite criar gráficos facetados, onde cada painel representa um subconjunto de dados de acordo com uma variável categórica. Isso facilita a comparação de padrões em diferentes grupos.</p>
-<p>Exemplo de gráfico de barras facetado:</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Criando um gráfico de barras facetado por uma variável categórica ggplot(data = dataset, aes(x = variavel_categorica)) +   geom_bar() +   facet_wrap(~ variavel_subgrupos) +   labs(title = "Gráfico de Barras Facetado", x = "Categoria", y = "Frequência")</code></p>
-<p>Neste tópico, exploramos alguns recursos avançados do ggplot2, como adicionar efeitos especiais aos gráficos, dividir o gráfico em painéis usando o recurso “grid”, reduzir sobreposições de pontos com “jitter” e criar gráficos facetados para visualizar subgrupos. Essas técnicas permitem uma apresentação mais sofisticada e informativa dos dados. Nos próximos tópicos, aprenderemos sobre outros recursos avançados, como a adição de escalas discretas e contínuas, labels, legendas e mais opções de personalização.</p>
+<p>Para isso, vamos usar o argumento labs().</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df, <span class="fu">aes</span>(<span class="at">x =</span> neuroticismo, <span class="at">y =</span> bem_estar, <span class="at">color =</span> idade)) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Gráfico de Neuroticismo vs. Bem-Estar"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">x =</span> <span class="st">"Escores de Neuroticismo"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">y =</span> <span class="st">"Escores de Bem-Estar"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">"Idade"</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ggplot2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 </section>
-<section id="tópico-6-aplicação-dos-conceitos-em-bases-de-dados-reais" class="level1">
-<h1>Tópico 6: Aplicação dos conceitos em bases de dados reais</h1>
-<p>Neste tópico, iremos aplicar os conceitos aprendidos anteriormente utilizando a base de dados fornecida. Faremos a visualização de dados gerais (Idade, Altura, Gênero cinematográfico, Gênero musical e Atividade física) e também a visualização dos resultados da Escala de bem-estar Warwick-Edinburgh e dos traços de personalidade (extroversão e neuroticismo) com gráficos específicos.</p>
-<section id="visualização-de-dados-gerais" class="level2">
-<h2 class="anchored" data-anchor-id="visualização-de-dados-gerais">6.1 Visualização de dados gerais</h2>
-<p>Vamos criar gráficos para visualizar os dados gerais da base, utilizando diferentes tipos de gráficos adequados para cada tipo de variável.</p>
+<section id="salvando-o-gráfico" class="level1">
+<h1>Salvando o gráfico</h1>
+<p>Vamos salvar o gráfico em pdf:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Abrir um dispositivo PDF para salvar o gráfico</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">"neuroticismo_vs_bemestar.pdf"</span>, <span class="at">width =</span> <span class="dv">5</span>, <span class="at">height =</span> <span class="dv">3</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir o gráfico no dispositivo PDF</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(g)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Fechar o dispositivo PDF</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="conclusão" class="level1">
+<h1>Conclusão</h1>
+<p>Nessa aula, vimos sobre ggplot, uma biblioteca do R para visualizações de dados.</p>
+<section id="nessa-aula-vimos" class="level3">
+<h3 class="anchored" data-anchor-id="nessa-aula-vimos">Nessa aula, vimos:</h3>
 <ul>
-<li><p>Gráfico de barras para o Gênero cinematográfico e Gênero musical.</p></li>
-<li><p>Gráfico de dispersão para Idade e Altura, mostrando a relação entre essas duas variáveis.</p></li>
-<li><p>Gráfico de barras ou gráfico de pizza para a variável Atividade física, exibindo a distribuição das categorias.</p></li>
+<li><p>Camadas gráficas e sobreposição.</p></li>
+<li><p>Geoms e propriedades estéticas.</p></li>
+<li><p>facet_wrap para dividir gráficos em painéis.</p></li>
+<li><p>Adição de linhas de regressão.</p></li>
+<li><p>Diferentes temas</p></li>
+<li><p>Inserção de títulos e rótulos.</p></li>
 </ul>
 </section>
-<section id="visualização-dos-resultados-da-escala-de-bem-estar-warwick-edinburgh" class="level2">
-<h2 class="anchored" data-anchor-id="visualização-dos-resultados-da-escala-de-bem-estar-warwick-edinburgh">6.2 Visualização dos resultados da Escala de bem-estar Warwick-Edinburgh</h2>
-<p>Vamos criar gráficos para visualizar os resultados da Escala de bem-estar Warwick-Edinburgh, que é uma escala Likert com pontuação de 0 a 4 para diferentes itens. Utilizaremos gráficos de barras, boxplots ou outros gráficos adequados para representar as pontuações e analisar a distribuição dos escores de bem-estar.</p>
+<section id="exercícios" class="level3">
+<h3 class="anchored" data-anchor-id="exercícios">Exercícios</h3>
+<ol type="1">
+<li><p>Crie um gráfico à partir dos dados.</p></li>
+<li><p>Você pode seguir as sugestões abaixo ou explorar suas próprias ideias.</p>
+<p><strong>Sugestão 1</strong>: relação entre neuroticismo e extroversão, usando geoms de pontos, mas dividindo o gráfico conforme a preferência por ficção científica ou não (coluna cinema_preferencia).</p>
+<p><strong>Sugestão 2</strong>: boxplot de bem-estar (eixo y) por preferência musical (coluna musica_preferencia), no eixo x. Usar cores diferentes para os dois grupos. Dica: para gerar cores no boxplot, o argumento é fill, ao invés de color.</p></li>
+</ol>
 </section>
-<section id="visualização-dos-traços-de-personalidade-extroversão-e-neuroticismo" class="level2">
-<h2 class="anchored" data-anchor-id="visualização-dos-traços-de-personalidade-extroversão-e-neuroticismo">6.3 Visualização dos traços de personalidade (extroversão e neuroticismo)</h2>
-<p>Vamos criar gráficos para visualizar os traços de personalidade (extroversão e neuroticismo) utilizando gráficos de barras, boxplots ou gráficos de dispersão para representar a relação entre os itens e os traços de personalidade. Além disso, iremos considerar a inversão das pontuações de alguns itens, conforme explicado na base de dados.</p>
-</section>
-<section id="considerações-finais" class="level2">
-<h2 class="anchored" data-anchor-id="considerações-finais">6.4 Considerações finais</h2>
-<p>Neste tópico, aplicamos os conceitos aprendidos em visualização de dados com ggplot2 em uma base de dados real. Visualizamos dados gerais, os resultados da Escala de bem-estar Warwick-Edinburgh e os traços de personalidade (extroversão e neuroticismo) usando diferentes tipos de gráficos. Essa prática nos permitiu explorar como as ferramentas do ggplot2 podem ser poderosas para criar gráficos informativos e visualmente atraentes. Continuando, nos próximos tópicos, aprenderemos sobre recursos avançados adicionais do ggplot2 e como aprimorar ainda mais nossas habilidades em visualização de dados em R.</p>
+<section id="recursos-adicionais" class="level3">
+<h3 class="anchored" data-anchor-id="recursos-adicionais">Recursos adicionais</h3>
+<p>Na pasta, você pode encontrar a folha de referência com várias opções gráficas e referências rápidas.</p>
 </section>
 </section>
 

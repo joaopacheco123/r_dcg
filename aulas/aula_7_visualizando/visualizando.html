@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="João Pedro">
 
 <title>Visualizando dados e modelando em R</title>
 <style>
@@ -77,7 +78,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="visualizando.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução">Introdução</a>
+  <ul class="collapse">
+  <li><a href="#nossas-perguntas-de-pesquisa" id="toc-nossas-perguntas-de-pesquisa" class="nav-link" data-scroll-target="#nossas-perguntas-de-pesquisa">Nossas perguntas de pesquisa</a></li>
+  <li><a href="#suposições-de-normalidade" id="toc-suposições-de-normalidade" class="nav-link" data-scroll-target="#suposições-de-normalidade">Suposições de normalidade</a></li>
+  <li><a href="#hipótese-nula-e-hipótese-alternativa" id="toc-hipótese-nula-e-hipótese-alternativa" class="nav-link" data-scroll-target="#hipótese-nula-e-hipótese-alternativa">Hipótese nula e hipótese alternativa</a></li>
+  <li><a href="#iniciando-os-trabalhos" id="toc-iniciando-os-trabalhos" class="nav-link" data-scroll-target="#iniciando-os-trabalhos">Iniciando os trabalhos</a>
+  <ul class="collapse">
+  <li><a href="#dados-categóricos" id="toc-dados-categóricos" class="nav-link" data-scroll-target="#dados-categóricos">Dados categóricos</a></li>
+  <li><a href="#dados-numéricos-contínuos" id="toc-dados-numéricos-contínuos" class="nav-link" data-scroll-target="#dados-numéricos-contínuos">Dados numéricos contínuos</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#testando-as-nossas-hipóteses" id="toc-testando-as-nossas-hipóteses" class="nav-link" data-scroll-target="#testando-as-nossas-hipóteses">Testando as nossas hipóteses</a>
+  <ul class="collapse">
+  <li><a href="#primeira-questão" id="toc-primeira-questão" class="nav-link" data-scroll-target="#primeira-questão">Primeira questão</a></li>
+  <li><a href="#segunda-questão" id="toc-segunda-questão" class="nav-link" data-scroll-target="#segunda-questão">Segunda questão</a></li>
+  <li><a href="#terceira-e-quarta-questões" id="toc-terceira-e-quarta-questões" class="nav-link" data-scroll-target="#terceira-e-quarta-questões">Terceira e quarta questões</a></li>
+  </ul></li>
+  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios">Exercícios</a></li>
+  <li><a href="#outros-gráficos-disponíveis-em-r" id="toc-outros-gráficos-disponíveis-em-r" class="nav-link" data-scroll-target="#outros-gráficos-disponíveis-em-r">Outros gráficos disponíveis em R</a></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -89,6 +115,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>João Pedro </p>
+          </div>
+  </div>
     
   
     
@@ -97,292 +129,856 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="objetivo-da-aula" class="level1">
-<h1>Objetivo da aula</h1>
-<p>Introduzi-los à visualização de dados usando a linguagem R, apresentando a função plot() para criar diferentes tipos de gráficos. Além disso, abordaremos conceitos básicos de estatística inferencial e como modelar a relação entre duas variáveis.</p>
-</section>
-<section id="tópicos-da-aula" class="level1">
-<h1>Tópicos da aula</h1>
+<section id="introdução" class="level1">
+<h1>Introdução</h1>
+<p>Vamos iniciar visualizando as variáveis que queremos no nosso banco de dados:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Variável</th>
+<th>Tipo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Idade em anos</td>
+<td>Numérica quantitativa (discreta)</td>
+</tr>
+<tr class="even">
+<td>Altura em metros</td>
+<td>Numérica quantitativa (contínua)</td>
+</tr>
+<tr class="odd">
+<td>Cinema (gênero favorito)</td>
+<td>Qualitativa (nominal)</td>
+</tr>
+<tr class="even">
+<td>Músicas favoritas</td>
+<td>Qualitativa (nominal)</td>
+</tr>
+<tr class="odd">
+<td>Atividade física</td>
+<td>Qualitativa (ordinal)</td>
+</tr>
+<tr class="even">
+<td>Bem-estar</td>
+<td>Numérica quantitativa (contínua)</td>
+</tr>
+<tr class="odd">
+<td>Extroversão</td>
+<td>Numérica quantitativa (contínua)</td>
+</tr>
+<tr class="even">
+<td>Neuroticismo</td>
+<td>Numérica quantitativa (contínua)</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p>“Quero ver a associação entre essas variáveis” - Todo estudante com um banco de dados.</p>
+</blockquote>
+<p>Isso é muito comum, mas não é o mais correto.</p>
+<p>O mais recomendado é iniciar com uma hipótese, baseado no conhecimento existente (literatura), realizar o projeto do experimento/pesquisa, saber de antemão quais testes irá realizar, para então iniciar a pesquisa.</p>
+<section id="nossas-perguntas-de-pesquisa" class="level2">
+<h2 class="anchored" data-anchor-id="nossas-perguntas-de-pesquisa">Nossas perguntas de pesquisa</h2>
+<p>Hoje vamos realizar algumas análises, e vamos partir de algumas hipóteses pré-estabelecidas:</p>
 <ol type="1">
-<li><p>Introdução à visualização de dados</p>
-<ol type="1">
-<li>Importância da visualização na análise de dados</li>
-</ol></li>
-<li><p>Tipos de gráficos disponíveis em R</p>
-<ol type="1">
-<li><p>A função plot() em R</p></li>
-<li><p>Sintaxe básica do plot()</p></li>
-<li><p>Gráfico de dispersão (scatter plot)</p></li>
-<li><p>Gráfico de linha (line plot)</p></li>
-<li><p>Gráfico de barras (bar plot)</p></li>
-<li><p>Gráfico de pizza (pie plot)</p></li>
-<li><p>Gráfico de boxplot (box plot)</p></li>
-</ol></li>
-<li><p>Estatística inferencial básica</p>
-<ol type="1">
-<li><p>Conceitos fundamentais da estatística inferencial</p></li>
-<li><p>População e amostra</p></li>
-<li><p>Média, mediana e moda</p></li>
-<li><p>Desvio padrão e variância</p></li>
-<li><p>Intervalo de confiança</p></li>
-<li><p>Teste de hipóteses (introdução)</p></li>
-</ol></li>
-<li><p>Modelando a relação entre duas variáveis</p>
-<ol type="1">
-<li><p>Regressão linear simples</p></li>
-<li><p>Coeficiente de correlação</p></li>
-<li><p>Interpretação dos resultados da regressão</p></li>
-<li><p>Exemplos práticos de modelagem</p></li>
-</ol></li>
-<li><p>Lista de exercícios</p>
-<ol type="1">
-<li><p>Resolução de problemas práticos utilizando</p></li>
-<li><p>Aplicação dos conhecimentos adquiridos em visualização e modelagem</p></li>
-</ol></li>
+<li>A proporção de roqueiros é maior entre fãs de ficção científica vs não-fãs;
+<ul>
+<li>Aqui, nós vamos testar a diferença entre duas proporções. Para isso, usandos o teste qui-quadrado.</li>
+</ul></li>
+<li>Roqueiros são mais introvertidos:
+<ul>
+<li>Aqui, nós vamos testar a diferença entre duas médias (dos escores de introversão entre os dois grupos - roqueiros e não-roqueiros). Vamos usar aqui o teste t.</li>
+</ul></li>
+<li>Quanto mais extrovertido, maior o nível de bem-estar;
+<ul>
+<li>Aqui, nós vamos explorar a associação entre duas variáveis quantitativas contínuas. Para isso, usaremos a regressão, já que temos uma variável contínua dependente (bem-estar) e uma independente (extroversão)</li>
+</ul></li>
+<li>O efeito do neuroticismo no bem-estar desaparece se ajustarmos para extroversão.
+<ul>
+<li>Aqui, vamos usar a regressão múltipla.</li>
+</ul></li>
 </ol>
-<p>Essa estrutura deve fornecer uma introdução sólida sobre a visualização de dados no R, a função plot() e como modelar a relação entre duas variáveis usando técnicas de estatística inferencial. A lista de exercícios é importante para consolidar o conhecimento adquirido e permitir que vocês pratiquem suas habilidades em R.</p>
+<p>No final do livro de Andy Field, temos a seguinte figura, que ajuda a mapear o tipo de teste que queremos utilizar conforme as variáveis que temos.</p>
+<p><img src="Capturar.PNG" class="img-fluid"></p>
+<p>Juntamente com essas questões nós também vamos explorar algumas maneiras de visualizar os dados, como o <em>box plot</em>, o <em>bar plot</em>, o <em>scatter plot</em>, etc.</p>
 </section>
-<section id="introdução-à-visualização-de-dados" class="level1">
-<h1>Introdução à visualização de dados</h1>
-<p>A visualização de dados é uma etapa crucial na análise de informações em qualquer projeto de ciência de dados ou pesquisa. Por meio de gráficos e plots, podemos transformar dados brutos em representações visuais compreensíveis, o que facilita a identificação de padrões, tendências e insights importantes. A visualização não apenas torna os dados mais acessíveis, mas também auxilia na comunicação efetiva dos resultados para uma audiência diversa.</p>
-<section id="importância-da-visualização-na-análise-de-dados" class="level2">
-<h2 class="anchored" data-anchor-id="importância-da-visualização-na-análise-de-dados">Importância da visualização na análise de dados</h2>
-<p>A visualização de dados desempenha um papel fundamental nos seguintes aspectos:</p>
-<section id="a-identificação-de-padrões-e-tendências" class="level3">
-<h3 class="anchored" data-anchor-id="a-identificação-de-padrões-e-tendências">a) Identificação de padrões e tendências</h3>
-<p>Visualizar dados permite que você identifique rapidamente padrões e tendências que podem não ser aparentes ao examinar apenas as tabelas de números. Através de gráficos, podemos detectar relações entre variáveis, sazonalidades e outros comportamentos relevantes.</p>
-</section>
-<section id="b-comunicação-eficaz" class="level3">
-<h3 class="anchored" data-anchor-id="b-comunicação-eficaz">b) Comunicação eficaz</h3>
-<p>Gráficos e plots facilitam a comunicação dos resultados e insights para um público não técnico. As representações visuais são mais fáceis de serem compreendidas e podem tornar a análise de dados mais acessível a pessoas com diferentes níveis de conhecimento em estatística e ciência de dados.</p>
-</section>
-<section id="c-tomada-de-decisão-embasada" class="level3">
-<h3 class="anchored" data-anchor-id="c-tomada-de-decisão-embasada">c) Tomada de decisão embasada</h3>
-<p>Com dados visualizados de forma adequada, tomadores de decisão podem basear suas escolhas em evidências concretas. Gráficos bem elaborados fornecem informações claras e confiáveis, auxiliando na formulação de estratégias e soluções.</p>
-</section>
-</section>
-</section>
-<section id="tipos-de-gráficos-disponíveis-em-r" class="level1">
-<h1>Tipos de gráficos disponíveis em R</h1>
-<p>O R oferece uma ampla variedade de pacotes e funções para a criação de gráficos e plots. Nesta aula, exploraremos alguns dos principais tipos de gráficos disponíveis usando a função <code>plot()</code>.</p>
-<section id="sintaxe-básica-do-plot" class="level2">
-<h2 class="anchored" data-anchor-id="sintaxe-básica-do-plot">Sintaxe básica do plot()</h2>
-<p>Antes de criarmos os diferentes tipos de gráficos, é importante entender a sintaxe básica da função <code>plot()</code> em R. A função <code>plot()</code> é utilizada para produzir gráficos simples e geralmente aceita argumentos como os valores das variáveis que queremos plotar, além de parâmetros adicionais para personalizar a aparência do gráfico.</p>
-<p>Aqui está a sintaxe básica da função <code>plot()</code>:</p>
-<pre><code>RCopy code</code></pre>
-<p><code>plot(x, y, type = "p", col = "blue", main = "Título do Gráfico", xlab = "Rótulo do Eixo X", ylab = "Rótulo do Eixo Y")</code></p>
+<section id="suposições-de-normalidade" class="level2">
+<h2 class="anchored" data-anchor-id="suposições-de-normalidade">Suposições de normalidade</h2>
+<p>Veja que temos uma última coluna denominada “<em>Assumptions of parametric tests</em>”, sempre para quando o desfecho é uma variável contínua.</p>
+<p>A suposição de normalidade dos dados é uma característica importante para podermos utilizar os testes denominados paramétricos.</p>
+<p>O quê isso significa?</p>
 <ul>
-<li><p><code>x</code>: Vetor de valores para o eixo x.</p></li>
-<li><p><code>y</code>: Vetor de valores para o eixo y.</p></li>
-<li><p><code>type</code>: Tipo de gráfico. Pode ser “p” (pontos), “l” (linha), “b” (pontos e linha), “h” (histograma) e outros.</p></li>
-<li><p><code>col</code>: Cor do gráfico.</p></li>
-<li><p><code>main</code>: Título do gráfico.</p></li>
-<li><p><code>xlab</code>: Rótulo do eixo x.</p></li>
-<li><p><code>ylab</code>: Rótulo do eixo y.</p></li>
+<li><p>A distribuição normal é caracterizada por uma curva de sino simétrica.</p></li>
+<li><p>A distribuição normal é importante na estatística porque muitos fenômenos naturais e artificiais seguem essa distribuição.</p></li>
+<li><p>Essa distribuição é definida pela seguinte fórmula</p></li>
 </ul>
-<p>Agora, vamos criar diferentes tipos de gráficos usando a função <code>plot()</code>:</p>
-</section>
-<section id="gráfico-de-dispersão-scatter-plot" class="level2">
-<h2 class="anchored" data-anchor-id="gráfico-de-dispersão-scatter-plot">Gráfico de dispersão (scatter plot)</h2>
-<p>O gráfico de dispersão é usado para exibir a relação entre duas variáveis numéricas. Cada ponto no gráfico representa uma observação com os valores correspondentes das duas variáveis. É útil para identificar a correlação entre as variáveis.</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Exemplo de gráfico de dispersão x &lt;- c(1, 2, 3, 4, 5) y &lt;- c(3, 5, 4, 6, 8) plot(x, y, main = "Gráfico de Dispersão", xlab = "Variável X", ylab = "Variável Y", pch = 16, col = "blue")</code></p>
-</section>
-<section id="gráfico-de-linha-line-plot" class="level2">
-<h2 class="anchored" data-anchor-id="gráfico-de-linha-line-plot">Gráfico de linha (line plot)</h2>
-<p>O gráfico de linha é utilizado para mostrar a evolução de uma variável ao longo do tempo ou de outro eixo contínuo. É útil para destacar tendências e mudanças ao longo de uma série temporal.</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Exemplo de gráfico de linha x &lt;- c(1, 2, 3, 4, 5) y &lt;- c(3, 5, 4, 6, 8) plot(x, y, type = "l", main = "Gráfico de Linha", xlab = "Tempo", ylab = "Valores", col = "red")</code></p>
-</section>
-<section id="gráfico-de-barras-bar-plot" class="level2">
-<h2 class="anchored" data-anchor-id="gráfico-de-barras-bar-plot">Gráfico de barras (bar plot)</h2>
-<p>O gráfico de barras é uma representação visual de dados categóricos. Cada barra representa uma categoria e a altura da barra representa a quantidade ou frequência dessa categoria.</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Exemplo de gráfico de barras categorias &lt;- c("A", "B", "C", "D") valores &lt;- c(10, 15, 8, 12) barplot(valores, names.arg = categorias, main = "Gráfico de Barras", xlab = "Categorias", ylab = "Valores", col = "green")</code></p>
-</section>
-<section id="gráfico-de-pizza-pie-plot" class="level2">
-<h2 class="anchored" data-anchor-id="gráfico-de-pizza-pie-plot">Gráfico de pizza (pie plot)</h2>
-<p>O gráfico de pizza é outra forma de representar dados categóricos. As fatias da pizza representam as categorias e suas proporções em relação ao todo.</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Exemplo de gráfico de pizza categorias &lt;- c("A", "B", "C", "D") valores &lt;- c(25, 15, 30, 20) pie(valores, labels = categorias, main = "Gráfico de Pizza", col = c("red", "blue", "green", "orange"))</code></p>
-</section>
-<section id="gráfico-de-boxplot-box-plot" class="level2">
-<h2 class="anchored" data-anchor-id="gráfico-de-boxplot-box-plot">Gráfico de boxplot (box plot)</h2>
-<p>O gráfico de boxplot é utilizado para representar a distribuição de dados numéricos e identificar valores atípicos. É útil para comparar diferentes grupos ou variáveis.</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Exemplo de gráfico de boxplot grupo1 &lt;- c(10, 15, 20, 25, 30) grupo2 &lt;- c(5, 8, 12, 18, 24) boxplot(grupo1, grupo2, names = c("Grupo 1", "Grupo 2"), main = "Gráfico de Boxplot", col = c("blue", "green"))</code></p>
-</section>
-</section>
-<section id="estatística-inferencial-básica" class="level1">
-<h1>Estatística inferencial básica</h1>
-<p>A estatística inferencial é uma área da estatística que visa fazer inferências e tirar conclusões sobre uma população com base em uma amostra de dados coletados. Nesta parte da aula, iremos abordar os conceitos fundamentais da estatística inferencial e algumas das principais técnicas utilizadas.</p>
-<section id="conceitos-fundamentais-da-estatística-inferencial" class="level2">
-<h2 class="anchored" data-anchor-id="conceitos-fundamentais-da-estatística-inferencial">Conceitos fundamentais da estatística inferencial</h2>
-<p>Na estatística inferencial, trabalhamos com incerteza, pois estamos usando uma amostra para tentar entender uma população maior. Para isso, utilizamos técnicas estatísticas para fazer inferências sobre os parâmetros populacionais com base nos dados da amostra.</p>
-</section>
-<section id="população-e-amostra" class="level2">
-<h2 class="anchored" data-anchor-id="população-e-amostra">População e amostra</h2>
-<ul>
-<li><p>População: É o conjunto completo de todos os elementos que estamos interessados em estudar e obter conclusões. Representa o grupo total que desejamos analisar, mas nem sempre é possível examinar toda a população devido a restrições de tempo, recursos ou praticidade.</p></li>
-<li><p>Amostra: É uma parte representativa da população, selecionada para estudo e análise. A amostra deve ser escolhida de forma aleatória e representar, de maneira precisa, as características da população.</p></li>
-</ul>
-</section>
-<section id="média-mediana-e-moda" class="level2">
-<h2 class="anchored" data-anchor-id="média-mediana-e-moda">Média, mediana e moda</h2>
-<ul>
-<li>Média: É a soma de todos os valores dividida pelo número total de observações. É a medida de tendência central mais comumente utilizada e pode ser influenciada por valores extremos (outliers).</li>
-</ul>
-<pre><code>RCopy code</code></pre>
-<p><code># Exemplo de cálculo da média dados &lt;- c(10, 15, 12, 8, 20) media &lt;- mean(dados) media</code></p>
-<ul>
-<li>Mediana: É o valor que separa a metade inferior e a metade superior de um conjunto de dados ordenados. É menos sensível a valores extremos do que a média.</li>
-</ul>
-<pre><code>RCopy code</code></pre>
-<p><code># Exemplo de cálculo da mediana dados &lt;- c(10, 15, 12, 8, 20) mediana &lt;- median(dados) mediana</code></p>
-<ul>
-<li>Moda: É o valor que ocorre com maior frequência em um conjunto de dados.</li>
-</ul>
-<pre><code>RCopy code</code></pre>
-<p><code># Exemplo de cálculo da moda dados &lt;- c(10, 15, 12, 8, 20, 15, 12) moda &lt;- table(dados) moda &lt;- as.numeric(names(moda)[moda == max(moda)]) moda</code></p>
-</section>
-<section id="desvio-padrão-e-variância" class="level2">
-<h2 class="anchored" data-anchor-id="desvio-padrão-e-variância">Desvio padrão e variância</h2>
-<ul>
-<li>Desvio padrão: É uma medida de dispersão que indica o quanto os valores do conjunto de dados se afastam da média. Quanto maior o desvio padrão, mais dispersos estão os dados.</li>
-</ul>
-<pre><code>RCopy code</code></pre>
-<p><code># Exemplo de cálculo do desvio padrão dados &lt;- c(10, 15, 12, 8, 20) desvio_padrao &lt;- sd(dados) desvio_padrao</code></p>
-<ul>
-<li>Variância: É outra medida de dispersão que indica a média dos quadrados dos desvios em relação à média. É o quadrado do desvio padrão.</li>
-</ul>
-<pre><code>RCopy code</code></pre>
-<p><code># Exemplo de cálculo da variância dados &lt;- c(10, 15, 12, 8, 20) variancia &lt;- var(dados) variancia</code></p>
-</section>
-<section id="intervalo-de-confiança" class="level2">
-<h2 class="anchored" data-anchor-id="intervalo-de-confiança">Intervalo de confiança</h2>
-<p>O intervalo de confiança é uma estimativa estatística que fornece um intervalo de valores plausíveis para um parâmetro populacional com base nos dados da amostra. É uma forma de expressar a incerteza associada à estimativa do parâmetro.</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Exemplo de cálculo do intervalo de confiança para a média dados &lt;- c(10, 15, 12, 8, 20) intervalo_confianca &lt;- t.test(dados)$conf.int intervalo_confianca</code></p>
-</section>
-<section id="teste-de-hipóteses" class="level2">
-<h2 class="anchored" data-anchor-id="teste-de-hipóteses">Teste de hipóteses</h2>
-<p>O teste de hipóteses é uma técnica estatística usada para tomar decisões sobre uma afirmação ou hipótese relacionada a um parâmetro populacional. Consiste em formular duas hipóteses, uma hipótese nula (H0) e uma hipótese alternativa (Ha), e utilizar dados da amostra para determinar se há evidências suficientes para rejeitar a hipótese nula em favor da hipótese alternativa.</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Exemplo de teste de hipóteses para a média dados &lt;- c(10, 15, 12, 8, 20) teste_hipotese &lt;- t.test(dados, mu = 13) teste_hipotese</code></p>
-<p>Nesta parte da aula, aprendemos conceitos fundamentais da estatística inferencial, como população e amostra, medidas de tendência central (média, mediana e moda), medidas de dispersão (desvio padrão e variância), intervalo de confiança e introdução ao teste de hipóteses. Esses conceitos são essenciais para a interpretação e análise de dados, bem como para as próximas etapas de modelagem.</p>
-</section>
-</section>
-<section id="modelando-a-relação-entre-duas-variáveis" class="level1">
-<h1>Modelando a relação entre duas variáveis</h1>
-<p>Nesta parte da aula, abordaremos técnicas de modelagem que nos permitirão entender e quantificar a relação entre duas variáveis. A modelagem é uma ferramenta poderosa na análise de dados, pois nos permite fazer previsões e inferências com base nos padrões identificados.</p>
-<section id="regressão-linear-simples" class="level2">
-<h2 class="anchored" data-anchor-id="regressão-linear-simples">Regressão linear simples</h2>
-<p>A regressão linear simples é uma técnica estatística que busca modelar a relação entre duas variáveis quantitativas: uma variável independente (X) e uma variável dependente (Y). A regressão linear procura encontrar a melhor reta que se ajusta aos pontos no gráfico de dispersão, minimizando a soma dos erros quadráticos. A equação da regressão linear é dada por:</p>
 <p><span class="math display">\[
-Y=β0​+β1​⋅X+ε
+f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}
 \]</span></p>
-<p>Onde:</p>
+<p>Nesta fórmula, <span class="math inline">\(x\)</span> representa um valor específico, <span class="math inline">\(\mu\)</span> é a média e <span class="math inline">\(\sigma\)</span> é o desvio padrão. A constante <span class="math inline">\(\pi\)</span> é aproximadamente igual a 3.14159.</p>
+<p>Assim é uma distribuição normal:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="visualizando_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Veja a figura de curvas que não seguem a distribuição normal:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="visualizando_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Para avaliar a normalidade dos dados acima, vamos usar o teste de Shapiro-Wilk</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Teste de Shapiro-Wilk</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>shapiro_test_result <span class="ot">&lt;-</span> <span class="fu">shapiro.test</span>(amostra)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibir o resultado do teste</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(shapiro_test_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  amostra
+W = 0.9994, p-value = 0.8077</code></pre>
+</div>
+</div>
 <ul>
-<li><p>𝑌 é a variável dependente;</p></li>
-<li><p>𝑋 é a variável independente;</p></li>
-<li><p>β0​ é o intercepto (ponto em que a reta cruza o eixo Y);</p></li>
-<li><p>β1​ é o coeficiente de inclinação (representa a variação em 𝑌 associada a uma unidade de variação em 𝑋);</p></li>
-<li><p>ε é o erro aleatório.</p></li>
+<li>Como o valor-p (0.92) é maior que o nível de significância comum de 0.05 (ou seja, <span class="math inline">\(\alpha\)</span> = 0.05), não temos evidências estatisticamente significativas para rejeitar a hipótese (nula, H0) de que os dados não seguem uma distribuição normal.</li>
+</ul>
+</section>
+<section id="hipótese-nula-e-hipótese-alternativa" class="level2">
+<h2 class="anchored" data-anchor-id="hipótese-nula-e-hipótese-alternativa">Hipótese nula e hipótese alternativa</h2>
+<p>É importante o conceito de hipótese nula e hipótese alternativa. Para cada pergunta, existe uma hipótese nula e uma alternativa.</p>
+<p>Considere a questão abaixo:</p>
+<ul>
+<li>Roqueiros são mais introvertidos?</li>
+</ul>
+<p>A hipótese nula de a questão é: “A média dos escores de introversão é igual entre roqueiros e não roqueiros”. A hipótese alternativa, por sua vez, contrapõe essa ideia.</p>
+<p>Vamos considerar que um teste positivo é aquele com p-valor &lt; 0.05, no qual <em>afastamos a hipótese nula</em>.</p>
+</section>
+<section id="iniciando-os-trabalhos" class="level2">
+<h2 class="anchored" data-anchor-id="iniciando-os-trabalhos">Iniciando os trabalhos</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definindo a pasta de trabalho</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># setwd("D:/Documentos/GitHub/r_dcg/aulas/aula_7_visualizando")</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregando o pacote necessário</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ lubridate 1.9.2     ✔ tibble    3.2.1
+✔ purrr     1.0.1     ✔ tidyr     1.3.0
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregando os dados</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"dados_turma_1.xlsx"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos salvar como df2 o nosso banco de dados sem dados faltantes</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> tidyr<span class="sc">::</span><span class="fu">drop_na</span>()</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Modificando os nomes das colunas e salvando o banco</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df2 <span class="sc">|&gt;</span> </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">data_preenchimento =</span> <span class="st">`</span><span class="at">Carimbo de data/hora</span><span class="st">`</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">idade =</span> <span class="st">`</span><span class="at">Idade (em anos, somente número)</span><span class="st">`</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">altura =</span> <span class="st">`</span><span class="at">Altura (em metros, casa decimal separada por ponto)</span><span class="st">`</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">cinema =</span> <span class="st">`</span><span class="at">Gênero cinematográfico preferido</span><span class="st">`</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">musica =</span> <span class="st">`</span><span class="at">Gênero musical preferido</span><span class="st">`</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">atividade_fisica =</span> <span class="st">`</span><span class="at">Quantos vezes por semana, em média, você pratica atividade física?</span><span class="st">`</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">otimismo =</span> <span class="st">`</span><span class="at">Tenho me sentido otimista em relação ao futuro</span><span class="st">`</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">utilidade =</span> <span class="st">`</span><span class="at">Tenho me sentido útil</span><span class="st">`</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">tranquilidade =</span> <span class="st">`</span><span class="at">Tenho me sentido tranquilo</span><span class="st">`</span>,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">lidar_problemas =</span> <span class="st">`</span><span class="at">Tenho lidado bem com os problemas</span><span class="st">`</span>,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">clareza_mental =</span> <span class="st">`</span><span class="at">Tenho pensado com clareza</span><span class="st">`</span>,</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">proximidade =</span> <span class="st">`</span><span class="at">Tenho me sentido próximo (a) às outras pessoas</span><span class="st">`</span>,</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">decisoes =</span> <span class="st">`</span><span class="at">Tenho sido capaz de tomar as minhas próprias decisões</span><span class="st">`</span>,</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">comunicativo =</span> <span class="st">`</span><span class="at">É conversador, comunicativo</span><span class="st">`</span>,</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">depressivo =</span> <span class="st">`</span><span class="at">É depressivo, triste</span><span class="st">`</span>,</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">reservado =</span> <span class="st">`</span><span class="at">É reservado</span><span class="st">`</span>,</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">controle_estresse =</span> <span class="st">`</span><span class="at">É relaxado, controla bem o stress</span><span class="st">`</span>,</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">energia =</span> <span class="st">`</span><span class="at">É cheio de energia</span><span class="st">`</span>,</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">tensao =</span> <span class="st">`</span><span class="at">Fica tenso com frequência</span><span class="st">`</span>,</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">entusiasmo =</span> <span class="st">`</span><span class="at">Gera muito entusiasmo</span><span class="st">`</span>,</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">preocupacao =</span> <span class="st">`</span><span class="at">Preocupa-se muito com tudo</span><span class="st">`</span>,</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">quietude =</span> <span class="st">`</span><span class="at">Tende a ser quieto, calado</span><span class="st">`</span>,</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">estabilidade_emocional =</span> <span class="st">`</span><span class="at">É emocionalmente estável, não se altera facilmente</span><span class="st">`</span>,</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">assertividade =</span> <span class="st">`</span><span class="at">É assertivo, não teme expressar o que sente</span><span class="st">`</span>,</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">temperamento =</span> <span class="st">`</span><span class="at">É temperamental, muda de humor facilmente</span><span class="st">`</span>,</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">timidez =</span> <span class="st">`</span><span class="at">É, às vezes, tímido e inibido</span><span class="st">`</span>,</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">calma =</span> <span class="st">`</span><span class="at">Mantém-se calmo nas situações de tensão</span><span class="st">`</span>,</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">sociabilidade =</span> <span class="st">`</span><span class="at">É sociável, extrovertido</span><span class="st">`</span>,</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">nervosismo =</span> <span class="st">`</span><span class="at">Fica nervoso facilmente</span><span class="st">`</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando variável de identificação e alterando sua posição para o início</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df2 <span class="sc">|&gt;</span> </span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">row_number</span>(), <span class="at">.before =</span> data_preenchimento) </span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Identificando os níveis de atividade física e bem-estar</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>levels_bem_estar <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Nunca"</span>, <span class="st">"Raramente"</span>, <span class="st">"Algumas vezes"</span>, <span class="st">"Frequentemente"</span>, <span class="st">"Sempre"</span>)</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>levels_ativ_fisica <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Não pratico atividade física"</span>, <span class="st">"Menos do que três vezes na semana"</span>, <span class="st">"Entre três e cinco vezes na semana"</span>, <span class="st">"Mais do que cinco vezes na semana"</span>)</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Juntando todas as operações de transformação usando o pipe</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df2 <span class="sc">|&gt;</span> </span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">altura =</span> <span class="fu">as.double</span>(altura),</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">musica =</span> <span class="fu">factor</span>(musica),</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">cinema =</span> <span class="fu">factor</span>(cinema),</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">atividade_fisica =</span> <span class="fu">factor</span>(atividade_fisica, <span class="at">levels =</span> levels_ativ_fisica , <span class="at">ordered =</span> T),</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(otimismo<span class="sc">:</span>decisoes, <span class="sc">~</span> <span class="fu">factor</span>(.x, <span class="at">levels =</span> levels_bem_estar, <span class="at">ordered =</span> T)),</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(otimismo<span class="sc">:</span>decisoes, as.numeric)</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bem_estar =</span> <span class="fu">sum</span>(<span class="fu">c</span>(otimismo, utilidade, tranquilidade, lidar_problemas, clareza_mental, proximidade, decisoes))) </span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Você consegue manipular os dados de neuroticismo e extroversão?</span></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos criar um vetor com os níveis da escala</span></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>likert_values <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Discordo totalmente"</span>,</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Discordo"</span>,</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Não concorco nem discordo"</span>,</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Concordo"</span>,</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Concordo totalmente"</span></span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df2 <span class="sc">|&gt;</span> <span class="fu">mutate</span>(across</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>                     (comunicativo<span class="sc">:</span>nervosismo, <span class="sc">~</span> factor</span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>                       (.x, <span class="at">levels =</span> likert_values, <span class="at">ordered =</span> T)),</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">across</span>(comunicativo<span class="sc">:</span>nervosismo, as.numeric))</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a><span class="co"># Defina colunas para colocar os escores ao contrário</span></span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>colunas_reverter <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>  <span class="st">"reservado"</span>,</span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>  <span class="st">"controle_estresse"</span>,</span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>  <span class="st">"quietude"</span>,</span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>  <span class="st">"estabilidade_emocional"</span>,</span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>  <span class="st">"timidez"</span>,</span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>  <span class="st">"calma"</span></span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a><span class="co"># Reverter os escores para as colunas especificadas</span></span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>df2[, colunas_reverter] <span class="ot">&lt;-</span> <span class="dv">6</span> <span class="sc">-</span> df2[, colunas_reverter]</span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a><span class="co"># Agora vamos criar as colunas de soma</span></span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df2 <span class="sc">|&gt;</span> </span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">extroversao =</span> <span class="fu">sum</span>(<span class="fu">c</span>(comunicativo, reservado, energia, entusiasmo, quietude, assertividade, timidez, sociabilidade))) </span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df2 <span class="sc">|&gt;</span> </span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">neuroticismo =</span> <span class="fu">sum</span>(<span class="fu">c</span>(depressivo, controle_estresse, tensao, preocupacao, estabilidade_emocional, temperamento, calma, nervosismo))) </span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a><span class="co"># Ótimo. </span></span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos salvar o banco de dados processado?</span></span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(df2, <span class="st">"dados_processados.csv"</span>, <span class="at">row.names=</span><span class="cn">FALSE</span>)</span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos limpar o ambiente de trabalho para passar para a próxima etapa.</span></span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Agora, vamos começar com o banco de dados processado, carregar os pacotes exigidos e iniciar a nossa análise.</p>
+<p>O objetivo nesta aula é descrever os dados, criar algumas visualizações interessantes e testar algumas hipóteses.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregando pacotes necessários</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr); <span class="fu">library</span>(DescTools); <span class="fu">library</span>(tidyverse); <span class="fu">library</span>(psych); <span class="fu">library</span>(questionr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'psych'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:DescTools':
+
+    AUC, ICC, SD</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:ggplot2':
+
+    %+%, alpha</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'questionr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:psych':
+
+    describe</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar o banco de dados processado</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"dados_processados.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 15 Columns: 33</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr   (3): cinema, musica, atividade_fisica
+dbl  (29): id, idade, altura, otimismo, utilidade, tranquilidade, lidar_prob...
+dttm  (1): data_preenchimento
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos primeiro transformar em fator "cinema", "musica", e "atividade_fisica"</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>levels_ativ_fisica <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Não pratico atividade física"</span>, <span class="st">"Menos do que três vezes na semana"</span>, <span class="st">"Entre três e cinco vezes na semana"</span>, <span class="st">"Mais do que cinco vezes na semana"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">musica =</span> <span class="fu">factor</span>(musica),</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">cinema =</span> <span class="fu">factor</span>(cinema),</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">atividade_fisica =</span> <span class="fu">factor</span>(atividade_fisica, <span class="at">levels =</span> levels_ativ_fisica , <span class="at">ordered =</span> T)) </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Veja a estrutura dos dados</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [15 × 33] (S3: tbl_df/tbl/data.frame)
+ $ id                    : num [1:15] 1 2 3 4 5 6 7 8 9 10 ...
+ $ data_preenchimento    : POSIXct[1:15], format: "2023-08-11 13:45:33" "2023-08-11 13:45:49" ...
+ $ idade                 : num [1:15] 22 20 25 25 23 20 28 20 23 20 ...
+ $ altura                : num [1:15] 1.71 1.79 1.76 1.78 1.77 1.8 1.74 1.82 1.58 1.75 ...
+ $ cinema                : Factor w/ 5 levels "Ação","Drama",..: 3 4 4 2 3 5 3 3 3 2 ...
+ $ musica                : Factor w/ 5 levels "Clássico","Indie",..: 1 4 5 5 5 5 2 4 5 5 ...
+ $ atividade_fisica      : Ord.factor w/ 4 levels "Não pratico atividade física"&lt;..: 4 1 3 3 2 4 2 3 3 4 ...
+ $ otimismo              : num [1:15] 5 4 3 3 3 4 4 3 3 4 ...
+ $ utilidade             : num [1:15] 5 3 3 3 2 4 3 4 2 3 ...
+ $ tranquilidade         : num [1:15] 4 3 2 2 3 3 3 4 3 4 ...
+ $ lidar_problemas       : num [1:15] 3 3 3 2 1 4 3 4 2 3 ...
+ $ clareza_mental        : num [1:15] 4 4 3 3 2 4 4 4 4 5 ...
+ $ proximidade           : num [1:15] 4 4 3 2 2 3 4 3 3 4 ...
+ $ decisoes              : num [1:15] 4 4 5 3 4 5 4 4 2 5 ...
+ $ comunicativo          : num [1:15] 5 4 5 4 1 3 2 3 2 4 ...
+ $ depressivo            : num [1:15] 1 3 4 2 4 2 4 2 4 4 ...
+ $ reservado             : num [1:15] 5 3 2 2 2 1 2 2 2 2 ...
+ $ controle_estresse     : num [1:15] 2 5 4 5 3 3 3 2 3 3 ...
+ $ energia               : num [1:15] 5 2 3 2 1 3 2 3 2 4 ...
+ $ tensao                : num [1:15] 3 4 3 4 3 5 5 2 4 2 ...
+ $ entusiasmo            : num [1:15] 5 4 3 4 1 3 2 3 4 3 ...
+ $ preocupacao           : num [1:15] 3 5 5 4 3 4 4 4 4 1 ...
+ $ quietude              : num [1:15] 4 4 3 2 2 2 2 2 2 2 ...
+ $ estabilidade_emocional: num [1:15] 3 4 4 3 2 2 3 3 4 2 ...
+ $ assertividade         : num [1:15] 4 3 3 4 1 3 2 2 5 1 ...
+ $ temperamento          : num [1:15] 2 4 5 5 2 3 4 2 4 2 ...
+ $ timidez               : num [1:15] 4 2 1 1 1 2 2 2 1 1 ...
+ $ calma                 : num [1:15] 2 4 4 2 2 1 2 3 2 2 ...
+ $ sociabilidade         : num [1:15] 5 4 5 4 2 3 3 2 1 3 ...
+ $ nervosismo            : num [1:15] 2 4 4 5 3 2 3 4 4 1 ...
+ $ bem_estar             : num [1:15] 29 25 22 18 17 27 25 26 19 28 ...
+ $ extroversao           : num [1:15] 37 26 25 23 11 20 17 19 19 20 ...
+ $ neuroticismo          : num [1:15] 18 33 33 30 22 22 28 22 29 17 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos tirar algumas colunas que não nos interessam mais:</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>otimismo<span class="sc">:-</span>nervosismo)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos gerar algumas estatísticas descritivas com o pacote DescTools</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>numeric_vars <span class="ot">&lt;-</span> df[, <span class="fu">sapply</span>(df, is.numeric)]</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>summary_stats_numeric <span class="ot">&lt;-</span> <span class="fu">Desc</span>(numeric_vars)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Agora para as variáveis categóricas</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>categorical_vars <span class="ot">&lt;-</span> df[, <span class="fu">sapply</span>(df, is.factor)]</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>summary_stats_categorical <span class="ot">&lt;-</span> <span class="fu">Desc</span>(categorical_vars)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>null device 
+          1 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Você pode também usar o pacote psych, função describe; e para variáveis categóricas a função freq do pacote questionr</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">describe</span>(df<span class="sc">$</span>idade)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   vars  n mean   sd median trimmed  mad min max range skew kurtosis   se
+X1    1 15 22.2 2.48     22      22 2.97  19  28     9 0.67    -0.41 0.64</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">describe</span>(df<span class="sc">$</span>altura)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   vars  n mean   sd median trimmed  mad  min  max range skew kurtosis   se
+X1    1 15 1.73 0.09   1.75    1.73 0.07 1.58 1.92  0.34 0.01    -0.72 0.02</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">describe</span>(df<span class="sc">$</span>bem_estar)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   vars  n  mean   sd median trimmed  mad min max range skew kurtosis   se
+X1    1 15 23.33 3.83     24   23.38 4.45  17  29    12 -0.2    -1.43 0.99</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">describe</span>(df<span class="sc">$</span>extroversao)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   vars  n  mean   sd median trimmed  mad min max range skew kurtosis   se
+X1    1 15 22.33 6.67     20   22.08 4.45  11  37    26 0.59    -0.32 1.72</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">describe</span>(df<span class="sc">$</span>neuroticismo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   vars  n mean   sd median trimmed  mad min max range  skew kurtosis   se
+X1    1 15 25.6 5.95     28   25.77 7.41  16  33    17 -0.21    -1.52 1.54</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>questionr<span class="sc">::</span><span class="fu">freq</span>(df<span class="sc">$</span>cinema)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  n    % val%
+Ação              1  6.7  6.7
+Drama             4 26.7 26.7
+Ficção científica 7 46.7 46.7
+Suspense          2 13.3 13.3
+Terror            1  6.7  6.7</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>questionr<span class="sc">::</span><span class="fu">freq</span>(df<span class="sc">$</span>musica)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         n    % val%
+Clássico 1  6.7  6.7
+Indie    1  6.7  6.7
+MPB      2 13.3 13.3
+Pop      3 20.0 20.0
+Rock     8 53.3 53.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>questionr<span class="sc">::</span><span class="fu">freq</span>(df<span class="sc">$</span>atividade_fisica)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                   n    % val%
+Não pratico atividade física       2 13.3 13.3
+Menos do que três vezes na semana  5 33.3 33.3
+Entre três e cinco vezes na semana 5 33.3 33.3
+Mais do que cinco vezes na semana  3 20.0 20.0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos transformar algumas variáveis categóricas para fazer algumas análises</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>musica_preferencia <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(df<span class="sc">$</span>musica <span class="sc">==</span> <span class="st">"Rock"</span>, </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Rock"</span>, </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Não-Rock"</span>)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>cinema_preferencia <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(df<span class="sc">$</span>cinema <span class="sc">==</span> <span class="st">"Ficção científica"</span>, </span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Ficção científica"</span>, </span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Não-Ficção científica"</span>)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>sedentarismo <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(df<span class="sc">$</span>atividade_fisica <span class="sc">==</span> <span class="st">"Não pratico atividade física"</span> <span class="sc">|</span> </span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>                          df<span class="sc">$</span>atividade_fisica <span class="sc">==</span> <span class="st">"Menos do que três vezes na semana"</span>, </span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Sedentário"</span>, </span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Ativo"</span>)</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>musica_preferencia <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(df<span class="sc">$</span>musica_preferencia)</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>cinema_preferencia <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(df<span class="sc">$</span>cinema_preferencia)</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>sedentarismo <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(df<span class="sc">$</span>sedentarismo)</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>musica_preferencia)</span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>cinema_preferencia)</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>sedentarismo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Vamos, agora, fazer algumas visualizações com os dados que temos.</p>
+<section id="dados-categóricos" class="level3">
+<h3 class="anchored" data-anchor-id="dados-categóricos">Dados categóricos</h3>
+<p>Para visualizar dados categóricos, podemos usar o gráfico de colunas:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Para visualizar o gráfico de colunas, primeiro é necessário gerar uma tabela dos dados em df$cinema</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>cinema_table <span class="ot">&lt;-</span> <span class="fu">table</span>(df<span class="sc">$</span>cinema)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de colunas</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(cinema_table, </span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Gráfico de barras de preferência de filmes"</span>, </span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Cinema"</span>, </span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Frequência"</span>, </span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="st">"skyblue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="visualizando_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos ver a preferência por ficção científica ou não.</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>cinema_table <span class="ot">&lt;-</span> <span class="fu">table</span>(df<span class="sc">$</span>cinema_preferencia)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(cinema_table, </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Gráfico de barras de preferência de filmes"</span>, </span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Cinema"</span>, </span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Frequência"</span>, </span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="st">"skyblue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="visualizando_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Para criar um gráfico de colunas  que mostre a relação entre os grupos, você pode usar a função barplot em combinação com a função table para criar uma tabela de contingência</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Crie uma tabela de contingência entre as colunas 'cinema' e 'ficção científica'</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>cont_table <span class="ot">&lt;-</span> <span class="fu">table</span>(df<span class="sc">$</span>cinema_preferencia, df<span class="sc">$</span>musica_preferencia)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Defina cores para os grupos de 'ficção científica'</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>cores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"lightgreen"</span>, <span class="st">"lightcoral"</span>)</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Crie um gráfico de colunas justapostas</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(cont_table, </span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">beside =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> cores, </span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Gráfico de Barras por Grupo de Ficção Científica e Cinema"</span>,</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Preferência musical"</span>,</span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Contagem"</span>)</span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Adicione uma legenda</span></span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">xpd =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"top"</span>, <span class="at">legend =</span> <span class="fu">levels</span>(df<span class="sc">$</span>cinema_preferencia), <span class="at">fill =</span> cores, <span class="at">bty =</span> <span class="st">"n"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="visualizando_files/figure-html/unnamed-chunk-6-3.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="dados-numéricos-contínuos" class="level3">
+<h3 class="anchored" data-anchor-id="dados-numéricos-contínuos">Dados numéricos contínuos</h3>
+<p>Aqui, podemos usar o histograma, um gráfico de colunas justapostas que representam as classes na distribuição.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># nclass me permite ajustar o número de classes desejada</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(df<span class="sc">$</span>idade, </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Histograma da Idade"</span>, </span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Idade"</span>, </span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Frequência"</span>,</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"lightblue"</span>,</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">nclass =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="visualizando_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Outra maneira é o gráfico de densidade.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crie um gráfico de densidade da coluna 'idade'</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>den <span class="ot">&lt;-</span> <span class="fu">density</span>(df<span class="sc">$</span>idade)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(den, <span class="at">main =</span> <span class="st">"Gráfico de Densidade da Idade"</span>, <span class="at">xlab =</span> <span class="st">"Idade"</span>, <span class="at">ylab =</span> <span class="st">"Densidade"</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="visualizando_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Exercício.</p>
+<p>Crie visualizações das outras variáveis.</p>
+<p>Exemplo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>den <span class="ot">&lt;-</span> <span class="fu">density</span>(df<span class="sc">$</span>bem_estar)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(den, <span class="at">main =</span> <span class="st">"Gráfico de Densidade de Bem-Estar"</span>, <span class="at">xlab =</span> <span class="st">"Escore"</span>, <span class="at">ylab =</span> <span class="st">"Densidade"</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="visualizando_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="testando-as-nossas-hipóteses" class="level1">
+<h1>Testando as nossas hipóteses</h1>
+<section id="primeira-questão" class="level2">
+<h2 class="anchored" data-anchor-id="primeira-questão">Primeira questão</h2>
+<p>A proporção de roqueiros é maior entre fãs de ficção científica vs não-fãs;</p>
+<ul>
+<li>Aqui, nós vamos testar a diferença entre duas proporções. Para isso, usandos o teste qui-quadrado.</li>
+</ul>
+<p>A medida mais comum e possivelmente mais útil do tamanho do efeito para dados categóricos é a razão de chances (<em>odds ratio</em>). As razões de chances são mais interpretáveis em tabelas de contingência 2 × 2 e provavelmente não são úteis para tabelas de contingência maiores.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos criar uma tabela de contingência</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>contingency_table <span class="ot">&lt;-</span> <span class="fu">table</span>(df<span class="sc">$</span>cinema_preferencia, df<span class="sc">$</span>musica_preferencia)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>contingency_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                       
+                        Não-Rock Rock
+  Ficção científica            4    3
+  Não-Ficção científica        3    5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Realizar o teste do qui-quadrado</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>chi_squared_test <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(contingency_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in chisq.test(contingency_table): Aproximação do qui-quadrado pode estar
+incorreta</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar os resultados</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>chi_squared_test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test with Yates' continuity correction
+
+data:  contingency_table
+X-squared = 0.058594, df = 1, p-value = 0.8087</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular o odds ratio</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>odds_ratio <span class="ot">&lt;-</span> contingency_table[<span class="dv">1</span>,<span class="dv">1</span>] <span class="sc">*</span> contingency_table[<span class="dv">2</span>,<span class="dv">2</span>] <span class="sc">/</span> (contingency_table[<span class="dv">1</span>,<span class="dv">2</span>] <span class="sc">*</span> contingency_table[<span class="dv">2</span>,<span class="dv">1</span>])</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>odds_ratio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.222222</code></pre>
+</div>
+</div>
+<p>A mensagem de aviso que você recebeu, que se traduz como “A aproximação do qui-quadrado pode estar incorreta”, sugere que o teste do qui-quadrado pode não ser apropriado para seus dados. Este aviso normalmente ocorre quando o tamanho da amostra é pequeno ou quando as frequências esperadas das células na tabela de contingência são muito baixas.</p>
+<p>Nesses casos, é aconselhável considerar um teste estatístico alternativo, como o teste exato de Fisher, que é mais adequado para amostras pequenas ou quando as frequências celulares esperadas são baixas. Veja como você pode realizar o teste exato de Fisher em R:</p>
+<p>O teste qui-quadrado é mais seguro quando você tem um grande tamanho de amostra (geralmente acima de 100) e as expectativas de frequência nas células da tabela de contingência são razoavelmente altas, geralmente não menores que 5.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Realizar teste exato de Fisher</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>fisher_test <span class="ot">&lt;-</span> <span class="fu">fisher.test</span>(contingency_table)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>fisher_test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Fisher's Exact Test for Count Data
+
+data:  contingency_table
+p-value = 0.6193
+alternative hypothesis: true odds ratio is not equal to 1
+95 percent confidence interval:
+  0.1893223 27.6093922
+sample estimates:
+odds ratio 
+   2.10384 </code></pre>
+</div>
+</div>
+<p>O p-valor &gt;0.05 sugere não haver diferença entre os dois grupos.</p>
+<p>O intervalo de confiança indica uma faixa de valores em que o odds ratio verdadeiro provavelmente está. Aqui, o intervalo vai de 0.1893 a 27.6094. Isso significa que, com 95% de confiança, o odds ratio verdadeiro está dentro dessa faixa. Um intervalo que inclui o valor 1 sugere que não há uma diferença significativa nas preferências entre os grupos. O odds ratio estimado é de 2.10384.</p>
+<p>Ou seja, as pessoas que preferem ficção científica têm aproximadamente duas vezes mais chances de preferir rock do que as pessoas que não preferem ficção científica. <strong>No entanto, como o p-valor é alto e o intervalo de confiança inclui 1, essa diferença não é estatisticamente significativa.</strong></p>
+</section>
+<section id="segunda-questão" class="level2">
+<h2 class="anchored" data-anchor-id="segunda-questão">Segunda questão</h2>
+<p>Roqueiros são mais introvertidos:</p>
+<ul>
+<li>Aqui, nós vamos testar a diferença entre duas médias (dos escores de introversão entre os dois grupos - roqueiros e não-roqueiros). Vamos usar aqui o teste t.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo de regressão linear simples </span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>) </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>) </span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x) </span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Separar o conjunto de dados em dois grupos: roqueiros e não-roqueiros</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>roqueiros <span class="ot">&lt;-</span> df[df<span class="sc">$</span>musica_preferencia <span class="sc">==</span> <span class="st">"Rock"</span>, <span class="st">"extroversao"</span>]</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>nao_roqueiros <span class="ot">&lt;-</span> df[df<span class="sc">$</span>musica_preferencia <span class="sc">!=</span> <span class="st">"Rock"</span>, <span class="st">"extroversao"</span>]</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Realizar um teste t para comparar as médias dos escores de extroversão entre os grupos</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>t_test_result <span class="ot">&lt;-</span> <span class="fu">t.test</span>(roqueiros, nao_roqueiros, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibir os resultados do teste t</span></span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>t_test_result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  roqueiros and nao_roqueiros
+t = -2.1867, df = 9.3874, p-value = 0.05535
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -13.9427077   0.1927077
+sample estimates:
+mean of x mean of y 
+   19.125    26.000 </code></pre>
+</div>
+</div>
+<p>Aqui está a interpretação dos resultados do teste t de duas amostras (Welch Two Sample t-test) para comparar as médias dos escores de extroversão entre roqueiros e não-roqueiros:</p>
+<ol type="1">
+<li><p><strong>t = -2.1867:</strong> A estatística t é -2.1867. Esse valor representa a magnitude da diferença entre as médias dos grupos (roqueiros e não-roqueiros) em relação à variabilidade dos dados. O sinal negativo indica que a média dos roqueiros é menor do que a média dos não-roqueiros.</p></li>
+<li><p><strong>p-value = 0.05535:</strong> O valor-p é 0.05535, apoiando a hipótese nula.</p></li>
+<li><p><strong>Hipótese alternativa: true difference in means is not equal to 0:</strong> A hipótese alternativa afirma que a diferença real entre as médias não é igual a zero, o que significa que você está interessado em verificar se existe uma diferença significativa entre os grupos.</p></li>
+<li><p><strong>Intervalo de confiança de 95 por cento (95 percent confidence interval):</strong> O intervalo de confiança vai de -13.9427 a 0.1927. O intervalo inclui o valor zero, indicando que não há diferença significativa.</p></li>
+<li><p><strong>Estimativas da amostra (sample estimates):</strong> As médias dos dois grupos são apresentadas como “mean of x” (roqueiros) e “mean of y” (não-roqueiros). A média dos roqueiros é de aproximadamente 19.125, enquanto a média dos não-roqueiros é de 26.000.</p></li>
+</ol>
+<p>Com base nos resultados, o valor-p é ligeiramente maior que o nível de significância comum de 0,05 (é 0,05535). Portanto, não há evidência estatisticamente significativa para afirmar que os roqueiros são mais introvertidos do que os não-roqueiros com base nos escores de extroversão. No entanto, é importante notar que o valor-p está próximo do limite, então, dependendo do contexto e da importância prática, pode ser útil considerar uma análise mais aprofundada ou uma <strong>maior amostragem</strong> para obter conclusões mais robustas.</p>
+<p>Uma maneira de visualizar os resultados é através do box plot:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a boxplot with labels and a title</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(df<span class="sc">$</span>extroversao <span class="sc">~</span> df<span class="sc">$</span>musica_preferencia,</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Preferência musical"</span>,</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Nível de extroversão"</span>,</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Boxplot of preferência musical vs extroversão"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="visualizando_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Uma outra maneira de visualizar é através do gráfico de colunas:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar a biblioteca ggplot2</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular as médias e as barras de erro (vamos usar o desvio padrão como exemplo)</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>mean_roqueiros <span class="ot">&lt;-</span> <span class="fu">mean</span>(roqueiros<span class="sc">$</span>extroversao)</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>mean_nao_roqueiros <span class="ot">&lt;-</span> <span class="fu">mean</span>(nao_roqueiros<span class="sc">$</span>extroversao)</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>sd_roqueiros <span class="ot">&lt;-</span> <span class="fu">sd</span>(roqueiros<span class="sc">$</span>extroversao)</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>sd_nao_roqueiros <span class="ot">&lt;-</span> <span class="fu">sd</span>(nao_roqueiros<span class="sc">$</span>extroversao)</span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar um data frame com os dados</span></span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">Grupo =</span> <span class="fu">c</span>(<span class="st">"Roqueiros"</span>, <span class="st">"Não Roqueiros"</span>),</span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">Media =</span> <span class="fu">c</span>(mean_roqueiros, mean_nao_roqueiros),</span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">Erro_Padrao =</span> <span class="fu">c</span>(sd_roqueiros, sd_nao_roqueiros) <span class="co"># A diferença não tem erro padrão</span></span>
+<span id="cb55-15"><a href="#cb55-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb55-16"><a href="#cb55-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-17"><a href="#cb55-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar o gráfico de colunas</span></span>
+<span id="cb55-18"><a href="#cb55-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> Grupo, <span class="at">y =</span> Media, <span class="at">fill =</span> Grupo)) <span class="sc">+</span></span>
+<span id="cb55-19"><a href="#cb55-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.9</span>), <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb55-20"><a href="#cb55-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> Media <span class="sc">-</span> Erro_Padrao, <span class="at">ymax =</span> Media <span class="sc">+</span> Erro_Padrao), <span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.9</span>)) <span class="sc">+</span></span>
+<span id="cb55-21"><a href="#cb55-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Gráfico de Barras com Médias e Erro Padrão"</span>,</span>
+<span id="cb55-22"><a href="#cb55-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Grupo"</span>,</span>
+<span id="cb55-23"><a href="#cb55-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Média no escore de extroversão"</span>) <span class="sc">+</span></span>
+<span id="cb55-24"><a href="#cb55-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="visualizando_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>Exercício:</strong></p>
+<ul>
+<li><p>Testar outras hipóteses de diferença de média entre grupos de preferência de filme, atividade física, etc.</p></li>
+<li><p>Faça box plots para mostrar essas diferenças.</p></li>
+</ul>
+</section>
+<section id="terceira-e-quarta-questões" class="level2">
+<h2 class="anchored" data-anchor-id="terceira-e-quarta-questões">Terceira e quarta questões</h2>
+<p>Quanto mais extrovertido, maior o nível de bem-estar;</p>
+<ul>
+<li>Aqui, nós vamos explorar a associação entre duas variáveis quantitativas contínuas. Para isso, usaremos a regressão, já que temos uma variável contínua dependente (bem-estar) e uma independente (extroversão)</li>
+</ul>
+<p>O efeito do neuroticismo no bem-estar desaparece se ajustarmos para extroversão.</p>
+<ul>
+<li>Aqui, vamos usar a regressão múltipla.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Temos que testar a normalidade dos dados que vamos usar</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Teste de Shapiro-Wilk</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>shapiro_test_result <span class="ot">&lt;-</span> <span class="fu">shapiro.test</span>(df<span class="sc">$</span>extroversao)</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibir o resultado do teste</span></span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(shapiro_test_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  df$extroversao
+W = 0.94896, p-value = 0.5082</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Teste de Shapiro-Wilk para neuroticismo</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>shapiro_test_result <span class="ot">&lt;-</span> <span class="fu">shapiro.test</span>(df<span class="sc">$</span>neuroticismo); <span class="fu">print</span>(shapiro_test_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  df$neuroticismo
+W = 0.90729, p-value = 0.1231</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Teste de Shapiro-Wilk para bem-estar</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>shapiro_test_result <span class="ot">&lt;-</span> <span class="fu">shapiro.test</span>(df<span class="sc">$</span>bem_estar); <span class="fu">print</span>(shapiro_test_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  df$bem_estar
+W = 0.94371, p-value = 0.4313</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ou seja, nossos dados têm distribuição normal. Sinal verde para usar a regressão linear.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Veja a distribuição dos nossos dados quantitativos:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="visualizando_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Agora vamos testar a nossa primeira hipótese:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos usar a função lm()</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> df, bem_estar <span class="sc">~</span> extroversao)</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos ver os resutados usando a função summary()</span></span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = y ~ x)
+lm(formula = bem_estar ~ extroversao, data = df)
 
 Residuals:
-         1          2          3          4          5 
--7.772e-16  9.000e-01 -1.200e+00 -3.000e-01  6.000e-01 
+    Min      1Q  Median      3Q     Max 
+-5.5348 -2.5241  0.4439  2.2567  5.3717 
 
 Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)  
-(Intercept)    1.900      0.995   1.910   0.1522  
-x              1.100      0.300   3.667   0.0351 *
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  16.5856     3.1460   5.272 0.000151 ***
+extroversao   0.3021     0.1353   2.232 0.043805 *  
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.9487 on 3 degrees of freedom
-Multiple R-squared:  0.8176,    Adjusted R-squared:  0.7568 
-F-statistic: 13.44 on 1 and 3 DF,  p-value: 0.03508</code></pre>
+Residual standard error: 3.379 on 13 degrees of freedom
+Multiple R-squared:  0.2771,    Adjusted R-squared:  0.2215 
+F-statistic: 4.984 on 1 and 13 DF,  p-value: 0.0438</code></pre>
 </div>
 </div>
-<p>Interpretação do resultado do modelo:</p>
-<p>O modelo de regressão linear obtido foi:</p>
-<p>�=1.900+1.100⋅�+�Y=1.900+1.100⋅X+ε</p>
-<p>Aqui estão os principais aspectos a serem observados na saída do modelo:</p>
+<p>Interpretação dos Resultados:</p>
+<ul>
+<li><p>O coeficiente de interceptação (Intercept) é de aproximadamente 16.586. Isso representa o valor estimado de “bem_estar” quando “extroversao” é igual a zero.</p></li>
+<li><p>O coeficiente de “extroversao” é de aproximadamente 0.3021. Isso indica que, para cada unidade de aumento em “extroversao”, espera-se um aumento médio de 0.3021 na variável “bem_estar”.</p></li>
+<li><p>O valor-p (Pr(&gt;|t|)) associado ao coeficiente de “extroversao” é 0.0438, o que indica que a relação entre “extroversao” e “bem_estar” é estatisticamente significativa a um nível de significância de 0.05. Portanto, podemos concluir que “extroversao” tem um efeito significativo em “bem_estar”.</p></li>
+<li><p>O coeficiente de determinação (R-quadrado) é 0.2771. Isso significa que cerca de 27.71% da variabilidade em “bem_estar” pode ser explicada pela variável “extroversao”. O R-quadrado ajustado é 0.2215, levando em consideração o número de preditores no modelo.</p></li>
+<li><p>O F-statistic é 4.984, com um valor-p de 0.0438. Isso sugere que o modelo como um todo é estatisticamente significativo, indicando que a regressão linear é adequada para explicar a relação entre as variáveis.</p></li>
+</ul>
+<p>Agora, vamos criar uma visualização para ilustrar essa relação. Vamos traçar um <strong>gráfico de dispersão</strong> com a linha de regressão:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar o gráfico de dispersão com a linha de regressão e a sombra de intervalo de confiança</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>grafico <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> extroversao, <span class="at">y =</span> bem_estar)) <span class="sc">+</span></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">fill =</span> <span class="st">"lightblue"</span>) <span class="sc">+</span>  <span class="co"># Adicionar sombra</span></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Regressão Linear com Intervalo de Confiança"</span>,</span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Extroversão"</span>,</span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Bem-Estar"</span>) <span class="sc">+</span></span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-10"><a href="#cb65-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Adicionar informações sobre o modelo ao gráfico</span></span>
+<span id="cb65-11"><a href="#cb65-11" aria-hidden="true" tabindex="-1"></a>texto <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"Fórmula: y = %.4f + %.4fx</span><span class="sc">\n</span><span class="st">Valor-p: %.4f"</span>, <span class="fu">coef</span>(modelo)[<span class="dv">1</span>], <span class="fu">coef</span>(modelo)[<span class="dv">2</span>], <span class="fu">summary</span>(modelo)<span class="sc">$</span>coefficients[<span class="dv">2</span>, <span class="dv">4</span>])</span>
+<span id="cb65-12"><a href="#cb65-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-13"><a href="#cb65-13" aria-hidden="true" tabindex="-1"></a>grafico_com_texto <span class="ot">&lt;-</span> grafico <span class="sc">+</span></span>
+<span id="cb65-14"><a href="#cb65-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">max</span>(df<span class="sc">$</span>extroversao), <span class="at">y =</span> <span class="fu">min</span>(df<span class="sc">$</span>bem_estar), <span class="at">label =</span> texto, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="dv">0</span>)</span>
+<span id="cb65-15"><a href="#cb65-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-16"><a href="#cb65-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar o gráfico com o texto e a sombra de intervalo de confiança</span></span>
+<span id="cb65-17"><a href="#cb65-17" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(grafico_com_texto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="visualizando_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Agora vamos testar a questão em sequência.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos usar a função lm()</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> df, bem_estar <span class="sc">~</span> extroversao <span class="sc">+</span> neuroticismo)</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Vamos ver os resutados usando a função summary()</span></span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = bem_estar ~ extroversao + neuroticismo, data = df)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5075 -2.0452  0.3134  2.4547  3.8395 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   25.6728     4.5417   5.653 0.000107 ***
+extroversao    0.2630     0.1158   2.272 0.042282 *  
+neuroticismo  -0.3208     0.1298  -2.471 0.029423 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.863 on 12 degrees of freedom
+Multiple R-squared:  0.5209,    Adjusted R-squared:  0.4411 
+F-statistic: 6.525 on 2 and 12 DF,  p-value: 0.01209</code></pre>
+</div>
+</div>
+<p>Nesse caso usamos uma regressão múltipla.</p>
+<p>Uma regressão simples envolve apenas duas variáveis: uma variável independente (preditora) e uma variável dependente.</p>
+<p>Uma regressão múltipla envolve mais de duas variáveis, incluindo uma variável dependente e duas ou mais variáveis independentes.</p>
+<p>Y = β0 + β1X1 + β2X2 + ... + βkXk + ε</p>
+<ul>
+<li><p><strong><code>Y</code></strong> é a variável dependente.</p></li>
+<li><p><strong><code>X₁, X₂, ..., Xₖ</code></strong> são as variáveis independentes.</p></li>
+<li><p><strong><code>β₀</code></strong> é o coeficiente de interceptação.</p></li>
+<li><p><strong><code>β₁, β₂, ..., βₖ</code></strong> são os coeficientes das variáveis independentes.</p></li>
+<li><p><strong><code>ε</code></strong> é o erro residual.</p></li>
+</ul>
+<p>Você consegue interpretar os resultados da nossa regressão múltipla?</p>
+</section>
+</section>
+<section id="exercícios" class="level1">
+<h1>Exercícios</h1>
+<p>Você consegue testar essas perguntas de pesquisa? Defina a hipótese nula e alternativa, o teste estatístico mais adequado, verifique a normalidade dos dados quando necessário e faça o teste.</p>
 <ol type="1">
-<li><p>Coeficientes:</p>
-<ul>
-<li><p>Intercepto (�0β0​): O valor do intercepto é 1.900. Isso significa que quando a variável independente (�X) é igual a zero, o valor estimado da variável dependente (�Y) é 1.900.</p></li>
-<li><p>Coeficiente de inclinação (�1β1​): O valor do coeficiente de inclinação é 1.100. Isso indica que, para cada unidade de aumento em �X, espera-se um aumento de 1.100 em �Y.</p></li>
-</ul></li>
-<li><p>Teste de hipóteses:</p>
-<ul>
-<li><p>Para o intercepto (�0β0​): O valor p (Pr(&gt;|t|)) associado ao intercepto é 0.1522. Como esse valor é maior que 0.05, não temos evidências suficientes para rejeitar a hipótese nula de que o intercepto é igual a zero.</p></li>
-<li><p>Para o coeficiente de inclinação (�1β1​): O valor p (Pr(&gt;|t|)) associado ao coeficiente de inclinação é 0.0351. Como esse valor é menor que 0.05, temos evidências estatisticamente significativas para rejeitar a hipótese nula de que o coeficiente de inclinação é igual a zero. Isso indica que o coeficiente de inclinação é significativamente diferente de zero, ou seja, a variável independente (�X) tem um efeito significativo na variável dependente (�Y).</p></li>
-</ul></li>
-<li><p>Coeficiente de determinação (R-quadrado):</p>
-<ul>
-<li>O coeficiente de determinação (�2R2) é igual a 0.8176, o que significa que aproximadamente 81.76% da variação em �Y é explicada pela variação em �X. Isso indica que o modelo de regressão linear explica bem os dados e a relação entre as duas variáveis.</li>
-</ul></li>
-<li><p>Residual standard error:</p>
-<ul>
-<li>O residual standard error é igual a 0.9487, que representa o desvio padrão dos resíduos (diferença entre os valores observados e os valores estimados pelo modelo). Quanto menor esse valor, melhor o ajuste do modelo aos dados.</li>
-</ul></li>
-</ol>
-<p>Em resumo, o modelo de regressão linear indica que existe uma relação significativa entre as variáveis �X e �Y, onde �Y aumenta em média 1.100 unidades para cada unidade de aumento em �X. O modelo explica cerca de 81.76% da variação observada em �Y. O intercepto não é estatisticamente significativo, o que significa que não há evidências suficientes para afirmar que o valor de �Y é diferente de zero quando �X é igual a zero. No entanto, o coeficiente de inclinação é estatisticamente significativo, indicando que �X tem um efeito significativo em �Y.</p>
-</section>
-<section id="coeficiente-de-correlação" class="level2">
-<h2 class="anchored" data-anchor-id="coeficiente-de-correlação">Coeficiente de correlação</h2>
-<p>O coeficiente de correlação (r) é uma medida que quantifica a força e a direção da relação linear entre duas variáveis quantitativas. O coeficiente de correlação varia entre -1 e 1. Um valor próximo de 1 indica uma forte correlação positiva, um valor próximo de -1 indica uma forte correlação negativa e um valor próximo de 0 indica uma correlação fraca ou inexistente.</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Exemplo de cálculo do coeficiente de correlação x &lt;- c(1, 2, 3, 4, 5) y &lt;- c(3, 5, 4, 6, 8) correlacao &lt;- cor(x, y) correlacao</code></p>
-</section>
-<section id="interpretação-dos-resultados-da-regressão" class="level2">
-<h2 class="anchored" data-anchor-id="interpretação-dos-resultados-da-regressão">Interpretação dos resultados da regressão</h2>
-<p>Ao realizar uma análise de regressão, é importante interpretar os resultados obtidos. O resumo do modelo nos fornece informações sobre os coeficientes estimados, o coeficiente de determinação (�2R2) e outras estatísticas relevantes. A interpretação dos resultados nos ajuda a compreender a relação entre as variáveis e a avaliar a qualidade do modelo.</p>
-</section>
-<section id="exemplos-práticos-de-modelagem" class="level2">
-<h2 class="anchored" data-anchor-id="exemplos-práticos-de-modelagem">Exemplos práticos de modelagem</h2>
-<p>Agora, vamos aplicar a regressão linear a um conjunto de dados real e fazer a análise de um modelo resultante. Escolha um conjunto de dados adequado para a análise de regressão e explore os resultados do modelo para obter insights relevantes.</p>
-<pre><code>RCopy code</code></pre>
-<p><code># Exemplo prático de modelagem com regressão linear # (Insira aqui o código e a descrição do conjunto de dados utilizado)</code></p>
-<p>Nesta parte da aula, aprendemos sobre a regressão linear simples, uma técnica para modelar a relação entre duas variáveis quantitativas, e o coeficiente de correlação, que quantifica a intensidade dessa relação. Além disso, discutimos a interpretação dos resultados da regressão e a importância de aplicar a modelagem em conjuntos de dados reais para obter insights valiosos. A modelagem é uma ferramenta poderosa que pode ser usada para previsões e tomada de decisões informadas.</p>
-</section>
-</section>
-<section id="lista-de-exercícios" class="level1">
-<h1>Lista de exercícios</h1>
-<section id="resolução-de-problemas-práticos-utilizando-r" class="level2">
-<h2 class="anchored" data-anchor-id="resolução-de-problemas-práticos-utilizando-r">Resolução de problemas práticos utilizando R</h2>
-<ol type="1">
-<li><p>Baixe um conjunto de dados de sua escolha (pode ser de um repositório público ou uma planilha própria) e importe-o para o R.</p></li>
-<li><p>Realize a limpeza e pré-processamento dos dados, tratando valores ausentes e realizando transformações necessárias.</p></li>
-<li><p>Crie diferentes tipos de gráficos (scatter plot, line plot, bar plot, pie plot, box plot) para explorar visualmente as relações e tendências dos dados.</p></li>
-<li><p>Calcule a média, mediana, moda, desvio padrão e variância das variáveis quantitativas do conjunto de dados.</p></li>
-<li><p>Calcule o coeficiente de correlação entre pares de variáveis quantitativas para identificar possíveis relações lineares.</p></li>
+<li>Quem gosta de ficção científica é mais neurótico;</li>
+<li>Quem pratica atividade física tem maiores níveis de bem-estar;</li>
+<li>Quanto mais neurótico, menor o nível de bem-estar.</li>
 </ol>
 </section>
-<section id="aplicação-dos-conhecimentos-adquiridos-em-visualização-e-modelagem" class="level2">
-<h2 class="anchored" data-anchor-id="aplicação-dos-conhecimentos-adquiridos-em-visualização-e-modelagem">Aplicação dos conhecimentos adquiridos em visualização e modelagem</h2>
-<ol type="1">
-<li><p>Escolha duas variáveis quantitativas do conjunto de dados utilizado anteriormente e crie um scatter plot para visualizar sua relação.</p></li>
-<li><p>Realize uma regressão linear simples entre essas duas variáveis e interprete os resultados obtidos, considerando o valor do coeficiente de correlação.</p></li>
-<li><p>Explore diferentes técnicas de visualização para representar os resultados da regressão (pode utilizar bibliotecas como ggplot2).</p></li>
-<li><p>Identifique possíveis outliers no conjunto de dados e analise como eles afetam a regressão e a relação entre as variáveis.</p></li>
-<li><p>Utilize o intervalo de confiança para a média de uma variável quantitativa do conjunto de dados e interprete-o em termos do contexto do problema.</p></li>
-<li><p>Formule uma hipótese relacionada a uma das variáveis do conjunto de dados e realize um teste de hipóteses para verificar sua validade.</p></li>
-</ol>
-</section>
+<section id="outros-gráficos-disponíveis-em-r" class="level1">
+<h1>Outros gráficos disponíveis em R</h1>
+<p>Para um panorama geral de vários tipos de gráficos disponíveis, visite a <a href="https://r-graph-gallery.com/">R Graph Gallery</a>.</p>
+<p>Por exemplo, o gráfico de linhas é interessante para mostrar a evolução temporal de alguma variável, heatmaps são bons para mostrar correlações, e mapas são ótimos para gerar visualizações geoespaciais.</p>
+<p>É possível também gerar gráficos interativos com R usando shiny apps. Por exemplo, veja a <a href="https://pacheco-jpg.shinyapps.io/dsm_xc_shiny_app/">ferramenta</a> que desenvolvemos para visualizar as probabilidades pré- e pós-teste para a Escala de Sintomas Transversais do DSM-5.</p>
 </section>
 
 </main>
