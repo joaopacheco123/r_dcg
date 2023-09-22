@@ -2,7 +2,7 @@
 title: "Aula 5 - Estatística descritiva"
 author: "João Amaral"
 format: 
-  pdf:
+  html:
     toc: true
 editor: source
 editor_options:
@@ -13,7 +13,9 @@ editor_options:
 #| label: setup
 #| include: false
 
-knitr::opts_knit$set(root.dir = 'C:/Users/User/Documents/r_dcg')
+#knitr::opts_knit$set(root.dir = 'C:/Users/User/Documents/r_dcg')
+knitr::opts_knit$set(root.dir = 'C:/Users/joao/OneDrive/Documentos/r_dcg')
+
 ```
 
 

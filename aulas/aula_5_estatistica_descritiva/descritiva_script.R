@@ -1,5 +1,5 @@
 # Carrega pacotes necessários
-library(tidyverse); library(haven)
+library(tidyverse); library(haven); library(dplyr)
 
 # Importa o banco de dados do tipo .sav, utilizado pelo programa SPSS
 saq_df <- haven::read_sav(file = "aulas/aula_5_estatistica_descritiva/data/SAQ_mod.sav")
@@ -31,8 +31,7 @@ saq_df |>
   sjlabelled::get_labels()
 
 saq_df |> 
-  dplyr::select(sexo) |> 
-  sjlabelled::get_values() 
+  dplyr::select(raca_etnia)
 
 # Acessando diretamente o atributo "labels" do objeto, conseguimos visualizar os valores numéricos e os tipos de resposta simultaneamente.
 saq_df |> 
@@ -49,6 +48,7 @@ saq_df |>
   dplyr::select(q01:q23) |> 
   filter(if_any(everything(), ~ .x == 9)) |> 
   dim()
+
 
 # Checa se há dados faltantes no banco de dados em cada coluna do questionário
 
